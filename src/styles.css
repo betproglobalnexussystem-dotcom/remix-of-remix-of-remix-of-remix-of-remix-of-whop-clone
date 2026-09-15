@@ -1922,13 +1922,13 @@ h3,
 	background: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 14px;
-	padding: 20px;
+	padding: 14px;
 	align-self: start;
 }
 .sub-float-plan {
 	display: grid;
 	gap: 2px;
-	margin: 0 0 14px;
+	margin: 0 0 8px;
 }
 .sub-float-plan span {
 	font-size: 13px;
@@ -1947,10 +1947,10 @@ h3,
 	justify-content: space-between;
 	align-items: baseline;
 	gap: 10px;
-	margin: 14px 0 16px;
+	margin: 10px 0 10px;
 }
 .sub-float-due strong {
-	font-size: 26px;
+	font-size: 22px;
 }
 .sub-float-pay {
 	width: 100%;
