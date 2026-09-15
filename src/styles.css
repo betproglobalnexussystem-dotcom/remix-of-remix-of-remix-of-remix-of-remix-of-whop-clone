@@ -1102,6 +1102,23 @@ h3,
   gap: 32px 24px;
 }
 
+.films-upcoming {
+  margin-bottom: 56px;
+}
+
+.films-upcoming .kicker {
+  margin-bottom: 24px;
+}
+
+.film-card .thumb.portrait {
+  aspect-ratio: 2 / 3;
+}
+
+.badge-soon {
+  background: var(--gold);
+  color: var(--ink);
+}
+
 .join-hero {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr 0.55fr 0.55fr;
