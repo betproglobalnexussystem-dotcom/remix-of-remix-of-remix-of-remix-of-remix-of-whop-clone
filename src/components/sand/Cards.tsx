@@ -46,8 +46,12 @@ export function FilmCard({ film, portrait }: { film: Film; portrait?: boolean })
         )}
       </div>
       <h3>{film.title}</h3>
-      {film.duration ? <p className="meta">{film.duration}</p> : null}
-      <p className="excerpt">{film.excerpt}</p>
+      {portrait ? null : (
+        <>
+          {film.duration ? <p className="meta">{film.duration}</p> : null}
+          <p className="excerpt">{film.excerpt}</p>
+        </>
+      )}
     </Link>
   );
 }
