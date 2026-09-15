@@ -49,8 +49,11 @@ function WatchPage() {
 				if (destroyed) return;
 				setSession(ticket.sessionId);
 
-				const shaka = (await import("shaka-player/dist/shaka-player.compiled"))
-					.default as typeof import("shaka-player");
+				const mod = (await import(
+					"shaka-player/dist/shaka-player.compiled"
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				)) as any;
+				const shaka = mod.default ?? mod;
 				shaka.polyfill.installAll();
 				if (!shaka.Player.isBrowserSupported()) {
 					setStatus("error");

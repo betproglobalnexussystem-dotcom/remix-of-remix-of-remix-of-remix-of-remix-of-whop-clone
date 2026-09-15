@@ -38,6 +38,7 @@ import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
+import { Route as WatchSlugRouteImport } from './routes/watch.$slug'
 import { Route as ArticleCategoryCategoryRouteImport } from './routes/article.category.$category'
 import { Route as ArticleTagTagRouteImport } from './routes/article.tag.$tag'
 import { Route as ApiPublicStreamLicenseRouteImport } from './routes/api/public/stream.license'
@@ -188,6 +189,11 @@ const VideosSlugRoute = VideosSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => VideosRoute,
 } as any)
+const WatchSlugRoute = WatchSlugRouteImport.update({
+  id: '/watch/$slug',
+  path: '/watch/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleCategoryCategoryRoute = ArticleCategoryCategoryRouteImport.update({
   id: '/article/category/$category',
   path: '/article/category/$category',
@@ -239,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -347,6 +356,7 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -382,6 +392,7 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -417,6 +428,7 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -451,6 +463,7 @@ export interface RootRouteChildren {
   CollectionsLabelRoute: typeof CollectionsLabelRoute
   EventSlugRoute: typeof EventSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
+  WatchSlugRoute: typeof WatchSlugRoute
   ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
   ArticleTagTagRoute: typeof ArticleTagTagRoute
   ApiPublicStreamLicenseRoute: typeof ApiPublicStreamLicenseRoute
@@ -662,6 +675,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosSlugRouteImport
       parentRoute: typeof VideosRoute
     }
+    '/watch/$slug': {
+      id: '/watch/$slug'
+      path: '/watch/$slug'
+      fullPath: '/watch/$slug'
+      preLoaderRoute: typeof WatchSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article/category/$category': {
       id: '/article/category/$category'
       path: '/article/category/$category'
@@ -742,6 +762,7 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsLabelRoute: CollectionsLabelRoute,
   EventSlugRoute: EventSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
+  WatchSlugRoute: WatchSlugRoute,
   ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
   ArticleTagTagRoute: ArticleTagTagRoute,
   ApiPublicStreamLicenseRoute: ApiPublicStreamLicenseRoute,
