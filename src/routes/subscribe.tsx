@@ -58,11 +58,11 @@ function SubscribePage() {
 		writeSubscription({
 			active: true,
 			region,
-			method: method ?? undefined,
+			...(method ? { method } : {}),
 			startedAt: Date.now(),
 		});
 		setActive(true);
-		if (redirect) navigate({ to: redirect });
+		if (redirect) window.location.assign(redirect);
 	}
 
 	return (
