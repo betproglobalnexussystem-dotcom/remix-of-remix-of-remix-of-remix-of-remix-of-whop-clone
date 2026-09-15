@@ -2,12 +2,8 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { EventCard } from "../components/sand/Cards";
 import { SiteEnd } from "../components/layout/SiteEnd";
-import {
-  EVENTS,
-  FILMS,
-  HERO_SLIDES,
-  UPCOMING_FILMS,
-} from "../data/catalog";
+import { FILMS } from "../data/catalog";
+import { useContent } from "../lib/admin-store";
 
 const AWARDS = [
   {
@@ -48,6 +44,9 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const content = useContent();
+  const HERO_SLIDES = content.heroSlides;
+  const EVENTS = content.events;
   const [slide, setSlide] = useState(0);
   const [eventStart, setEventStart] = useState(0);
   const [filmRailPosition, setFilmRailPosition] = useState({
@@ -55,7 +54,11 @@ function HomePage() {
     canScrollRight: false,
   });
   const filmRailRef = useRef<HTMLDivElement>(null);
-  const posters = FILMS.slice(0, 7);
+  const bySlug = (slug: string) =>
+    content.films.find((film) => film.slug === slug);
+  const posters = content.directorFilmSlugs
+    .map(bySlug)
+    .filter((film): film is (typeof content.films)[number] => Boolean(film));
   const series = FILMS.filter((film) =>
     [
       "mauri",
