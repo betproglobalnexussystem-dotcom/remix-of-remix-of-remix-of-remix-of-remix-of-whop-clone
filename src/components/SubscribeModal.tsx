@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { getRegionByIp } from "../lib/geo.functions";
 import {
-	PAYMENT_METHODS,
 	type PaymentMethod,
 	type Region,
 	detectRegion,
-	planFor,
 	writeSubscription,
 } from "../lib/subscription";
 
@@ -16,21 +14,50 @@ type Props = {
 	onActivated?: () => void;
 };
 
+type Method = {
+	id: PaymentMethod;
+	name: string;
+	icon: string;
+	currency: "UGX" | "USD";
+};
+
+/** Mobile Money charges in shillings; every card/wallet method charges in USD. */
+const METHODS: Method[] = [
+	{ id: "mobile-money", name: "Mobile Money (MTN / Airtel)", icon: "📱", currency: "UGX" },
+	{ id: "card", name: "Credit/debit card", icon: "💳", currency: "USD" },
+	{ id: "paypal", name: "PayPal", icon: "🅿️", currency: "USD" },
+	{ id: "google-pay", name: "Google Pay", icon: "🇬", currency: "USD" },
+	{ id: "whop", name: "Whop", icon: "🛒", currency: "USD" },
+];
+
+const UGX_MONTH = 5000;
+const USD_MONTH = 5.99;
+
+function money(currency: "UGX" | "USD", amount: number) {
+	return currency === "UGX"
+		? `UGX ${amount.toLocaleString("en-UG")}`
+		: `USD ${amount.toFixed(2)}`;
+}
+
 /** Floating subscription panel — region is detected from the visitor IP. */
 export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [region, setRegion] = useState<Region>("INTL");
 	const [country, setCountry] = useState<string | null>(null);
-	const [method, setMethod] = useState<PaymentMethod | null>(null);
+	const [method, setMethod] = useState<PaymentMethod>("card");
+	const [pending, setPending] = useState(false);
 
 	useEffect(() => {
 		if (!open) return;
-		setRegion(detectRegion());
+		const guess = detectRegion();
+		setRegion(guess);
+		setMethod(guess === "UG" ? "mobile-money" : "card");
 		let cancelled = false;
 		getRegionByIp()
 			.then((res) => {
 				if (cancelled) return;
 				setRegion(res.region);
 				setCountry(res.country);
+				setMethod(res.region === "UG" ? "mobile-money" : "card");
 			})
 			.catch(() => {
 				/* keep browser-based guess */
@@ -50,13 +77,17 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	}, [open, onClose]);
 
 	if (!open) return null;
-	const plan = planFor(region);
+
+	const selected = METHODS.find((item) => item.id === method) ?? METHODS[1]!;
+	const currency = selected.currency;
+	const amount = currency === "UGX" ? UGX_MONTH : USD_MONTH;
+	const price = money(currency, amount);
 
 	function activate() {
 		writeSubscription({
 			active: true,
 			region,
-			...(method ? { method } : {}),
+			method,
 			startedAt: Date.now(),
 		});
 		onActivated?.();
@@ -66,66 +97,114 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		<div className="sub-float" role="dialog" aria-modal="true">
 			<div className="sub-float-backdrop" onClick={() => onClose?.()} />
 			<div className="sub-float-card">
-				{onClose ? (
-					<button
-						type="button"
-						className="sub-float-close"
-						onClick={onClose}
-						aria-label="Close"
-					>
-						×
-					</button>
-				) : null}
-				<p className="kicker">Membership</p>
-				<h2 className="serif" style={{ margin: "6px 0 10px", fontSize: 30 }}>
-					{title ? `Subscribe to watch ${title}` : "Subscribe to watch"}
-				</h2>
-				<p style={{ margin: 0 }}>
-					{region === "UG"
-						? "Uganda plan detected from your location."
-						: "International plan based on your location."}
-					{country ? ` (${country})` : ""}
-				</p>
-
-				<div className="sub-float-price">
-					<strong>{plan.label}</strong>
-					<span>{plan.period}</span>
-				</div>
-
-				<div className="sub-float-methods">
-					{PAYMENT_METHODS.map((item) => (
+				<header className="sub-float-head">
+					<h2 className="serif">Review subscription and pay</h2>
+					{onClose ? (
 						<button
 							type="button"
-							key={item.id}
-							className={
-								method === item.id
-									? "sub-float-method is-active"
-									: "sub-float-method"
-							}
-							onClick={() => setMethod(item.id)}
+							className="sub-float-close"
+							onClick={onClose}
+							aria-label="Close"
 						>
-							<strong>{item.name}</strong>
-							<span>{item.blurb}</span>
+							×
 						</button>
-					))}
-				</div>
+					) : null}
+				</header>
 
-				{method ? (
-					<div className="sub-float-pending">
-						<p style={{ margin: "0 0 10px" }}>
-							Payment is not connected yet. Once your keys are added this will
-							open the real {method === "mobile-money" ? "Mobile Money" : method === "paypal" ? "PayPal" : "Whop"}{" "}
-							checkout for {plan.label} {plan.period}.
+				<div className="sub-float-grid">
+					<div className="sub-float-left">
+						<p className="kicker">Payment details</p>
+						<div className="sub-float-methods">
+							{METHODS.map((item) => (
+								<button
+									type="button"
+									key={item.id}
+									className={
+										method === item.id
+											? "sub-float-method is-active"
+											: "sub-float-method"
+									}
+									onClick={() => {
+										setMethod(item.id);
+										setPending(false);
+									}}
+								>
+									<span className="sub-float-radio" aria-hidden="true" />
+									<span className="sub-float-icon" aria-hidden="true">
+										{item.icon}
+									</span>
+									<span className="sub-float-name">{item.name}</span>
+									<span className="sub-float-cur">{item.currency}</span>
+								</button>
+							))}
+						</div>
+
+						{method === "mobile-money" ? (
+							<div className="sub-float-fields">
+								<p className="kicker">Mobile Money number</p>
+								<input type="tel" placeholder="07XX XXX XXX" />
+							</div>
+						) : method === "card" ? (
+							<div className="sub-float-fields">
+								<p className="kicker">Card details</p>
+								<div className="sub-float-card-row">
+									<input type="text" placeholder="Card number" />
+									<input type="text" placeholder="MM/YY" />
+									<input type="text" placeholder="CVC" />
+								</div>
+							</div>
+						) : null}
+
+						<p className="sub-float-note">
+							Billing region:{" "}
+							<strong>{region === "UG" ? "Uganda" : country || "International"}</strong>{" "}
+							· Mobile Money is charged in shillings, all other methods in US
+							dollars.
 						</p>
-						<button type="button" className="btn-ghost" onClick={activate}>
-							Grant test access for now
-						</button>
 					</div>
-				) : (
-					<p style={{ fontSize: 14, opacity: 0.75 }}>
-						Choose a payment method to continue.
-					</p>
-				)}
+
+					<aside className="sub-float-right">
+						<p className="sub-float-plan">
+							<strong>MAGEYE Streaming</strong>
+							<span>Monthly · 1 viewer</span>
+						</p>
+						<div className="sub-float-line">
+							<span>1 membership</span>
+							<span>{price} /month</span>
+						</div>
+						<div className="sub-float-line">
+							<span>Total for 1 month</span>
+							<span>{price}</span>
+						</div>
+						<div className="sub-float-due">
+							<span>Amount due</span>
+							<strong>{price}</strong>
+						</div>
+						<button
+							type="button"
+							className="btn-gold sub-float-pay"
+							onClick={() => setPending(true)}
+						>
+							Pay {price} now
+						</button>
+						{pending ? (
+							<div className="sub-float-pending">
+								<p>
+									{selected.name} is not connected yet. Once your keys are added
+									this button opens the real checkout for {price} per month.
+								</p>
+								<button type="button" className="btn-ghost" onClick={activate}>
+									Grant test access for now
+								</button>
+							</div>
+						) : (
+							<p className="sub-float-small">
+								Renews every month. Cancel any time. Streaming only — films are
+								never downloadable.
+							</p>
+						)}
+					</aside>
+				</div>
 			</div>
 		</div>
 	);

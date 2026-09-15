@@ -15,18 +15,14 @@ import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as BoardRouteImport } from './routes/board'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CoursesRouteImport } from './routes/courses'
-import { Route as DonateRouteImport } from './routes/donate'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FilmsRouteImport } from './routes/films'
 import { Route as JoinTheCommunityRouteImport } from './routes/join-the-community'
 import { Route as LibraryRouteImport } from './routes/library'
-import { Route as MissionRouteImport } from './routes/mission'
-import { Route as NondualityRouteImport } from './routes/nonduality'
 import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as RecordingPolicyRouteImport } from './routes/recording-policy'
-import { Route as SandScholarshipProgramRouteImport } from './routes/sand-scholarship-program'
 import { Route as SponsorsPartnersRouteImport } from './routes/sponsors-partners'
 import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as TeamRouteImport } from './routes/team'
@@ -77,11 +73,6 @@ const CoursesRoute = CoursesRouteImport.update({
   path: '/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -107,16 +98,6 @@ const LibraryRoute = LibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MissionRoute = MissionRouteImport.update({
-  id: '/mission',
-  path: '/mission',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NondualityRoute = NondualityRouteImport.update({
-  id: '/nonduality',
-  path: '/nonduality',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PodcastRoute = PodcastRouteImport.update({
   id: '/podcast',
   path: '/podcast',
@@ -130,11 +111,6 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
 const RecordingPolicyRoute = RecordingPolicyRouteImport.update({
   id: '/recording-policy',
   path: '/recording-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SandScholarshipProgramRoute = SandScholarshipProgramRouteImport.update({
-  id: '/sand-scholarship-program',
-  path: '/sand-scholarship-program',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SponsorsPartnersRoute = SponsorsPartnersRouteImport.update({
@@ -240,18 +216,14 @@ export interface FileRoutesByFullPath {
   '/board': typeof BoardRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/films': typeof FilmsRouteWithChildren
   '/join-the-community': typeof JoinTheCommunityRoute
   '/library': typeof LibraryRoute
-  '/mission': typeof MissionRoute
-  '/nonduality': typeof NondualityRoute
   '/podcast': typeof PodcastRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recording-policy': typeof RecordingPolicyRoute
-  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
   '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
@@ -279,17 +251,13 @@ export interface FileRoutesByTo {
   '/board': typeof BoardRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/join-the-community': typeof JoinTheCommunityRoute
   '/library': typeof LibraryRoute
-  '/mission': typeof MissionRoute
-  '/nonduality': typeof NondualityRoute
   '/podcast': typeof PodcastRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recording-policy': typeof RecordingPolicyRoute
-  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
   '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
@@ -318,18 +286,14 @@ export interface FileRoutesById {
   '/board': typeof BoardRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/films': typeof FilmsRouteWithChildren
   '/join-the-community': typeof JoinTheCommunityRoute
   '/library': typeof LibraryRoute
-  '/mission': typeof MissionRoute
-  '/nonduality': typeof NondualityRoute
   '/podcast': typeof PodcastRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recording-policy': typeof RecordingPolicyRoute
-  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
   '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
@@ -359,18 +323,14 @@ export interface FileRouteTypes {
     | '/board'
     | '/contact'
     | '/courses'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/films'
     | '/join-the-community'
     | '/library'
-    | '/mission'
-    | '/nonduality'
     | '/podcast'
     | '/privacy-policy'
     | '/recording-policy'
-    | '/sand-scholarship-program'
     | '/sponsors-partners'
     | '/subscribe'
     | '/team'
@@ -398,17 +358,13 @@ export interface FileRouteTypes {
     | '/board'
     | '/contact'
     | '/courses'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/join-the-community'
     | '/library'
-    | '/mission'
-    | '/nonduality'
     | '/podcast'
     | '/privacy-policy'
     | '/recording-policy'
-    | '/sand-scholarship-program'
     | '/sponsors-partners'
     | '/subscribe'
     | '/team'
@@ -436,18 +392,14 @@ export interface FileRouteTypes {
     | '/board'
     | '/contact'
     | '/courses'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/films'
     | '/join-the-community'
     | '/library'
-    | '/mission'
-    | '/nonduality'
     | '/podcast'
     | '/privacy-policy'
     | '/recording-policy'
-    | '/sand-scholarship-program'
     | '/sponsors-partners'
     | '/subscribe'
     | '/team'
@@ -476,18 +428,14 @@ export interface RootRouteChildren {
   BoardRoute: typeof BoardRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
-  DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   FilmsRoute: typeof FilmsRouteWithChildren
   JoinTheCommunityRoute: typeof JoinTheCommunityRoute
   LibraryRoute: typeof LibraryRoute
-  MissionRoute: typeof MissionRoute
-  NondualityRoute: typeof NondualityRoute
   PodcastRoute: typeof PodcastRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   RecordingPolicyRoute: typeof RecordingPolicyRoute
-  SandScholarshipProgramRoute: typeof SandScholarshipProgramRoute
   SponsorsPartnersRoute: typeof SponsorsPartnersRoute
   SubscribeRoute: typeof SubscribeRoute
   TeamRoute: typeof TeamRoute
@@ -550,13 +498,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -592,20 +533,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mission': {
-      id: '/mission'
-      path: '/mission'
-      fullPath: '/mission'
-      preLoaderRoute: typeof MissionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nonduality': {
-      id: '/nonduality'
-      path: '/nonduality'
-      fullPath: '/nonduality'
-      preLoaderRoute: typeof NondualityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/podcast': {
       id: '/podcast'
       path: '/podcast'
@@ -625,13 +552,6 @@ declare module '@tanstack/react-router' {
       path: '/recording-policy'
       fullPath: '/recording-policy'
       preLoaderRoute: typeof RecordingPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sand-scholarship-program': {
-      id: '/sand-scholarship-program'
-      path: '/sand-scholarship-program'
-      fullPath: '/sand-scholarship-program'
-      preLoaderRoute: typeof SandScholarshipProgramRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sponsors-partners': {
@@ -800,18 +720,14 @@ const rootRouteChildren: RootRouteChildren = {
   BoardRoute: BoardRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
-  DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   FilmsRoute: FilmsRouteWithChildren,
   JoinTheCommunityRoute: JoinTheCommunityRoute,
   LibraryRoute: LibraryRoute,
-  MissionRoute: MissionRoute,
-  NondualityRoute: NondualityRoute,
   PodcastRoute: PodcastRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   RecordingPolicyRoute: RecordingPolicyRoute,
-  SandScholarshipProgramRoute: SandScholarshipProgramRoute,
   SponsorsPartnersRoute: SponsorsPartnersRoute,
   SubscribeRoute: SubscribeRoute,
   TeamRoute: TeamRoute,
