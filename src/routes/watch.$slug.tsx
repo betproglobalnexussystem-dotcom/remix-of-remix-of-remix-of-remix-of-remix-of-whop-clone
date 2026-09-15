@@ -52,7 +52,9 @@ function WatchPage() {
 	const [showSubscribe, setShowSubscribe] = useState(false);
 
 	useEffect(() => {
-		setPlan(planFor(detectRegion()));
+		const guess = detectRegion();
+		setPlan(planFor(guess));
+		activateFromReturnUrl(guess);
 		const subscribed = Boolean(readSubscription());
 		setAccess(subscribed ? "allowed" : "denied");
 		if (!subscribed) setShowSubscribe(true);
