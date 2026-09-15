@@ -42,6 +42,7 @@ function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteLoader />
       <div className="site-shell">
         <Header />
         <main className="site-main">
