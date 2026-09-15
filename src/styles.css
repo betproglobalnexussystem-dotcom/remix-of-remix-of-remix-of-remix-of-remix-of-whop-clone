@@ -2385,6 +2385,46 @@ h3,
   justify-self: center;
 }
 
+.checkout-page {
+  min-height: 100vh;
+  background: var(--cream);
+}
+.checkout-page__header {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(18px, 4vw, 56px);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+.checkout-page__brand {
+  font-family: Marcellus, serif;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+}
+.checkout-page__back { font-size: 13px; text-decoration: underline; }
+.checkout-page__content {
+  width: min(680px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0 80px;
+}
+.checkout-page__content h1 { margin: 8px 0 10px; font-size: 42px; }
+.checkout-page__content > p { max-width: 580px; }
+.checkout-page__embed {
+  min-height: 480px;
+  margin-top: 28px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 8px;
+}
+.checkout-page__embed > .loader { margin: 80px auto; }
+.checkout-page__error {
+  margin-top: 18px;
+  color: #9d2525;
+  font-weight: 600;
+}
+
 /* ---------- Admin wallet ---------- */
 .admin-cards {
   display: grid;

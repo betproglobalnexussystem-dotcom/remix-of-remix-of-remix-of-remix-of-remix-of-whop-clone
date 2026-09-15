@@ -31,6 +31,7 @@ import { Route as VideosRouteImport } from './routes/videos'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as AudioSlugRouteImport } from './routes/audio.$slug'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
+import { Route as CheckoutCompleteRouteImport } from './routes/checkout.complete'
 import { Route as CollectionsLabelRouteImport } from './routes/collections.$label'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as FilmsIndexRouteImport } from './routes/films.index'
@@ -153,6 +154,11 @@ const CheckoutPlanIdRoute = CheckoutPlanIdRouteImport.update({
   path: '/checkout/$planId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutCompleteRoute = CheckoutCompleteRouteImport.update({
+  id: '/checkout/complete',
+  path: '/checkout/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CollectionsLabelRoute = CollectionsLabelRouteImport.update({
   id: '/collections/$label',
   path: '/collections/$label',
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/checkout/complete': typeof CheckoutCompleteRoute
   '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
@@ -266,6 +273,7 @@ export interface FileRoutesByTo {
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/checkout/complete': typeof CheckoutCompleteRoute
   '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
@@ -302,6 +310,7 @@ export interface FileRoutesById {
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/checkout/complete': typeof CheckoutCompleteRoute
   '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
@@ -339,6 +348,7 @@ export interface FileRouteTypes {
     | '/article/$slug'
     | '/audio/$slug'
     | '/checkout/$planId'
+    | '/checkout/complete'
     | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
@@ -373,6 +383,7 @@ export interface FileRouteTypes {
     | '/article/$slug'
     | '/audio/$slug'
     | '/checkout/$planId'
+    | '/checkout/complete'
     | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
@@ -408,6 +419,7 @@ export interface FileRouteTypes {
     | '/article/$slug'
     | '/audio/$slug'
     | '/checkout/$planId'
+    | '/checkout/complete'
     | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
@@ -444,6 +456,7 @@ export interface RootRouteChildren {
   ArticleSlugRoute: typeof ArticleSlugRoute
   AudioSlugRoute: typeof AudioSlugRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
+  CheckoutCompleteRoute: typeof CheckoutCompleteRoute
   CollectionsLabelRoute: typeof CollectionsLabelRoute
   EventSlugRoute: typeof EventSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
@@ -610,6 +623,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutPlanIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/complete': {
+      id: '/checkout/complete'
+      path: '/checkout/complete'
+      fullPath: '/checkout/complete'
+      preLoaderRoute: typeof CheckoutCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/collections/$label': {
       id: '/collections/$label'
       path: '/collections/$label'
@@ -736,6 +756,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArticleSlugRoute: ArticleSlugRoute,
   AudioSlugRoute: AudioSlugRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
+  CheckoutCompleteRoute: CheckoutCompleteRoute,
   CollectionsLabelRoute: CollectionsLabelRoute,
   EventSlugRoute: EventSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
