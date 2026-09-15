@@ -40,6 +40,7 @@ import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
 import { Route as ArticleCategoryCategoryRouteImport } from './routes/article.category.$category'
 import { Route as ArticleTagTagRouteImport } from './routes/article.tag.$tag'
+import { Route as ApiPublicStreamManifestRouteImport } from './routes/api/public/stream.manifest'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -196,6 +197,11 @@ const ArticleTagTagRoute = ArticleTagTagRouteImport.update({
   path: '/article/tag/$tag',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicStreamManifestRoute = ApiPublicStreamManifestRouteImport.update({
+  id: '/api/public/stream/manifest',
+  path: '/api/public/stream/manifest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -229,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -331,6 +340,7 @@ export interface FileRouteTypes {
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/manifest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/manifest'
   id:
     | '__root__'
     | '/'
@@ -397,6 +408,7 @@ export interface FileRouteTypes {
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/manifest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -429,6 +441,7 @@ export interface RootRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
   ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
   ArticleTagTagRoute: typeof ArticleTagTagRoute
+  ApiPublicStreamManifestRoute: typeof ApiPublicStreamManifestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -650,6 +663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleTagTagRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/stream/manifest': {
+      id: '/api/public/stream/manifest'
+      path: '/api/public/stream/manifest'
+      fullPath: '/api/public/stream/manifest'
+      preLoaderRoute: typeof ApiPublicStreamManifestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -704,6 +724,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
   ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
   ArticleTagTagRoute: ArticleTagTagRoute,
+  ApiPublicStreamManifestRoute: ApiPublicStreamManifestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
