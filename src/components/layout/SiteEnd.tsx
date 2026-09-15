@@ -1,4 +1,4 @@
-import { IMG } from "../../data/site";
+import { DONATE_PLAN_ID, IMG } from "../../data/site";
 
 
 
