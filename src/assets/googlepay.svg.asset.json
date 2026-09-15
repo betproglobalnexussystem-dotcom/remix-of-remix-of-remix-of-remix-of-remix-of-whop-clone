@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "9f8d9c32-66b4-43e7-999d-f5310b616e34",
-  "project_id": "159a017c-e810-4dfb-bf39-478cd89243db",
-  "url": "/__l5e/assets-v1/9f8d9c32-66b4-43e7-999d-f5310b616e34/googlepay.svg",
-  "r2_key": "a/v1/159a017c-e810-4dfb-bf39-478cd89243db/9f8d9c32-66b4-43e7-999d-f5310b616e34/googlepay.svg",
-  "original_filename": "googlepay.svg",
-  "size": 1430,
   "content_type": "image/svg+xml",
-  "created_at": "2026-09-15T18:15:58Z"
+  "created_at": "2026-09-15T18:15:58Z",
+  "original_filename": "googlepay.svg",
+  "project_id": "d2b34d20-6a28-4aa9-9f34-e363045284a8",
+  "r2_key": "a/v1/d2b34d20-6a28-4aa9-9f34-e363045284a8/9f8d9c32-66b4-43e7-999d-f5310b616e34/googlepay.svg",
+  "size": 1430,
+  "url": "/__l5e/assets-v1/9f8d9c32-66b4-43e7-999d-f5310b616e34/googlepay.svg",
+  "version": 1
 }

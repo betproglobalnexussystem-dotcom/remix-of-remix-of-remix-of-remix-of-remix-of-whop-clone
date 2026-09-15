@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "d35cb128-7c1a-48da-b981-acd7c6d9bcca",
-  "project_id": "159a017c-e810-4dfb-bf39-478cd89243db",
-  "url": "/__l5e/assets-v1/d35cb128-7c1a-48da-b981-acd7c6d9bcca/visa-mastercard-official.png",
-  "r2_key": "a/v1/159a017c-e810-4dfb-bf39-478cd89243db/d35cb128-7c1a-48da-b981-acd7c6d9bcca/visa-mastercard-official.png",
-  "original_filename": "visa-mastercard-official.png",
-  "size": 35684,
   "content_type": "image/png",
-  "created_at": "2026-09-15T18:23:00Z"
+  "created_at": "2026-09-15T18:23:00Z",
+  "original_filename": "visa-mastercard-official.png",
+  "project_id": "d2b34d20-6a28-4aa9-9f34-e363045284a8",
+  "r2_key": "a/v1/d2b34d20-6a28-4aa9-9f34-e363045284a8/d35cb128-7c1a-48da-b981-acd7c6d9bcca/visa-mastercard-official.png",
+  "size": 35684,
+  "url": "/__l5e/assets-v1/d35cb128-7c1a-48da-b981-acd7c6d9bcca/visa-mastercard-official.png",
+  "version": 1
 }
