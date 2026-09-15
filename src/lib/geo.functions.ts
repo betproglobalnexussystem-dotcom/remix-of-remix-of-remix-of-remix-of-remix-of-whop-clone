@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { getRequest } from "@tanstack/react-start/server";
 
 /**
  * Resolve the visitor's country from the request IP (edge headers first, then a
@@ -9,7 +9,7 @@ export const getRegionByIp = createServerFn({ method: "GET" }).handler(
 	async (): Promise<{ region: "UG" | "INTL"; country: string | null }> => {
 		let country: string | null = null;
 		try {
-			const request = getWebRequest();
+			const request = getRequest();
 			const h = request.headers;
 			country =
 				h.get("cf-ipcountry") ??
