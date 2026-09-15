@@ -2340,3 +2340,40 @@ h3,
 @keyframes l12 {
   100% { transform: rotate(0.5turn); }
 }
+
+/* ---------- Whop checkout inside the subscription panel ---------- */
+.sub-float-whop-pay {
+  display: grid;
+  gap: 12px;
+  justify-items: stretch;
+}
+.sub-float-whop-pay > .loader {
+  justify-self: center;
+}
+
+/* ---------- Admin wallet ---------- */
+.admin-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.admin-stat {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 6px;
+}
+.admin-stat span { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; }
+.admin-stat strong { font-size: 22px; }
+.admin-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) {
+  .admin-cards, .admin-row { grid-template-columns: 1fr; }
+}
