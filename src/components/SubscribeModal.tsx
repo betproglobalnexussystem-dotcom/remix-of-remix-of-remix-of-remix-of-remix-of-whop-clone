@@ -73,7 +73,32 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [pending, setPending] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [whopPlan, setWhopPlan] = useState<string | null>(null);
 	const content = useContent();
+
+	// Resolve the Whop plan for this region so the one-click button can mount.
+	useEffect(() => {
+		if (!open) return;
+		let cancelled = false;
+		const configured = content.plans.find(
+			(item) => item.id === (region === "UG" ? "ug" : "intl"),
+		)?.whopPlanId;
+		if (configured) {
+			setWhopPlan(configured);
+			return;
+		}
+		getWhopPlanId({ data: { region } })
+			.then((res) => {
+				if (!cancelled) setWhopPlan(res.planId);
+			})
+			.catch(() => {
+				if (!cancelled) setWhopPlan(null);
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [open, region, content.plans]);
+
 
 	useEffect(() => {
 		if (!open) return;
