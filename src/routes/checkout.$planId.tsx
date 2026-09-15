@@ -1,6 +1,7 @@
 import { WhopCheckoutEmbed } from "@whop/checkout/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { getDeviceIdentity } from "../lib/device";
 
 export const Route = createFileRoute("/checkout/$planId")({
   head: () => ({
