@@ -113,9 +113,15 @@ export function writeSubscription(state: SubscriptionState) {
 	const identity = getDeviceIdentity();
 	const record: SubscriptionState = {
 		...state,
-		deviceId: state.deviceId ?? identity?.deviceId,
-		deviceEmail: state.deviceEmail ?? identity?.email,
-		deviceLabel: state.deviceLabel ?? identity?.label,
+		...(state.deviceId ?? identity?.deviceId
+			? { deviceId: (state.deviceId ?? identity?.deviceId) as string }
+			: {}),
+		...(state.deviceEmail ?? identity?.email
+			? { deviceEmail: (state.deviceEmail ?? identity?.email) as string }
+			: {}),
+		...(state.deviceLabel ?? identity?.label
+			? { deviceLabel: (state.deviceLabel ?? identity?.label) as string }
+			: {}),
 	};
 	window.localStorage.setItem(KEY, JSON.stringify(record));
 }

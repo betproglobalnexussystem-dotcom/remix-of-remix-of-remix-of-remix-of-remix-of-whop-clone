@@ -65,7 +65,7 @@ function CheckoutPage() {
               adaptivePricing
               hideEmail
               hideAddressForm
-              prefill={email ? { email } : undefined}
+              {...(email ? { prefill: { email } } : {})}
               themeOptions={{ accentColor: "gold", borderRadius: 6 }}
               styles={{ container: { paddingX: 0 } }}
               fallback={<div className="loader" />}

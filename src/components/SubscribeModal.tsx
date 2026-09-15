@@ -130,7 +130,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 			region,
 			method,
 			startedAt: Date.now(),
-			receiptId,
+			...(receiptId ? { receiptId } : {}),
 		});
 		onActivated?.();
 	}
@@ -237,7 +237,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 								<WhopExpressCheckoutButton
 									planId={WHOP_STREAMING_PLAN_ID}
 									returnUrl={checkoutReturnUrl(window.location.pathname)}
-									methods={["apple_pay", "google_pay", "paypal"]}
+									methods={["apple-pay", "google-pay", "whop-pay"]}
 									theme="light"
 									themeOptions={{ accentColor: "gold" }}
 									prefill={{ email }}
