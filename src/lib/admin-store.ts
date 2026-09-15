@@ -223,7 +223,9 @@ export function resetContent() {
 
 export function subscribeContent(listener: (content: Content) => void) {
 	listeners.add(listener);
-	return () => listeners.delete(listener);
+	return () => {
+		listeners.delete(listener);
+	};
 }
 
 /** SSR-safe hook: renders the seed first, then the saved content after mount. */
