@@ -362,6 +362,26 @@ function HomePage() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="wrap partner">
+          <h2>Partner with Us</h2>
+          <p>
+            We welcome investors, producers, distributors, organizations, and
+            creative collaborators interested in our upcoming projects. Explore
+            our current productions below and reach out to learn more about
+            opportunities to get involved.
+          </p>
+          <h3>Interested in getting involved?</h3>
+          <p>
+            Contact us to learn more about our projects and current
+            opportunities for collaboration.
+          </p>
+          <a className="btn-gold" href="mailto:info@mageye.com">
+            Get in Touch
+          </a>
+        </div>
+      </section>
+
       <section className="awards" id="awards">
         <div className="awards-inner">
           <div className="awards-kicker">SELECTED RECOGNITION · MAGEYE · 2025</div>
