@@ -2,6 +2,12 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { filmBySlug } from "../data/catalog";
 import { getPlaybackTicket } from "../lib/stream.functions";
+import {
+	INTL_PLAN,
+	detectRegion,
+	planFor,
+	readSubscription,
+} from "../lib/subscription";
 
 export const Route = createFileRoute("/watch/$slug")({
 	component: WatchPage,
@@ -37,8 +43,18 @@ function WatchPage() {
 	const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 	const [message, setMessage] = useState("Securing your session…");
 	const [session, setSession] = useState("");
+	const [access, setAccess] = useState<"checking" | "allowed" | "denied">(
+		"checking",
+	);
+	const [plan, setPlan] = useState(INTL_PLAN);
 
 	useEffect(() => {
+		setPlan(planFor(detectRegion()));
+		setAccess(readSubscription() ? "allowed" : "denied");
+	}, []);
+
+	useEffect(() => {
+		if (access !== "allowed") return;
 		let destroyed = false;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let player: any = null;
@@ -128,7 +144,7 @@ function WatchPage() {
 			destroyed = true;
 			player?.destroy();
 		};
-	}, [film.slug]);
+	}, [film.slug, access]);
 
 	// Anti-capture deterrents: block context menu, drag, keyboard save/print
 	// shortcuts, and blank the frame when the tab or window loses focus.
@@ -160,6 +176,40 @@ function WatchPage() {
 			document.removeEventListener("visibilitychange", onVisibility);
 		};
 	}, []);
+
+	if (access !== "allowed") {
+		return (
+			<div className="watch-page">
+				<div className="watch-top">
+					<Link
+						to="/films/$slug"
+						params={{ slug: film.slug }}
+						className="watch-back"
+					>
+						← Back to film
+					</Link>
+					<span className="watch-secure">Members only</span>
+				</div>
+				<div className="watch-paywall">
+					<p className="kicker">Subscription required</p>
+					<h1 className="serif">{film.title}</h1>
+					<p>
+						{access === "checking"
+							? "Checking your membership…"
+							: `Streaming this film needs an active MAGEYE subscription — ${plan.label} ${plan.period}.`}
+					</p>
+					{access === "denied" ? (
+						<a
+							className="btn-gold"
+							href={`/subscribe?redirect=${encodeURIComponent(`/watch/${film.slug}`)}`}
+						>
+							Subscribe for {plan.label}
+						</a>
+					) : null}
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="watch-page">
