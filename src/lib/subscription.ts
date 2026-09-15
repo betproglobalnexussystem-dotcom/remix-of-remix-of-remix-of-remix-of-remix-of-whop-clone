@@ -1,6 +1,8 @@
 // Client-safe subscription helpers. Pricing is region based and the payment
 // providers are wired as placeholders until real API credentials are added.
 
+import { getDeviceIdentity } from "./device";
+
 export type Region = "UG" | "INTL";
 
 export type PlanPrice = {
