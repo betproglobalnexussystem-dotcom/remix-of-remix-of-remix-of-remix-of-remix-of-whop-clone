@@ -1,12 +1,12 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { EventCard, ExploreCard } from "../components/sand/Cards";
+import { EventCard } from "../components/sand/Cards";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import {
   EVENTS,
-  EXPLORE,
   FILMS,
   HERO_SLIDES,
+  UPCOMING_FILMS,
 } from "../data/catalog";
 
 const AWARDS = [
@@ -50,7 +50,6 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [slide, setSlide] = useState(0);
   const [eventStart, setEventStart] = useState(0);
-  const [exploreStart, setExploreStart] = useState(0);
   const [filmRailPosition, setFilmRailPosition] = useState({
     canScrollLeft: false,
     canScrollRight: false,
@@ -115,7 +114,7 @@ function HomePage() {
   };
 
   const visibleEvents = EVENTS.slice(eventStart, eventStart + 3);
-  const visibleExplore = EXPLORE.slice(exploreStart, exploreStart + 3);
+  const visibleExplore = UPCOMING_FILMS;
 
   return (
     <>
@@ -218,32 +217,22 @@ function HomePage() {
         <div className="wrap-wide">
           <div className="section-head">
             <div className="kicker">Explore Premiere and Upcoming Films</div>
-            <div className="arrow-row">
-              <button
-                type="button"
-                aria-label="Previous stories"
-                onClick={() =>
-                  setExploreStart((value) => Math.max(0, value - 1))
-                }
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                aria-label="Next stories"
-                onClick={() =>
-                  setExploreStart((value) =>
-                    Math.min(EXPLORE.length - 3, value + 1),
-                  )
-                }
-              >
-                →
-              </button>
-            </div>
           </div>
           <div className="carousel">
-            {visibleExplore.map((item) => (
-              <ExploreCard key={item.slug} item={item} />
+            {visibleExplore.map((film) => (
+              <Link
+                key={film.slug}
+                to="/films/$slug"
+                params={{ slug: film.slug }}
+                className="explore-card"
+              >
+                <div className="thumb">
+                  <img src={film.image} alt="" />
+                  <span className="badge">Upcoming</span>
+                </div>
+                <h3>{film.title}</h3>
+                <p className="excerpt">{film.excerpt}</p>
+              </Link>
             ))}
           </div>
         </div>
