@@ -86,6 +86,11 @@ export type SubscriptionState = {
 	region: Region;
 	method?: PaymentMethod;
 	startedAt?: number;
+	/** Device login the subscription belongs to. */
+	deviceId?: string;
+	deviceEmail?: string;
+	deviceLabel?: string;
+	receiptId?: string;
 };
 
 export function readSubscription(): SubscriptionState | null {
