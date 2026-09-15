@@ -4,8 +4,12 @@ import googlePayLogo from "../assets/google-pay-official.webp.asset.json";
 import mtnLogo from "../assets/mtn-momo.png.asset.json";
 import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
+import {
+	WhopCheckoutEmbed,
+	WhopExpressCheckoutButton,
+} from "@whop/checkout/react";
 import { getRegionByIp } from "../lib/geo.functions";
-import { createWhopCheckout } from "../lib/whop.functions";
+import { createWhopCheckout, getWhopPlanId } from "../lib/whop.functions";
 import { useContent } from "../lib/admin-store";
 import {
 	type PaymentMethod,
