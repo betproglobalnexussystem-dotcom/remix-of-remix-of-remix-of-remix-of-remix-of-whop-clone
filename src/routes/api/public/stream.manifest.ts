@@ -12,20 +12,30 @@ export const Route = createFileRoute("/api/public/stream/manifest")({
 				if (!ticket) return new Response("Forbidden", { status: 403 });
 
 				const source = streamSourceFor(ticket.slug);
+				const range = request.headers.get("range");
 				const upstream = await fetch(source.manifest, {
-					headers: { accept: "application/dash+xml,*/*" },
+					headers: {
+						accept: "video/mp4,application/dash+xml,*/*",
+						...(range ? { range } : {}),
+					},
 				});
-				if (!upstream.ok) {
+				if (!upstream.ok && upstream.status !== 206) {
 					return new Response("Upstream error", { status: 502 });
 				}
-				return new Response(await upstream.text(), {
-					status: 200,
-					headers: {
-						"content-type":
-							upstream.headers.get("content-type") ?? "application/dash+xml",
-						"cache-control": "private, no-store, max-age=0",
-						"x-content-type-options": "nosniff",
-					},
+				const headers = new Headers({
+					"content-type":
+						upstream.headers.get("content-type") ?? "video/mp4",
+					"cache-control": "private, no-store, max-age=0",
+					"x-content-type-options": "nosniff",
+					"accept-ranges": "bytes",
+				});
+				for (const key of ["content-length", "content-range"]) {
+					const value = upstream.headers.get(key);
+					if (value) headers.set(key, value);
+				}
+				return new Response(upstream.body, {
+					status: upstream.status,
+					headers,
 				});
 			},
 		},
