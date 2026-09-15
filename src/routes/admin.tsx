@@ -271,6 +271,7 @@ function AdminPage() {
 			</aside>
 
 			<section className="admin-main">
+				<div className="admin-edit">
 				{section === "overview" ? <Overview content={content} /> : null}
 
 				{section === "hero" ? (
