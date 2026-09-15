@@ -33,12 +33,20 @@ function FilmsPage() {
         </div>
       </section>
       <section className="section cream">
-        <div className="wrap media-grid">
+        <div className="wrap">
+          <p className="kicker">Upcoming Films</p>
+          <div className="media-grid films-upcoming">
+            {UPCOMING_FILMS.map((film) => (
+              <FilmCard key={film.slug} film={film} />
+            ))}
+          </div>
+        </div>
+        <div className="wrap media-grid films-portrait">
           {visible.map((film) => (
-            <FilmCard key={film.slug} film={film} />
+            <FilmCard key={film.slug} film={film} portrait />
           ))}
         </div>
-        {count < FILMS.length ? (
+        {count < regular.length ? (
           <div className="load-more">
             <button
               type="button"
