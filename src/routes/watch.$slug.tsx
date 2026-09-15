@@ -177,6 +177,41 @@ function WatchPage() {
 		};
 	}, []);
 
+	if (access !== "allowed") {
+		return (
+			<div className="watch-page">
+				<div className="watch-top">
+					<Link
+						to="/films/$slug"
+						params={{ slug: film.slug }}
+						className="watch-back"
+					>
+						← Back to film
+					</Link>
+					<span className="watch-secure">Members only</span>
+				</div>
+				<div className="watch-paywall">
+					<p className="kicker">Subscription required</p>
+					<h1 className="serif">{film.title}</h1>
+					<p>
+						{access === "checking"
+							? "Checking your membership…"
+							: `Streaming this film needs an active MAGEYE subscription — ${plan.label} ${plan.period}.`}
+					</p>
+					{access === "denied" ? (
+						<Link
+							className="btn-gold"
+							to="/subscribe"
+							search={{ redirect: `/watch/${film.slug}` }}
+						>
+							Subscribe for {plan.label}
+						</Link>
+					) : null}
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="watch-page">
 			<div className="watch-top">
