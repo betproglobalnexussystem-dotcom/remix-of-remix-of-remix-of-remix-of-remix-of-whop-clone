@@ -144,7 +144,7 @@ function WatchPage() {
 			destroyed = true;
 			player?.destroy();
 		};
-	}, [film.slug]);
+	}, [film.slug, access]);
 
 	// Anti-capture deterrents: block context menu, drag, keyboard save/print
 	// shortcuts, and blank the frame when the tab or window loses focus.
