@@ -209,8 +209,8 @@ function AdminPage() {
 				>
 					<h1 className="serif">Admin sign in</h1>
 					<p className="admin-hint">
-						Temporary passcode gate for testing: <code>{ADMIN_PASSCODE}</code>.
-						Real sign in arrives when Firebase is connected.
+						Enter your access code. You can change it inside the dashboard under
+						Access Code.
 					</p>
 					<label>
 						Passcode
