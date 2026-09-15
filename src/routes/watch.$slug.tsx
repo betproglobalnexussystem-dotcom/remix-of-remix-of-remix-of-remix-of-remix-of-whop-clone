@@ -98,7 +98,12 @@ function WatchPage() {
 					setMessage("Playback could not be verified. Please reload the page.");
 				});
 
-				await player.load(ticket.manifestUrl);
+				const isProgressive = !ticket.drm;
+				if (isProgressive) {
+					await player.load(ticket.manifestUrl, null, "video/mp4");
+				} else {
+					await player.load(ticket.manifestUrl);
+				}
 				if (destroyed) return;
 				setStatus("ready");
 			} catch {
