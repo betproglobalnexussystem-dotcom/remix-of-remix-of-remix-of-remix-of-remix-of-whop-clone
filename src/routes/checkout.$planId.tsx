@@ -26,6 +26,11 @@ function CheckoutPage() {
   const { planId } = Route.useParams();
   const [returnUrl, setReturnUrl] = useState("");
   const [error, setError] = useState("");
+  const [email, setEmail] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    setEmail(getDeviceIdentity()?.email);
+  }, []);
 
   useEffect(() => {
     const search = new URLSearchParams(window.location.search);
