@@ -100,16 +100,13 @@ export const TOPIC_CATEGORIES = [
 export const FOOTER_ABOUT = [
 	{ label: "Team", to: "/team" },
 	{ label: "Board", to: "/board" },
-	{ label: "Mission", to: "/mission" },
-	{ label: "Nonduality", to: "/nonduality" },
 	{ label: "FAQs", to: "/faq" },
 ] as const;
 
 export const FOOTER_COMMUNITY = [
-	{ label: "Donate", to: "/donate" },
-	{ label: "Scholarships", to: "/sand-scholarship-program" },
 	{ label: "Partners", to: "/sponsors-partners" },
 	{ label: "Testimonials", to: "/testimonials" },
+	{ label: "Contact Us", to: "/contact" },
 ] as const;
 
 export const FOOTER_LEGAL = [

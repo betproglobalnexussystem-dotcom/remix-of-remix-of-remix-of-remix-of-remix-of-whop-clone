@@ -132,8 +132,6 @@ export function seedContent(): Content {
 		team: TEAM.map((person) => ({ id: slugId(person.name), ...person })),
 		board: BOARD.map((person) => ({ id: slugId(person.name), ...person })),
 		pages: [
-			{ id: "mission", title: "Mission", body: MISSION_BODY },
-			{ id: "nonduality", title: "Nonduality", body: NONDUALITY_BODY },
 			{ id: "team", title: "Team", body: "" },
 			{ id: "board", title: "Board", body: "" },
 		],
