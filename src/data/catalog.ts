@@ -8,6 +8,7 @@ export type Film = {
 	excerpt: string;
 	image: string;
 	poster?: string;
+	upcoming?: boolean;
 };
 
 export type EventItem = {
@@ -211,7 +212,33 @@ export const FILMS: Film[] = [
 		poster:
 			"/img/2025_10_Mauri_1080x1693_150dpi_Layered-Laurels-300x480.jpg",
 	},
+	{
+		slug: "the-silence-we-flee",
+		title: "The Silence We Flee",
+		excerpt:
+			"A woman on the run. A truth they will kill to bury.",
+		image: "/img/upcoming-the-silence-we-flee.png",
+		upcoming: true,
+	},
+	{
+		slug: "john-bullock",
+		title: "John Bullock",
+		excerpt: "Some truths can never stay hidden.",
+		image: "/img/upcoming-john-bullock.png",
+		upcoming: true,
+	},
+	{
+		slug: "modern-road",
+		title: "Modern Road",
+		excerpt: "Some journeys change a nation.",
+		image: "/img/upcoming-modern-road.png",
+		upcoming: true,
+	},
 ];
+
+export const UPCOMING_FILMS: Film[] = FILMS.filter(
+	(film) => film.upcoming,
+);
 
 export const EVENTS: EventItem[] = [
 	{
