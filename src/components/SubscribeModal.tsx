@@ -124,12 +124,13 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		plan?.amount ?? (currency === "UGX" ? UGX_MONTH : USD_MONTH);
 	const price = plan?.priceLabel || money(currency, amount);
 
-	function activate() {
+	function activate(receiptId?: string) {
 		writeSubscription({
 			active: true,
 			region,
 			method,
 			startedAt: Date.now(),
+			receiptId,
 		});
 		onActivated?.();
 	}
