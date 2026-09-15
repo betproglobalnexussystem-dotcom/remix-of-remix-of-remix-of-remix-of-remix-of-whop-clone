@@ -182,12 +182,16 @@ function AdminPage() {
 	const [error, setError] = useState("");
 	const [section, setSection] = useState<SectionId>("overview");
 	const [content, setContent] = useState<Content>(() => readContent());
+	const [previewStamp, setPreviewStamp] = useState(0);
 
 	useEffect(() => {
 		setSignedIn(isAdminSignedIn());
 		setContent(readContent());
 		setReady(true);
-		return subscribeContent(setContent);
+		return subscribeContent((next) => {
+			setContent(next);
+			setPreviewStamp((n) => n + 1);
+		});
 	}, []);
 
 	if (!ready) return <main className="admin-shell" />;
