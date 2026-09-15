@@ -364,7 +364,8 @@ function HomePage() {
 
       <section className="section">
         <div className="wrap partner">
-          <h2>Partner with Us</h2>
+          <div className="kicker">Partner with us</div>
+          <h2 className="serif">Partner with Us</h2>
           <p>
             We welcome investors, producers, distributors, organizations, and
             creative collaborators interested in our upcoming projects. Explore
