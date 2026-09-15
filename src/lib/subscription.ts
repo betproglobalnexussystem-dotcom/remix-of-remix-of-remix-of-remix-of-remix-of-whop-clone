@@ -46,7 +46,12 @@ export function planFor(region: Region): PlanPrice {
 	return region === "UG" ? UG_PLAN : INTL_PLAN;
 }
 
-export type PaymentMethod = "mobile-money" | "paypal" | "whop";
+export type PaymentMethod =
+	| "mobile-money"
+	| "card"
+	| "paypal"
+	| "google-pay"
+	| "whop";
 
 export const PAYMENT_METHODS: {
 	id: PaymentMethod;
