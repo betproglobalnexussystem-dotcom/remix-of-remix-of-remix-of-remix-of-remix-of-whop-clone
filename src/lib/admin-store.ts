@@ -80,25 +80,6 @@ export type Content = {
 	messages: Message[];
 };
 
-const MISSION_BODY = [
-	"At MAGEYE, we explore who we are beyond ultimate truths, binary thinking, and individual awakening while acknowledging humanity as a mere part of the intricate web of life.",
-	"## Land Acknowledgement",
-	"We acknowledge that our headquarters are on Coastal Miwok and Southern Pomo Land in Sebastopol, CA, and we thank the past, current, and future Indigenous stewards of this territory.",
-	"## Perspective",
-	"In our view, the disconnect from Earth-based, indigenous wisdom began in the very early days of humankind, when male-dominated religions replaced fertility goddess worship as the prevalent cultural vehicle and started pitting humanity against its natural environment. Separation was born: me vs you, us vs them, human vs nature.",
-	"Much later, with the Scientific Revolution, the liberation of science from religion resulted in tremendous technological advances, but it also led to the fragmentation of knowledge, and to a science no longer engaged with the big questions of what it means to be human, to be conscious, and interconnected.",
-	"We also recognize that at the heart of the climate, political, and socioeconomic crises we face today lie the story of separation and the deep intergenerational trauma we carry.",
-	"## Purpose",
-	"At MAGEYE we envision a humanity firmly rooted in the truth of our interconnectedness. We see Earth as a living being and we hold life, in all its shapes and forms, as intelligent, sacred and complete.",
-	"We promote a spirituality honoring both the absolute/transcendent and the relative/immanent aspects of consciousness—ultimately one and the same. In these times of crisis, we need to be initiated into radical compassion, care and love for all life.",
-].join("\n\n");
-
-const NONDUALITY_BODY = [
-	"Nonduality has as many facets as there are human endeavors. Mystics describe the nondual experience in many ways, as loving, expansive, blissful and unitive, lacking any sense of separation. More than just a feeling, the experience conveys deep and liberating insights into the truth of life and death, self and world.",
-	"Philosophers speak of reality as unencumbered by the dualistic oppositions we so often get lost in. Scientists, after centuries of analytic reductionism, are converging with the nondual view, seeing the whole as more than the sum of its parts.",
-	"World religions teach nonduality in their esoteric branches, including Jewish Kabbalah, Islamic Sufism, Christian Mysticism, Hindu Advaita-Vedanta, Kashmir Shaivism, Buddhist Shentong, Madhyamaka or Zen, and Taoism. Many indigenous and shamanistic teachings are also nondual in essence.",
-	"The arts celebrate and cultivate the experience of nonduality. We hold the space for these conversations across science, spirituality, and culture.",
-].join("\n\n");
 
 function slugId(value: string) {
 	return value
