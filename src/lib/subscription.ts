@@ -105,9 +105,17 @@ export function readSubscription(): SubscriptionState | null {
 	}
 }
 
+/** Saves the subscription and stamps it with this device's silent login. */
 export function writeSubscription(state: SubscriptionState) {
 	if (typeof window === "undefined") return;
-	window.localStorage.setItem(KEY, JSON.stringify(state));
+	const identity = getDeviceIdentity();
+	const record: SubscriptionState = {
+		...state,
+		deviceId: state.deviceId ?? identity?.deviceId,
+		deviceEmail: state.deviceEmail ?? identity?.email,
+		deviceLabel: state.deviceLabel ?? identity?.label,
+	};
+	window.localStorage.setItem(KEY, JSON.stringify(record));
 }
 
 /** Marks access active when Whop sends the visitor back with ?paid=1. */
