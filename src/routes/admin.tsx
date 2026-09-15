@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
 	type Content,
-	fileToDataUrl,
 	getAdminPasscode,
 	isAdminSignedIn,
 	newId,
@@ -568,6 +567,7 @@ function AdminPage() {
 								{ key: "amount", label: "Amount", type: "number" },
 								{ key: "priceLabel", label: "Displayed price" },
 								{ key: "period", label: "Period" },
+								{ key: "whopPlanId", label: "Whop plan ID" },
 							]}
 							blank={() => ({
 								id: newId("plan"),
