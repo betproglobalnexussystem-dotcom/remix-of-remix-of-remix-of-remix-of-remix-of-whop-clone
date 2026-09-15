@@ -73,7 +73,9 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const [email, setEmail] = useState<string | undefined>(undefined);
+	const [email, setEmail] = useState<string | undefined>(() =>
+		typeof window === "undefined" ? undefined : getDeviceIdentity()?.email,
+	);
 	const content = useContent();
 
 	// Silent device login: the generated address is used for the Whop receipt
@@ -232,7 +234,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							>
 								Pay {price} now
 							</button>
-						) : email ? (
+						) : (
 							<div className="sub-float-whop-pay">
 								<WhopExpressCheckoutButton
 									planId={WHOP_STREAMING_PLAN_ID}
@@ -240,7 +242,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 									methods={["apple-pay", "google-pay", "whop-pay"]}
 									theme="light"
 									themeOptions={{ accentColor: "gold" }}
-									prefill={{ email }}
+									{...(email ? { prefill: { email } } : {})}
 									adaptivePricing
 									onComplete={(_planId, receiptId) => activate(receiptId)}
 									onPaymentError={(paymentError) => {
@@ -249,6 +251,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 										);
 										setPending(true);
 									}}
+									fallback={<div className="pay-skeleton pay-skeleton--button" />}
 								/>
 								<WhopCheckoutEmbed
 									planId={WHOP_STREAMING_PLAN_ID}
@@ -258,7 +261,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 									hideEmail
 									hideAddressForm
 									hidePrice
-									prefill={{ email }}
+									{...(email ? { prefill: { email } } : {})}
 									themeOptions={{
 										accentColor: "gold",
 										borderRadius: 6,
@@ -274,12 +277,15 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 										);
 										setPending(true);
 									}}
-									fallback={<div className="loader" />}
+									fallback={
+										<div className="pay-skeleton-stack">
+											<div className="pay-skeleton pay-skeleton--row" />
+											<div className="pay-skeleton pay-skeleton--field" />
+											<div className="pay-skeleton pay-skeleton--row" />
+											<div className="pay-skeleton pay-skeleton--button" />
+										</div>
+									}
 								/>
-							</div>
-						) : (
-							<div className="sub-float-whop-pay">
-								<div className="loader" />
 							</div>
 						)}
 						{pending ? (

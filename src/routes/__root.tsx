@@ -75,6 +75,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "preconnect", href: "https://whop.com" },
+      { rel: "dns-prefetch", href: "https://whop.com" },
     ],
   }),
   component: RootLayout,
