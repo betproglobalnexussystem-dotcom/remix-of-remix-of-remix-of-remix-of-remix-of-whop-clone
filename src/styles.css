@@ -2255,3 +2255,30 @@ h3,
 		padding: 20px 16px 60px;
 	}
 }
+
+/* payment method brand logos */
+.sub-float-logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sub-float-logos img {
+  height: 22px;
+  width: auto;
+  max-width: 56px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+.sub-float-whop {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+}
