@@ -1792,20 +1792,29 @@ h3,
 }
 .sub-float-card {
 	position: relative;
-	width: min(560px, 100%);
-	max-height: 88vh;
+	width: min(920px, 100%);
+	max-height: 90vh;
 	overflow: auto;
 	background: var(--paper, #fbf8f3);
 	color: var(--ink, #1a1613);
 	border: 1px solid rgba(0, 0, 0, 0.12);
 	border-radius: 18px;
-	padding: 28px;
+	padding: 24px 26px 26px;
 	box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
+.sub-float-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	padding-bottom: 14px;
+}
+.sub-float-head h2 {
+	margin: 0;
+	font-size: 26px;
+}
 .sub-float-close {
-	position: absolute;
-	top: 10px;
-	right: 14px;
 	background: none;
 	border: 0;
 	font-size: 28px;
@@ -1813,42 +1822,124 @@ h3,
 	cursor: pointer;
 	color: inherit;
 }
-.sub-float-price {
-	display: flex;
-	align-items: baseline;
-	gap: 10px;
-	margin: 18px 0;
-}
-.sub-float-price strong {
-	font-size: 38px;
+.sub-float-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+	gap: 26px;
+	margin-top: 20px;
 }
 .sub-float-methods {
 	display: grid;
-	gap: 10px;
-	margin-bottom: 16px;
+	gap: 8px;
+	margin: 10px 0 16px;
 }
 .sub-float-method {
-	text-align: left;
 	display: grid;
-	gap: 4px;
-	padding: 14px 16px;
+	grid-template-columns: auto auto 1fr auto;
+	align-items: center;
+	gap: 10px;
+	text-align: left;
+	padding: 13px 14px;
 	border-radius: 12px;
 	border: 1px solid rgba(0, 0, 0, 0.14);
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.65);
 	cursor: pointer;
 	color: inherit;
+	font-size: 15px;
 }
 .sub-float-method.is-active {
 	border: 2px solid var(--gold);
+	background: #fff;
 }
-.sub-float-method span {
+.sub-float-radio {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	border: 1px solid rgba(0, 0, 0, 0.35);
+}
+.sub-float-method.is-active .sub-float-radio {
+	border: 5px solid var(--gold);
+}
+.sub-float-cur {
+	font-size: 12px;
+	letter-spacing: 0.08em;
+	opacity: 0.65;
+}
+.sub-float-fields {
+	display: grid;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+.sub-float-fields input {
+	width: 100%;
+	padding: 11px 12px;
+	border-radius: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.16);
+	background: #fff;
+	color: inherit;
+}
+.sub-float-card-row {
+	display: grid;
+	grid-template-columns: 1fr 90px 80px;
+	gap: 8px;
+}
+.sub-float-note,
+.sub-float-small {
+	font-size: 13px;
+	opacity: 0.75;
+	margin: 8px 0 0;
+}
+.sub-float-right {
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 14px;
+	padding: 20px;
+	align-self: start;
+}
+.sub-float-plan {
+	display: grid;
+	gap: 2px;
+	margin: 0 0 14px;
+}
+.sub-float-plan span {
+	font-size: 13px;
+	opacity: 0.7;
+}
+.sub-float-line {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
 	font-size: 14px;
-	opacity: 0.8;
+	padding: 7px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+.sub-float-due {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 10px;
+	margin: 14px 0 16px;
+}
+.sub-float-due strong {
+	font-size: 26px;
+}
+.sub-float-pay {
+	width: 100%;
 }
 .sub-float-pending {
 	border: 1px dashed var(--gold);
 	border-radius: 12px;
-	padding: 16px;
+	padding: 14px;
+	margin-top: 14px;
+	font-size: 14px;
+}
+.sub-float-pending p {
+	margin: 0 0 10px;
+}
+@media (max-width: 820px) {
+	.sub-float-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
 /* Admin dashboard */
