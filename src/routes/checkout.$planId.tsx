@@ -57,7 +57,9 @@ function CheckoutPage() {
               returnUrl={returnUrl}
               theme="light"
               adaptivePricing
-              collectPhoneNumbers="optional"
+              hideEmail
+              hideAddressForm
+              prefill={email ? { email } : undefined}
               themeOptions={{ accentColor: "gold", borderRadius: 6 }}
               styles={{ container: { paddingX: 0 } }}
               fallback={<div className="loader" />}
