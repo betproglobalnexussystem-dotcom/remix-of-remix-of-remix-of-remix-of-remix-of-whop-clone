@@ -1,10 +1,16 @@
-import { DONATE_PLAN_ID, IMG } from "../../data/site";
-
-
+import donateBg from "../../assets/donate-band.jpg.asset.json";
+import { DONATE_PLAN_ID } from "../../data/site";
 
 export function DonateBand() {
   return (
-    <section className="donate-band">
+    <section
+      className="donate-band"
+      style={{
+        backgroundImage: `linear-gradient(rgba(12, 20, 28, 0.72), rgba(12, 20, 28, 0.72)), url("${donateBg.url}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <h2>
         Support MAGEYE
         <br />
@@ -28,3 +34,4 @@ export function DonateBand() {
 export function SiteEnd({ donate = true }: { donate?: boolean }) {
   return <>{donate ? <DonateBand /> : null}</>;
 }
+
