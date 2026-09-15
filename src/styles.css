@@ -1818,7 +1818,7 @@ h3,
 .sub-float-card {
 	position: relative;
 	width: min(960px, 100%);
-	max-height: min(92vh, 720px);
+	max-height: min(94vh, 880px);
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
