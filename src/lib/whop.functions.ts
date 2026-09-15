@@ -23,8 +23,8 @@ export const createWhopCheckout = createServerFn({ method: "POST" })
 				return await createCheckoutUrl({
 					region: data.region,
 					method: data.method,
-					redirectUrl: data.redirectUrl,
-					planId: data.planId,
+					...(data.redirectUrl ? { redirectUrl: data.redirectUrl } : {}),
+					...(data.planId ? { planId: data.planId } : {}),
 				});
 			} catch {
 				return { url: null, error: "Could not reach Whop. Please try again." };
