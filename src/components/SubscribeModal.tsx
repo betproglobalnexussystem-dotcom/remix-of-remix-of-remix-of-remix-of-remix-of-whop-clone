@@ -67,6 +67,9 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [country, setCountry] = useState<string | null>(null);
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const content = useContent();
 
 	useEffect(() => {
 		if (!open) return;
