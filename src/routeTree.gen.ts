@@ -32,6 +32,8 @@ import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as VideosRouteImport } from './routes/videos'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as AudioSlugRouteImport } from './routes/audio.$slug'
+import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
+import { Route as CollectionsLabelRouteImport } from './routes/collections.$label'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
@@ -154,6 +156,16 @@ const AudioSlugRoute = AudioSlugRouteImport.update({
   path: '/audio/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutPlanIdRoute = CheckoutPlanIdRouteImport.update({
+  id: '/checkout/$planId',
+  path: '/checkout/$planId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsLabelRoute = CollectionsLabelRouteImport.update({
+  id: '/collections/$label',
+  path: '/collections/$label',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventSlugRoute = EventSlugRouteImport.update({
   id: '/event/$slug',
   path: '/event/$slug',
@@ -209,6 +221,8 @@ export interface FileRoutesByFullPath {
   '/videos': typeof VideosRouteWithChildren
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
+  '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -240,6 +254,8 @@ export interface FileRoutesByTo {
   '/videos': typeof VideosRouteWithChildren
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
+  '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -272,6 +288,8 @@ export interface FileRoutesById {
   '/videos': typeof VideosRouteWithChildren
   '/article/$slug': typeof ArticleSlugRoute
   '/audio/$slug': typeof AudioSlugRoute
+  '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/collections/$label': typeof CollectionsLabelRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
@@ -305,6 +323,8 @@ export interface FileRouteTypes {
     | '/videos'
     | '/article/$slug'
     | '/audio/$slug'
+    | '/checkout/$planId'
+    | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
     | '/products/$slug'
@@ -336,6 +356,8 @@ export interface FileRouteTypes {
     | '/videos'
     | '/article/$slug'
     | '/audio/$slug'
+    | '/checkout/$planId'
+    | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
     | '/products/$slug'
@@ -367,6 +389,8 @@ export interface FileRouteTypes {
     | '/videos'
     | '/article/$slug'
     | '/audio/$slug'
+    | '/checkout/$planId'
+    | '/collections/$label'
     | '/event/$slug'
     | '/films/$slug'
     | '/products/$slug'
@@ -399,6 +423,8 @@ export interface RootRouteChildren {
   VideosRoute: typeof VideosRouteWithChildren
   ArticleSlugRoute: typeof ArticleSlugRoute
   AudioSlugRoute: typeof AudioSlugRoute
+  CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
+  CollectionsLabelRoute: typeof CollectionsLabelRoute
   EventSlugRoute: typeof EventSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
@@ -568,6 +594,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AudioSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/$planId': {
+      id: '/checkout/$planId'
+      path: '/checkout/$planId'
+      fullPath: '/checkout/$planId'
+      preLoaderRoute: typeof CheckoutPlanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$label': {
+      id: '/collections/$label'
+      path: '/collections/$label'
+      fullPath: '/collections/$label'
+      preLoaderRoute: typeof CollectionsLabelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/event/$slug': {
       id: '/event/$slug'
       path: '/event/$slug'
@@ -658,6 +698,8 @@ const rootRouteChildren: RootRouteChildren = {
   VideosRoute: VideosRouteWithChildren,
   ArticleSlugRoute: ArticleSlugRoute,
   AudioSlugRoute: AudioSlugRoute,
+  CheckoutPlanIdRoute: CheckoutPlanIdRoute,
+  CollectionsLabelRoute: CollectionsLabelRoute,
   EventSlugRoute: EventSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
