@@ -2,6 +2,12 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { filmBySlug } from "../data/catalog";
 import { getPlaybackTicket } from "../lib/stream.functions";
+import {
+	INTL_PLAN,
+	detectRegion,
+	planFor,
+	readSubscription,
+} from "../lib/subscription";
 
 export const Route = createFileRoute("/watch/$slug")({
 	component: WatchPage,
