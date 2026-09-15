@@ -73,7 +73,14 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [email, setEmail] = useState<string | undefined>(undefined);
 	const content = useContent();
+
+	// Silent device login: the generated address is used for the Whop receipt
+	// so the visitor never has to type an email at checkout.
+	useEffect(() => {
+		setEmail(getDeviceIdentity()?.email);
+	}, []);
 
 
 	useEffect(() => {
