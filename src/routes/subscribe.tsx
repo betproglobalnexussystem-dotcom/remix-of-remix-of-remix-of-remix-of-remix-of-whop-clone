@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import {
 	PAYMENT_METHODS,
+	activateFromReturnUrl,
 	type PaymentMethod,
 	type Region,
 	detectRegion,
