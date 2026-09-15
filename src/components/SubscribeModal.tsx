@@ -1,4 +1,10 @@
 import { useEffect, useState } from "react";
+import airtelLogo from "../assets/airtel-money.png.asset.json";
+import googlePayLogo from "../assets/googlepay.svg.asset.json";
+import mastercardLogo from "../assets/mastercard.svg.asset.json";
+import mtnLogo from "../assets/mtn-momo.png.asset.json";
+import paypalLogo from "../assets/paypal.svg.asset.json";
+import visaLogo from "../assets/visa.svg.asset.json";
 import { getRegionByIp } from "../lib/geo.functions";
 import {
 	type PaymentMethod,
@@ -17,17 +23,32 @@ type Props = {
 type Method = {
 	id: PaymentMethod;
 	name: string;
-	icon: string;
+	logos: string[];
 	currency: "UGX" | "USD";
 };
 
 /** Mobile Money charges in shillings; every card/wallet method charges in USD. */
 const METHODS: Method[] = [
-	{ id: "mobile-money", name: "Mobile Money (MTN / Airtel)", icon: "📱", currency: "UGX" },
-	{ id: "card", name: "Credit/debit card", icon: "💳", currency: "USD" },
-	{ id: "paypal", name: "PayPal", icon: "🅿️", currency: "USD" },
-	{ id: "google-pay", name: "Google Pay", icon: "🇬", currency: "USD" },
-	{ id: "whop", name: "Whop", icon: "🛒", currency: "USD" },
+	{
+		id: "mobile-money",
+		name: "Mobile Money (MTN / Airtel)",
+		logos: [mtnLogo.url, airtelLogo.url],
+		currency: "UGX",
+	},
+	{
+		id: "card",
+		name: "Credit/debit card",
+		logos: [visaLogo.url, mastercardLogo.url],
+		currency: "USD",
+	},
+	{ id: "paypal", name: "PayPal", logos: [paypalLogo.url], currency: "USD" },
+	{
+		id: "google-pay",
+		name: "Google Pay",
+		logos: [googlePayLogo.url],
+		currency: "USD",
+	},
+	{ id: "whop", name: "Whop", logos: [], currency: "USD" },
 ];
 
 const UGX_MONTH = 5000;
