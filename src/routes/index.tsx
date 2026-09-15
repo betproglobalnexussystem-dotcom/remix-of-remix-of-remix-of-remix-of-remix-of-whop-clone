@@ -217,7 +217,7 @@ function HomePage() {
       <section className="section cream">
         <div className="wrap-wide">
           <div className="section-head">
-            <div className="kicker">Explore</div>
+            <div className="kicker">Explore Premiere and Upcoming Films</div>
             <div className="arrow-row">
               <button
                 type="button"
