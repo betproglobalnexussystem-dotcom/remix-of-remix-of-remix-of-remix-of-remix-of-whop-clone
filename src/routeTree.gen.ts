@@ -27,6 +27,7 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as RecordingPolicyRouteImport } from './routes/recording-policy'
 import { Route as SandScholarshipProgramRouteImport } from './routes/sand-scholarship-program'
 import { Route as SponsorsPartnersRouteImport } from './routes/sponsors-partners'
+import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as VideosRouteImport } from './routes/videos'
@@ -135,6 +136,11 @@ const SponsorsPartnersRoute = SponsorsPartnersRouteImport.update({
   path: '/sponsors-partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubscribeRoute = SubscribeRouteImport.update({
+  id: '/subscribe',
+  path: '/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/recording-policy': typeof RecordingPolicyRoute
   '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
   '/testimonials': typeof TestimonialsRoute
   '/videos': typeof VideosRouteWithChildren
@@ -276,6 +283,7 @@ export interface FileRoutesByTo {
   '/recording-policy': typeof RecordingPolicyRoute
   '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
   '/testimonials': typeof TestimonialsRoute
   '/videos': typeof VideosRouteWithChildren
@@ -314,6 +322,7 @@ export interface FileRoutesById {
   '/recording-policy': typeof RecordingPolicyRoute
   '/sand-scholarship-program': typeof SandScholarshipProgramRoute
   '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/subscribe': typeof SubscribeRoute
   '/team': typeof TeamRoute
   '/testimonials': typeof TestimonialsRoute
   '/videos': typeof VideosRouteWithChildren
@@ -353,6 +362,7 @@ export interface FileRouteTypes {
     | '/recording-policy'
     | '/sand-scholarship-program'
     | '/sponsors-partners'
+    | '/subscribe'
     | '/team'
     | '/testimonials'
     | '/videos'
@@ -389,6 +399,7 @@ export interface FileRouteTypes {
     | '/recording-policy'
     | '/sand-scholarship-program'
     | '/sponsors-partners'
+    | '/subscribe'
     | '/team'
     | '/testimonials'
     | '/videos'
@@ -426,6 +437,7 @@ export interface FileRouteTypes {
     | '/recording-policy'
     | '/sand-scholarship-program'
     | '/sponsors-partners'
+    | '/subscribe'
     | '/team'
     | '/testimonials'
     | '/videos'
@@ -464,6 +476,7 @@ export interface RootRouteChildren {
   RecordingPolicyRoute: typeof RecordingPolicyRoute
   SandScholarshipProgramRoute: typeof SandScholarshipProgramRoute
   SponsorsPartnersRoute: typeof SponsorsPartnersRoute
+  SubscribeRoute: typeof SubscribeRoute
   TeamRoute: typeof TeamRoute
   TestimonialsRoute: typeof TestimonialsRoute
   VideosRoute: typeof VideosRouteWithChildren
@@ -606,6 +619,13 @@ declare module '@tanstack/react-router' {
       path: '/sponsors-partners'
       fullPath: '/sponsors-partners'
       preLoaderRoute: typeof SponsorsPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subscribe': {
+      id: '/subscribe'
+      path: '/subscribe'
+      fullPath: '/subscribe'
+      preLoaderRoute: typeof SubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/team': {
@@ -772,6 +792,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecordingPolicyRoute: RecordingPolicyRoute,
   SandScholarshipProgramRoute: SandScholarshipProgramRoute,
   SponsorsPartnersRoute: SponsorsPartnersRoute,
+  SubscribeRoute: SubscribeRoute,
   TeamRoute: TeamRoute,
   TestimonialsRoute: TestimonialsRoute,
   VideosRoute: VideosRouteWithChildren,
