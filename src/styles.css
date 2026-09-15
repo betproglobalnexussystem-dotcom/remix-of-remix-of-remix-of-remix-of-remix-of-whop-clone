@@ -403,7 +403,8 @@ h3,
 
 .founder-profile__copy h1 {
   margin: 14px 0 22px;
-  font-size: clamp(42px, 6vw, 84px);
+  font-size: clamp(26px, 3vw, 40px);
+  white-space: nowrap;
 }
 
 .founder-profile__copy p {
