@@ -34,7 +34,6 @@ export const Route = createFileRoute("/subscribe")({
 });
 
 function SubscribePage() {
-	const navigate = useNavigate();
 	const search = typeof window !== "undefined" ? window.location.search : "";
 	const redirect = new URLSearchParams(search).get("redirect") ?? "";
 	const [region, setRegion] = useState<Region>("INTL");
