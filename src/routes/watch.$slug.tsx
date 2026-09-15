@@ -1,5 +1,6 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { SubscribeModal } from "../components/SubscribeModal";
 import { filmBySlug } from "../data/catalog";
 import { getPlaybackTicket } from "../lib/stream.functions";
 import {
@@ -8,6 +9,7 @@ import {
 	planFor,
 	readSubscription,
 } from "../lib/subscription";
+import { getRegionByIp } from "../lib/geo.functions";
 
 export const Route = createFileRoute("/watch/$slug")({
 	component: WatchPage,
@@ -47,10 +49,16 @@ function WatchPage() {
 		"checking",
 	);
 	const [plan, setPlan] = useState(INTL_PLAN);
+	const [showSubscribe, setShowSubscribe] = useState(false);
 
 	useEffect(() => {
 		setPlan(planFor(detectRegion()));
-		setAccess(readSubscription() ? "allowed" : "denied");
+		const subscribed = Boolean(readSubscription());
+		setAccess(subscribed ? "allowed" : "denied");
+		if (!subscribed) setShowSubscribe(true);
+		getRegionByIp()
+			.then((res) => setPlan(planFor(res.region)))
+			.catch(() => {});
 	}, []);
 
 	useEffect(() => {
@@ -199,14 +207,24 @@ function WatchPage() {
 							: `Streaming this film needs an active MAGEYE subscription — ${plan.label} ${plan.period}.`}
 					</p>
 					{access === "denied" ? (
-						<a
+						<button
+							type="button"
 							className="btn-gold"
-							href={`/subscribe?redirect=${encodeURIComponent(`/watch/${film.slug}`)}`}
+							onClick={() => setShowSubscribe(true)}
 						>
 							Subscribe for {plan.label}
-						</a>
+						</button>
 					) : null}
 				</div>
+				<SubscribeModal
+					open={showSubscribe && access === "denied"}
+					title={film.title}
+					onClose={() => setShowSubscribe(false)}
+					onActivated={() => {
+						setShowSubscribe(false);
+						setAccess("allowed");
+					}}
+				/>
 			</div>
 		);
 	}
