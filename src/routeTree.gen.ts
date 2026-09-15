@@ -34,6 +34,7 @@ import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as AudioSlugRouteImport } from './routes/audio.$slug'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
+import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
 import { Route as ArticleCategoryCategoryRouteImport } from './routes/article.category.$category'
 import { Route as ArticleTagTagRouteImport } from './routes/article.tag.$tag'
@@ -163,6 +164,11 @@ const FilmsSlugRoute = FilmsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => FilmsRoute,
 } as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VideosSlugRoute = VideosSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/audio/$slug': typeof AudioSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
@@ -235,6 +242,7 @@ export interface FileRoutesByTo {
   '/audio/$slug': typeof AudioSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/audio/$slug': typeof AudioSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/films/$slug': typeof FilmsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
@@ -298,6 +307,7 @@ export interface FileRouteTypes {
     | '/audio/$slug'
     | '/event/$slug'
     | '/films/$slug'
+    | '/products/$slug'
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/audio/$slug'
     | '/event/$slug'
     | '/films/$slug'
+    | '/products/$slug'
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/audio/$slug'
     | '/event/$slug'
     | '/films/$slug'
+    | '/products/$slug'
     | '/videos/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
@@ -388,6 +400,7 @@ export interface RootRouteChildren {
   ArticleSlugRoute: typeof ArticleSlugRoute
   AudioSlugRoute: typeof AudioSlugRoute
   EventSlugRoute: typeof EventSlugRoute
+  ProductsSlugRoute: typeof ProductsSlugRoute
   ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
   ArticleTagTagRoute: typeof ArticleTagTagRoute
 }
@@ -569,6 +582,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FilmsSlugRouteImport
       parentRoute: typeof FilmsRoute
     }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/videos/$slug': {
       id: '/videos/$slug'
       path: '/$slug'
@@ -639,6 +659,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArticleSlugRoute: ArticleSlugRoute,
   AudioSlugRoute: AudioSlugRoute,
   EventSlugRoute: EventSlugRoute,
+  ProductsSlugRoute: ProductsSlugRoute,
   ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
   ArticleTagTagRoute: ArticleTagTagRoute,
 }
