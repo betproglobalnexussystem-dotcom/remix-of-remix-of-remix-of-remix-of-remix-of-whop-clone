@@ -6,7 +6,9 @@ import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
 import {
 	WhopCheckoutEmbed,
+	WhopExpressCheckoutButton,
 } from "@whop/checkout/react";
+import { getDeviceIdentity } from "../lib/device";
 import { getRegionByIp } from "../lib/geo.functions";
 import { useContent } from "../lib/admin-store";
 import { checkoutReturnUrl, WHOP_STREAMING_PLAN_ID } from "../lib/whop";
@@ -71,7 +73,14 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [email, setEmail] = useState<string | undefined>(undefined);
 	const content = useContent();
+
+	// Silent device login: the generated address is used for the Whop receipt
+	// so the visitor never has to type an email at checkout.
+	useEffect(() => {
+		setEmail(getDeviceIdentity()?.email);
+	}, []);
 
 
 	useEffect(() => {
@@ -115,12 +124,13 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		plan?.amount ?? (currency === "UGX" ? UGX_MONTH : USD_MONTH);
 	const price = plan?.priceLabel || money(currency, amount);
 
-	function activate() {
+	function activate(receiptId?: string) {
 		writeSubscription({
 			active: true,
 			region,
 			method,
 			startedAt: Date.now(),
+			...(receiptId ? { receiptId } : {}),
 		});
 		onActivated?.();
 	}
@@ -222,23 +232,54 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							>
 								Pay {price} now
 							</button>
-						) : (
+						) : email ? (
 							<div className="sub-float-whop-pay">
+								<WhopExpressCheckoutButton
+									planId={WHOP_STREAMING_PLAN_ID}
+									returnUrl={checkoutReturnUrl(window.location.pathname)}
+									methods={["apple-pay", "google-pay", "whop-pay"]}
+									theme="light"
+									themeOptions={{ accentColor: "gold" }}
+									prefill={{ email }}
+									adaptivePricing
+									onComplete={(_planId, receiptId) => activate(receiptId)}
+									onPaymentError={(paymentError) => {
+										setError(
+											paymentError.message || "Payment could not be completed.",
+										);
+										setPending(true);
+									}}
+								/>
 								<WhopCheckoutEmbed
 									planId={WHOP_STREAMING_PLAN_ID}
 									returnUrl={checkoutReturnUrl(window.location.pathname)}
 									theme="light"
 									adaptivePricing
-									collectPhoneNumbers="optional"
-									themeOptions={{ accentColor: "gold", borderRadius: 6 }}
+									hideEmail
+									hideAddressForm
+									hidePrice
+									prefill={{ email }}
+									themeOptions={{
+										accentColor: "gold",
+										borderRadius: 6,
+										buttonText: `Pay ${price}`,
+									}}
 									styles={{ container: { paddingX: 0, paddingY: 0 } }}
-									onComplete={() => activate()}
+									onComplete={(_id, receiptId) =>
+										activate(typeof receiptId === "string" ? receiptId : undefined)
+									}
 									onPaymentError={(paymentError) => {
-									setError(paymentError.message || "Payment could not be completed.");
-									setPending(true);
-								}}
+										setError(
+											paymentError.message || "Payment could not be completed.",
+										);
+										setPending(true);
+									}}
 									fallback={<div className="loader" />}
 								/>
+							</div>
+						) : (
+							<div className="sub-float-whop-pay">
+								<div className="loader" />
 							</div>
 						)}
 						{pending ? (

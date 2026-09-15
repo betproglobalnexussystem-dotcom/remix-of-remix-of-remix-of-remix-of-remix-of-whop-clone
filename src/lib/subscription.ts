@@ -1,6 +1,8 @@
 // Client-safe subscription helpers. Pricing is region based and the payment
 // providers are wired as placeholders until real API credentials are added.
 
+import { getDeviceIdentity } from "./device";
+
 export type Region = "UG" | "INTL";
 
 export type PlanPrice = {
@@ -86,6 +88,11 @@ export type SubscriptionState = {
 	region: Region;
 	method?: PaymentMethod;
 	startedAt?: number;
+	/** Device login the subscription belongs to. */
+	deviceId?: string;
+	deviceEmail?: string;
+	deviceLabel?: string;
+	receiptId?: string;
 };
 
 export function readSubscription(): SubscriptionState | null {
@@ -100,9 +107,23 @@ export function readSubscription(): SubscriptionState | null {
 	}
 }
 
+/** Saves the subscription and stamps it with this device's silent login. */
 export function writeSubscription(state: SubscriptionState) {
 	if (typeof window === "undefined") return;
-	window.localStorage.setItem(KEY, JSON.stringify(state));
+	const identity = getDeviceIdentity();
+	const record: SubscriptionState = {
+		...state,
+		...(state.deviceId ?? identity?.deviceId
+			? { deviceId: (state.deviceId ?? identity?.deviceId) as string }
+			: {}),
+		...(state.deviceEmail ?? identity?.email
+			? { deviceEmail: (state.deviceEmail ?? identity?.email) as string }
+			: {}),
+		...(state.deviceLabel ?? identity?.label
+			? { deviceLabel: (state.deviceLabel ?? identity?.label) as string }
+			: {}),
+	};
+	window.localStorage.setItem(KEY, JSON.stringify(record));
 }
 
 /** Marks access active when Whop sends the visitor back with ?paid=1. */

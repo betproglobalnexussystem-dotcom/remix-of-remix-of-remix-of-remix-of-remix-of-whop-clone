@@ -1,6 +1,7 @@
 import { WhopCheckoutEmbed } from "@whop/checkout/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { getDeviceIdentity } from "../lib/device";
 
 export const Route = createFileRoute("/checkout/$planId")({
   head: () => ({
@@ -26,6 +27,11 @@ function CheckoutPage() {
   const { planId } = Route.useParams();
   const [returnUrl, setReturnUrl] = useState("");
   const [error, setError] = useState("");
+  const [email, setEmail] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    setEmail(getDeviceIdentity()?.email);
+  }, []);
 
   useEffect(() => {
     const search = new URLSearchParams(window.location.search);
@@ -57,7 +63,9 @@ function CheckoutPage() {
               returnUrl={returnUrl}
               theme="light"
               adaptivePricing
-              collectPhoneNumbers="optional"
+              hideEmail
+              hideAddressForm
+              {...(email ? { prefill: { email } } : {})}
               themeOptions={{ accentColor: "gold", borderRadius: 6 }}
               styles={{ container: { paddingX: 0 } }}
               fallback={<div className="loader" />}
