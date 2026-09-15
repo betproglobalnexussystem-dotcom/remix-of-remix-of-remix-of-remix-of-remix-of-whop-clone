@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
-import { IMG } from "../data/site";
+import hassanPhoto from "../assets/hassan-contact.avif.asset.json";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -23,7 +23,7 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   return (
     <>
-      <img src={IMG.contactHero} alt="" style={{ width: "100%", maxHeight: 280, objectFit: "cover" }} />
+      <img src={hassanPhoto.url} alt="Hassan Mageye" style={{ width: "100%", maxHeight: 280, objectFit: "cover", objectPosition: "center 20%" }} />
       <article className="page-copy">
         <h1>We’d love to hear from you!</h1>
         <div className="contact-layout">

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 
@@ -47,6 +47,9 @@ function PartnersPage() {
             <button className="btn-gold" type="submit">
               Get in Touch
             </button>
+            <Link to="/contact" className="btn-gold" style={{ textAlign: "center", marginTop: 12, textDecoration: "none" }}>
+              Contact Us
+            </Link>
           </form>
         )}
       </article>
