@@ -247,15 +247,16 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 						<button
 							type="button"
 							className="btn-gold sub-float-pay"
-							onClick={() => setPending(true)}
+							onClick={payNow}
+							disabled={busy}
 						>
-							Pay {price} now
+							{busy ? "Opening checkout…" : `Pay ${price} now`}
 						</button>
 						{pending ? (
 							<div className="sub-float-pending">
 								<p>
-									{selected.name} is not connected yet. Once your keys are added
-									this button opens the real checkout for {price} per month.
+									{error ??
+										`Checkout for ${selected.name} could not be opened right now.`}
 								</p>
 								<button type="button" className="btn-ghost" onClick={activate}>
 									Grant test access for now
