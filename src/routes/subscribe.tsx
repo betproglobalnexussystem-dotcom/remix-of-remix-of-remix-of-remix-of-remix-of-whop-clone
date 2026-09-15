@@ -89,14 +89,14 @@ function SubscribePage() {
 						<button
 							type="button"
 							onClick={() => setRegion("UG")}
-							className={region === "UG" ? "btn-gold" : "btn-outline"}
+							className={region === "UG" ? "btn-gold" : "btn-ghost"}
 						>
 							I am in Uganda
 						</button>
 						<button
 							type="button"
 							onClick={() => setRegion("INTL")}
-							className={region === "INTL" ? "btn-gold" : "btn-outline"}
+							className={region === "INTL" ? "btn-gold" : "btn-ghost"}
 						>
 							Other country
 						</button>
@@ -176,7 +176,7 @@ function SubscribePage() {
 								button will open the real checkout for {plan.label}{" "}
 								{plan.period}.
 							</p>
-							<button type="button" className="btn-outline" onClick={activate}>
+							<button type="button" className="btn-ghost" onClick={activate}>
 								Grant test access for now
 							</button>
 						</div>
