@@ -105,8 +105,12 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 
 	const selected = METHODS.find((item) => item.id === method) ?? METHODS[1]!;
 	const currency = selected.currency;
-	const amount = currency === "UGX" ? UGX_MONTH : USD_MONTH;
-	const price = money(currency, amount);
+	const plan = content.plans.find(
+		(item) => item.id === (currency === "UGX" ? "ug" : "intl"),
+	);
+	const amount =
+		plan?.amount ?? (currency === "UGX" ? UGX_MONTH : USD_MONTH);
+	const price = plan?.priceLabel || money(currency, amount);
 
 	function activate() {
 		writeSubscription({
@@ -116,6 +120,33 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 			startedAt: Date.now(),
 		});
 		onActivated?.();
+	}
+
+	/** Every method checks out through Whop. */
+	async function payNow() {
+		setBusy(true);
+		setError(null);
+		try {
+			const res = await createWhopCheckout({
+				data: {
+					planId: plan?.whopPlanId ?? "",
+					region,
+					method,
+					redirectUrl: `${window.location.origin}${window.location.pathname}?paid=1`,
+				},
+			});
+			if (res.url) {
+				window.location.assign(res.url);
+				return;
+			}
+			setError(res.error ?? "Checkout could not be started.");
+			setPending(true);
+		} catch {
+			setError("Checkout could not be started.");
+			setPending(true);
+		} finally {
+			setBusy(false);
+		}
 	}
 
 	return (
