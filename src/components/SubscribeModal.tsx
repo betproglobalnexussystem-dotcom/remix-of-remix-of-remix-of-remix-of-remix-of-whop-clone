@@ -273,14 +273,40 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							<span>Amount due</span>
 							<strong>{price}</strong>
 						</div>
-						<button
-							type="button"
-							className="btn-gold sub-float-pay"
-							onClick={payNow}
-							disabled={busy}
-						>
-							{busy ? "Opening checkout…" : `Pay ${price} now`}
-						</button>
+						{method === "mobile-money" ? (
+							<button
+								type="button"
+								className="btn-gold sub-float-pay"
+								onClick={payNow}
+								disabled={busy}
+							>
+								{busy ? "Opening checkout…" : `Pay ${price} now`}
+							</button>
+						) : whopPlan ? (
+							<div className="sub-float-whop-pay">
+								<WhopExpressCheckoutButton
+									planId={whopPlan}
+									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
+									theme="dark"
+									onComplete={() => activate()}
+									onPaymentError={(err) =>
+										setError(err.message || "Payment failed.")
+									}
+								/>
+								<WhopCheckoutEmbed
+									planId={whopPlan}
+									theme="dark"
+									hidePrice
+									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
+									onComplete={() => activate()}
+									fallback={<div className="loader" />}
+								/>
+							</div>
+						) : (
+							<div className="sub-float-whop-pay">
+								<div className="loader" />
+							</div>
+						)}
 						{pending ? (
 							<div className="sub-float-pending">
 								<p>
