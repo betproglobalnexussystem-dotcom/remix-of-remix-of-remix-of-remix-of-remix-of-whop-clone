@@ -196,7 +196,10 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 											<span className="sub-float-whop">W</span>
 										) : null}
 									</span>
-									<span className="sub-float-name">{item.name}</span>
+								<span className="sub-float-name">
+										<span className="sub-float-name-full">{item.name}</span>
+										<span className="sub-float-name-short">{item.short}</span>
+									</span>
 									<span className="sub-float-cur">{item.currency}</span>
 								</button>
 							))}
