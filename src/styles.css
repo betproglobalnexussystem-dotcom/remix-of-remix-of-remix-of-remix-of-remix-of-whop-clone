@@ -1330,7 +1330,7 @@ h3,
     gap: 12px;
   }
 
-  .nav-main,
+  .header-inner > .nav-main,
   .header-actions .hide-sm {
     display: none;
   }
@@ -1378,8 +1378,8 @@ h3,
   }
 
   .logo img {
-    height: 42px;
-    width: 46px;
+    height: 38px;
+    width: 42px;
   }
 
   .logo-wordmark { font-size: 19px; }
@@ -1402,8 +1402,9 @@ h3,
   }
 
   .header-actions .btn-gold {
-    padding: 10px 12px;
-    font-size: 11px;
+    padding: 9px 10px;
+    font-size: 9px;
+    white-space: nowrap;
   }
 
   .header-inner {
@@ -1416,9 +1417,17 @@ h3,
     gap: 4px;
   }
 
+  .header-actions .icon-btn {
+    display: none;
+  }
+
   .logo-wordmark {
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 0.06em;
+  }
+
+  .logo {
+    gap: 6px;
   }
 
   .icon-btn {
