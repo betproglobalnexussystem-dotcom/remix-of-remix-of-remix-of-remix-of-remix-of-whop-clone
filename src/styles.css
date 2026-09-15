@@ -1102,6 +1102,38 @@ h3,
   gap: 32px 24px;
 }
 
+.films-portrait {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 28px 18px;
+}
+
+.films-portrait .film-card h3 {
+  font-size: 15px;
+  margin: 10px 0 4px;
+}
+
+.films-portrait .film-card .meta {
+  font-size: 11px;
+}
+
+.films-portrait .film-card .excerpt {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.films-portrait .film-card .play {
+  transform: scale(0.62);
+}
+
+.films-portrait .film-card .watch-now {
+  font-size: 9px;
+}
+
+.films-portrait .film-card .badge {
+  font-size: 9px;
+  padding: 3px 8px;
+}
+
 .films-upcoming {
   margin-bottom: 56px;
 }
@@ -1112,6 +1144,24 @@ h3,
 
 .film-card .thumb.portrait {
   aspect-ratio: 2 / 3;
+}
+
+@media (max-width: 1100px) {
+  .media-grid.films-portrait {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .media-grid.films-portrait {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .media-grid.films-portrait {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .badge-soon {
