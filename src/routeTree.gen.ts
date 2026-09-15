@@ -35,6 +35,7 @@ import { Route as AudioSlugRouteImport } from './routes/audio.$slug'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 import { Route as CollectionsLabelRouteImport } from './routes/collections.$label'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as FilmsIndexRouteImport } from './routes/films.index'
 import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
@@ -174,6 +175,11 @@ const EventSlugRoute = EventSlugRouteImport.update({
   path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FilmsIndexRoute = FilmsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FilmsRoute,
+} as any)
 const FilmsSlugRoute = FilmsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -246,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/watch/$slug': typeof WatchSlugRoute
+  '/films/': typeof FilmsIndexRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -260,7 +267,6 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
-  '/films': typeof FilmsRouteWithChildren
   '/join-the-community': typeof JoinTheCommunityRoute
   '/library': typeof LibraryRoute
   '/mission': typeof MissionRoute
@@ -282,6 +288,7 @@ export interface FileRoutesByTo {
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/watch/$slug': typeof WatchSlugRoute
+  '/films': typeof FilmsIndexRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -319,6 +326,7 @@ export interface FileRoutesById {
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/watch/$slug': typeof WatchSlugRoute
+  '/films/': typeof FilmsIndexRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
   '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
@@ -357,6 +365,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/videos/$slug'
     | '/watch/$slug'
+    | '/films/'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -371,7 +380,6 @@ export interface FileRouteTypes {
     | '/donate'
     | '/events'
     | '/faq'
-    | '/films'
     | '/join-the-community'
     | '/library'
     | '/mission'
@@ -393,6 +401,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/videos/$slug'
     | '/watch/$slug'
+    | '/films'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -429,6 +438,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/videos/$slug'
     | '/watch/$slug'
+    | '/films/'
     | '/article/category/$category'
     | '/article/tag/$tag'
     | '/api/public/stream/license'
@@ -654,6 +664,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/films/': {
+      id: '/films/'
+      path: '/'
+      fullPath: '/films/'
+      preLoaderRoute: typeof FilmsIndexRouteImport
+      parentRoute: typeof FilmsRoute
+    }
     '/films/$slug': {
       id: '/films/$slug'
       path: '/$slug'
@@ -715,10 +732,12 @@ declare module '@tanstack/react-router' {
 
 interface FilmsRouteChildren {
   FilmsSlugRoute: typeof FilmsSlugRoute
+  FilmsIndexRoute: typeof FilmsIndexRoute
 }
 
 const FilmsRouteChildren: FilmsRouteChildren = {
   FilmsSlugRoute: FilmsSlugRoute,
+  FilmsIndexRoute: FilmsIndexRoute,
 }
 
 const FilmsRouteWithChildren = FilmsRoute._addFileChildren(FilmsRouteChildren)
