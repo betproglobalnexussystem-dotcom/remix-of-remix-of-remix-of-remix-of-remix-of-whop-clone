@@ -31,3 +31,18 @@ export const createWhopCheckout = createServerFn({ method: "POST" })
 			}
 		},
 	);
+
+/**
+ * Resolves (creating if needed) the Whop plan for a region so the one-click
+ * checkout button can mount without anything being configured by hand.
+ */
+export const getWhopPlanId = createServerFn({ method: "POST" })
+	.inputValidator((input: { region: "UG" | "INTL" }) => input)
+	.handler(async ({ data }): Promise<{ planId: string | null }> => {
+		try {
+			const { ensurePlan } = await import("./whop.server");
+			return { planId: await ensurePlan(data.region) };
+		} catch {
+			return { planId: null };
+		}
+	});
