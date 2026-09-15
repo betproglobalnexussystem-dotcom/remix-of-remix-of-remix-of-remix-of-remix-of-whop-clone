@@ -150,9 +150,14 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 										setPending(false);
 									}}
 								>
-									<span className="sub-float-radio" aria-hidden="true" />
-									<span className="sub-float-icon" aria-hidden="true">
-										{item.icon}
+								<span className="sub-float-radio" aria-hidden="true" />
+									<span className="sub-float-logos" aria-hidden="true">
+										{item.logos.map((logo) => (
+											<img key={logo} src={logo} alt="" loading="lazy" />
+										))}
+										{item.logos.length === 0 ? (
+											<span className="sub-float-whop">W</span>
+										) : null}
 									</span>
 									<span className="sub-float-name">{item.name}</span>
 									<span className="sub-float-cur">{item.currency}</span>
