@@ -3,40 +3,40 @@ export const ANNUAL_PLAN_ID = "plan_t1FtxvdLRFI5i";
 export const DONATE_PLAN_ID = "plan_oOY8KfL5lFtJE";
 
 export const IMG = {
-	logo: "https://scienceandnonduality.com/wp-content/uploads/2023/08/Science-Nonduality-logo-color-moss.png",
+	logo: "/img/2023_08_Science-Nonduality-logo-color-moss.png",
 	logoWhite:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/11/logo-footer-min.png",
+		"/img/2023_11_logo-footer-min.png",
 	favicon:
-		"https://scienceandnonduality.com/wp-content/uploads/2022/07/cropped-icon-sand-flat-192x192.png",
+		"/img/2022_07_cropped-icon-sand-flat-192x192.png",
 	vector:
-		"https://scienceandnonduality.com/wp-content/themes/blueprint-child/images/vector.webp",
+		"/img/https___scienceandnonduality.com_wp-content_themes_blueprint-child_images_vector.webp",
 	learnTogether:
-		"https://scienceandnonduality.com/wp-content/uploads/2022/08/crop-0-0-752-482-0-lets-learn-together.png",
-	bees: "https://scienceandnonduality.com/wp-content/uploads/2023/07/bee-pic-1.jpg",
+		"/img/2022_08_crop-0-0-752-482-0-lets-learn-together.png",
+	bees: "/img/2023_07_bee-pic-1.jpg",
 	contactHero:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/10/high-angle-close-up-of-patterns-in-beach-sand-at-d-2022-03-04-02-34-37-utc-1536x512.jpg",
+		"/img/2023_10_high-angle-close-up-of-patterns-in-beach-sand-at-d-2022-03-04-02-34-37-utc-1536x512.jpg",
 	missionHero:
-		"https://scienceandnonduality.com/wp-content/uploads/2022/07/custom-pages-1564851887-f3c7504b1944c2124ce3a541e484729e-CROP-3000x1000-1-scaled.jpg",
+		"/img/2022_07_custom-pages-1564851887-f3c7504b1944c2124ce3a541e484729e-CROP-3000x1000-1-scaled.jpg",
 	donateHero:
-		"https://scienceandnonduality.com/wp-content/uploads/2025/06/sand-collage-1536x501.webp",
+		"/img/2025_06_sand-collage-1536x501.webp",
 	podcastCover:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/09/Sand-Picture.jpg",
+		"/img/2023_09_Sand-Picture.jpg",
 	podcastHero:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/10/podcast-img.jpg",
+		"/img/2023_10_podcast-img.jpg",
 	joinHero1:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/07/img-1.jpg",
+		"/img/2023_07_img-1.jpg",
 	joinHero2:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/04/join-image-2-224x707.png",
+		"/img/2023_04_join-image-2-224x707.png",
 	joinHero3:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/07/img-3-224x707.jpg",
+		"/img/2023_07_img-3-224x707.jpg",
 	joinCouple:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/03/DSC4549-1.png",
+		"/img/2023_03_DSC4549-1.png",
 	joinFlowers:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/10/join-sand-flowers-418x600.png",
+		"/img/2023_10_join-sand-flowers-418x600.png",
 	joinMockup:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/07/Mockup-membership.png",
+		"/img/2023_07_Mockup-membership.png",
 	joinDrops:
-		"https://scienceandnonduality.com/wp-content/uploads/2023/07/Foto-gotas-fondo.jpg",
+		"/img/2023_07_Foto-gotas-fondo.jpg",
 };
 
 export const NAV = [
@@ -63,37 +63,37 @@ export const TOPIC_CATEGORIES = [
 	{
 		slug: "spiritual-traditions",
 		label: "SPIRITUAL TRADITIONS",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat01.png",
+		icon: "/img/2023_07_cat01.png",
 	},
 	{
 		slug: "living-universe",
 		label: "LIVING UNIVERSE",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat02.png",
+		icon: "/img/2023_07_cat02.png",
 	},
 	{
 		slug: "love-and-relationships",
 		label: "LOVE & RELATIONSHIPS",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat03.png",
+		icon: "/img/2023_07_cat03.png",
 	},
 	{
 		slug: "society",
 		label: "SOCIETY",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat04.png",
+		icon: "/img/2023_07_cat04.png",
 	},
 	{
 		slug: "sacred-action",
 		label: "SACRED ACTION",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat05.png",
+		icon: "/img/2023_07_cat05.png",
 	},
 	{
 		slug: "arts",
 		label: "ARTS",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat06.png",
+		icon: "/img/2023_07_cat06.png",
 	},
 	{
 		slug: "science",
 		label: "SCIENCE",
-		icon: "https://scienceandnonduality.com/wp-content/uploads/2023/07/cat07.png",
+		icon: "/img/2023_07_cat07.png",
 	},
 ] as const;
 
