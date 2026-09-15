@@ -1889,6 +1889,12 @@ h3,
 .sub-float-method.is-active .sub-float-radio {
 	border: 5px solid var(--gold);
 }
+.sub-float-name-full {
+	display: inline;
+}
+.sub-float-name-short {
+	display: none;
+}
 .sub-float-cur {
 	font-size: 12px;
 	letter-spacing: 0.08em;
@@ -1968,6 +1974,76 @@ h3,
 @media (max-width: 820px) {
 	.sub-float-grid {
 		grid-template-columns: 1fr;
+	}
+}
+/* Mobile: payment methods become small boxes in a single row across the top */
+@media (max-width: 640px) {
+	.sub-float-methods {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 6px;
+	}
+	.sub-float-method {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		text-align: center;
+		padding: 8px 3px;
+		font-size: 10px;
+		border-radius: 8px;
+		min-width: 0;
+	}
+	.sub-float-method.is-active {
+		border: 2px solid var(--gold);
+	}
+	.sub-float-radio,
+	.sub-float-cur {
+		display: none;
+	}
+	.sub-float-name {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+	}
+	.sub-float-name-full {
+		display: none;
+	}
+	.sub-float-name-short {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: 9.5px;
+		line-height: 1.15;
+	}
+	.sub-float-logos {
+		gap: 3px;
+	}
+	.sub-float-logos img {
+		height: 15px;
+		max-width: 38px;
+		padding: 1px 2px;
+	}
+	.sub-float-logos--card img {
+		height: 16px;
+		max-width: 44px;
+	}
+	.sub-float-logos--paypal img {
+		height: 17px;
+		max-width: 28px;
+	}
+	.sub-float-logos--google-pay img {
+		height: 16px;
+		max-width: 38px;
+		padding: 0;
+	}
+	.sub-float-whop {
+		width: 19px;
+		height: 19px;
+		font-size: 11px;
+		border-radius: 5px;
 	}
 }
 
