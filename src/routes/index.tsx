@@ -190,7 +190,10 @@ function HomePage() {
                   to="/films/$slug"
                   params={{ slug: film.slug }}
                 >
-                  <img src="/hassan-mageye.png" alt={`${film.title} poster`} />
+                  <img
+                    src={film.poster ?? film.image}
+                    alt={`${film.title} poster`}
+                  />
                   <span>{film.title}</span>
                 </Link>
               ))}
