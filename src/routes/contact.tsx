@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { addMessage } from "../lib/admin-store";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import hassanPhoto from "../assets/hassan-contact.avif.asset.json";
 
@@ -53,6 +54,21 @@ function ContactPage() {
               className="contact-form contact-form--full"
               onSubmit={(event) => {
                 event.preventDefault();
+                const data = new FormData(event.currentTarget);
+                const value = (key: string) => String(data.get(key) ?? "").trim();
+                addMessage({
+                  kind: "contact",
+                  name: `${value("first")} ${value("last")}`.trim(),
+                  email: value("email"),
+                  subject: value("subject"),
+                  body: [
+                    value("message"),
+                    value("phone") ? `Phone: ${value("phone")}` : "",
+                    value("organization") ? `Organization: ${value("organization")}` : "",
+                  ]
+                    .filter(Boolean)
+                    .join("\n\n"),
+                });
                 setDone(true);
               }}
             >

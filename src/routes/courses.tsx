@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import { EventCard } from "../components/sand/Cards";
-import { COURSES } from "../data/catalog";
+import { useContent } from "../lib/admin-store";
 
 export const Route = createFileRoute("/courses")({
   component: CoursesPage,
@@ -25,7 +25,7 @@ function CoursesPage() {
       </section>
       <section className="section cream">
         <div className="wrap media-grid">
-          {COURSES.map((item) => (
+          {useContent().courses.map((item) => (
             <EventCard key={item.slug} item={item} />
           ))}
         </div>

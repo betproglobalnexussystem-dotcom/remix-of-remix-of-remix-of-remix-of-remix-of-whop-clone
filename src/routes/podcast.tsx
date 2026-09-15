@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import { PodcastCard } from "../components/sand/Cards";
-import { PODCASTS } from "../data/catalog";
+import { useContent } from "../lib/admin-store";
 import { IMG } from "../data/site";
 
 export const Route = createFileRoute("/podcast")({
@@ -28,7 +28,7 @@ function PodcastPage() {
       </section>
       <section className="section cream">
         <div className="wrap media-grid">
-          {PODCASTS.map((item) => (
+          {useContent().podcasts.map((item) => (
             <PodcastCard key={item.slug} item={item} />
           ))}
         </div>

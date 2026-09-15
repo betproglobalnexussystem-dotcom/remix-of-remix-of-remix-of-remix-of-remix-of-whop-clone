@@ -2,12 +2,8 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { EventCard } from "../components/sand/Cards";
 import { SiteEnd } from "../components/layout/SiteEnd";
-import {
-  EVENTS,
-  FILMS,
-  HERO_SLIDES,
-  UPCOMING_FILMS,
-} from "../data/catalog";
+import { FILMS } from "../data/catalog";
+import { useContent } from "../lib/admin-store";
 
 const AWARDS = [
   {
@@ -48,6 +44,9 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const content = useContent();
+  const HERO_SLIDES = content.heroSlides;
+  const EVENTS = content.events;
   const [slide, setSlide] = useState(0);
   const [eventStart, setEventStart] = useState(0);
   const [filmRailPosition, setFilmRailPosition] = useState({
@@ -55,7 +54,11 @@ function HomePage() {
     canScrollRight: false,
   });
   const filmRailRef = useRef<HTMLDivElement>(null);
-  const posters = FILMS.slice(0, 7);
+  const bySlug = (slug: string) =>
+    content.films.find((film) => film.slug === slug);
+  const posters = content.directorFilmSlugs
+    .map(bySlug)
+    .filter((film): film is (typeof content.films)[number] => Boolean(film));
   const series = FILMS.filter((film) =>
     [
       "mauri",
@@ -114,7 +117,9 @@ function HomePage() {
   };
 
   const visibleEvents = EVENTS.slice(eventStart, eventStart + 3);
-  const visibleExplore = UPCOMING_FILMS;
+  const visibleExplore = content.exploreSlugs
+    .map(bySlug)
+    .filter((film): film is (typeof content.films)[number] => Boolean(film));
 
   return (
     <>
@@ -147,20 +152,12 @@ function HomePage() {
 
       <section className="wrap founder-profile" id="meet-creator">
         <div className="founder-profile__media">
-          <img src="/hassan-mageye.png" alt="Hassan Mageye" />
+          <img src={content.director.image} alt={content.director.name} />
         </div>
         <div className="founder-profile__copy">
           <div className="kicker">Meet the creator</div>
-          <h1>Hassan Mageye</h1>
-          <p>
-            Hassan Mageye is a Ugandan-American writer, director and producer
-            whose filmmaking career spans more than a decade. He studied Mass
-            Communication at Makerere University and moved from an early
-            interest in journalism toward filmmaking. His work has focused on
-            African stories, cultural identity, social themes and
-            character-driven drama. Hassan Mageye currently resides in
-            California.
-          </p>
+          <h1>{content.director.name}</h1>
+          <p>{content.director.bio}</p>
           <Link className="btn-gold" to="/join-the-community">
             Join MAGEYE
           </Link>

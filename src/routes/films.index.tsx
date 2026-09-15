@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import { FilmCard } from "../components/sand/Cards";
-import { FILMS, UPCOMING_FILMS } from "../data/catalog";
+import { useContent } from "../lib/admin-store";
 import filmsHero from "../assets/films-hero.jpg.asset.json";
 
 export const Route = createFileRoute("/films/")({
@@ -11,7 +11,9 @@ export const Route = createFileRoute("/films/")({
 });
 
 function FilmsPage() {
-  const regular = FILMS.filter((film) => !film.upcoming);
+  const content = useContent();
+  const regular = content.films.filter((film) => !film.upcoming);
+  const upcoming = content.films.filter((film) => film.upcoming);
   const [count, setCount] = useState(6);
   const visible = regular.slice(0, count);
   return (
@@ -36,7 +38,7 @@ function FilmsPage() {
         <div className="wrap">
           <p className="kicker">Upcoming Films</p>
           <div className="media-grid films-upcoming">
-            {UPCOMING_FILMS.map((film) => (
+            {upcoming.map((film) => (
               <FilmCard key={film.slug} film={film} />
             ))}
           </div>
