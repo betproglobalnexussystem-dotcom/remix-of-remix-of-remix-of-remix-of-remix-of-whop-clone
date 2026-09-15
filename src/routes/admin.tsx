@@ -603,6 +603,16 @@ function AdminPage() {
 				) : null}
 
 				{section === "messages" ? <Messages content={content} /> : null}
+
+				{section === "access" ? <AccessCode /> : null}
+				</div>
+
+				{section === "access" ? null : (
+					<LivePreview
+						path={PREVIEW_PATH[section]}
+						stamp={previewStamp}
+					/>
+				)}
 			</section>
 		</main>
 	);
