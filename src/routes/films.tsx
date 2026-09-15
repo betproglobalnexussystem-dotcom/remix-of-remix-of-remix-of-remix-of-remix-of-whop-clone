@@ -18,8 +18,16 @@ function FilmsPage() {
         <div>
           <h1>Films</h1>
           <p>
-            Our library of SAND-produced original films at the intersection of
-            spirituality, science, social healing, and the arts.
+            Our vision for The Eternal Song documentary series is to honor
+            Indigenous resilience, illuminate sacred wisdom held for humanity
+            and Earth, and invite healing across communities facing trauma and
+            colonial erasure.
+          </p>
+          <p>
+            Over the next two years, we will release a total of 12 full-length
+            films featuring different indigenous traditions. Each film opens a
+            portal into the ancestral wisdom of these cultures, calling us to
+            remember, grieve, heal, and act.
           </p>
         </div>
       </section>
@@ -40,6 +48,25 @@ function FilmsPage() {
             </button>
           </div>
         ) : null}
+      </section>
+      <section className="section">
+        <div className="wrap partner">
+          <h2>Partner with Us</h2>
+          <p>
+            We welcome investors, producers, distributors, organizations, and
+            creative collaborators interested in our upcoming projects. Explore
+            our current productions below and reach out to learn more about
+            opportunities to get involved.
+          </p>
+          <h3>Interested in getting involved?</h3>
+          <p>
+            Contact us to learn more about our projects and current
+            opportunities for collaboration.
+          </p>
+          <a className="btn-gold" href="mailto:info@mageye.com">
+            Get in Touch
+          </a>
+        </div>
       </section>
       <SiteEnd />
     </>
