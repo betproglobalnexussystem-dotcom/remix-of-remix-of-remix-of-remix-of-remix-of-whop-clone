@@ -10,33 +10,386 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArticlesRouteImport } from './routes/articles'
+import { Route as BoardRouteImport } from './routes/board'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FilmsRouteImport } from './routes/films'
+import { Route as JoinTheCommunityRouteImport } from './routes/join-the-community'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as MissionRouteImport } from './routes/mission'
+import { Route as NondualityRouteImport } from './routes/nonduality'
+import { Route as PodcastRouteImport } from './routes/podcast'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as RecordingPolicyRouteImport } from './routes/recording-policy'
+import { Route as SandScholarshipProgramRouteImport } from './routes/sand-scholarship-program'
+import { Route as SponsorsPartnersRouteImport } from './routes/sponsors-partners'
+import { Route as TeamRouteImport } from './routes/team'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as VideosRouteImport } from './routes/videos'
+import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as AudioSlugRouteImport } from './routes/audio.$slug'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
+import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
+import { Route as ArticleCategoryCategoryRouteImport } from './routes/article.category.$category'
+import { Route as ArticleTagTagRouteImport } from './routes/article.tag.$tag'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BoardRoute = BoardRouteImport.update({
+  id: '/board',
+  path: '/board',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilmsRoute = FilmsRouteImport.update({
+  id: '/films',
+  path: '/films',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinTheCommunityRoute = JoinTheCommunityRouteImport.update({
+  id: '/join-the-community',
+  path: '/join-the-community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissionRoute = MissionRouteImport.update({
+  id: '/mission',
+  path: '/mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NondualityRoute = NondualityRouteImport.update({
+  id: '/nonduality',
+  path: '/nonduality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastRoute = PodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecordingPolicyRoute = RecordingPolicyRouteImport.update({
+  id: '/recording-policy',
+  path: '/recording-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SandScholarshipProgramRoute = SandScholarshipProgramRouteImport.update({
+  id: '/sand-scholarship-program',
+  path: '/sand-scholarship-program',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SponsorsPartnersRoute = SponsorsPartnersRouteImport.update({
+  id: '/sponsors-partners',
+  path: '/sponsors-partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticleSlugRoute = ArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AudioSlugRoute = AudioSlugRouteImport.update({
+  id: '/audio/$slug',
+  path: '/audio/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilmsSlugRoute = FilmsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FilmsRoute,
+} as any)
+const VideosSlugRoute = VideosSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => VideosRoute,
+} as any)
+const ArticleCategoryCategoryRoute = ArticleCategoryCategoryRouteImport.update({
+  id: '/article/category/$category',
+  path: '/article/category/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticleTagTagRoute = ArticleTagTagRouteImport.update({
+  id: '/article/tag/$tag',
+  path: '/article/tag/$tag',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
+  '/board': typeof BoardRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/films': typeof FilmsRouteWithChildren
+  '/join-the-community': typeof JoinTheCommunityRoute
+  '/library': typeof LibraryRoute
+  '/mission': typeof MissionRoute
+  '/nonduality': typeof NondualityRoute
+  '/podcast': typeof PodcastRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recording-policy': typeof RecordingPolicyRoute
+  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
+  '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/team': typeof TeamRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/article/$slug': typeof ArticleSlugRoute
+  '/audio/$slug': typeof AudioSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/films/$slug': typeof FilmsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/article/category/$category': typeof ArticleCategoryCategoryRoute
+  '/article/tag/$tag': typeof ArticleTagTagRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
+  '/board': typeof BoardRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/films': typeof FilmsRouteWithChildren
+  '/join-the-community': typeof JoinTheCommunityRoute
+  '/library': typeof LibraryRoute
+  '/mission': typeof MissionRoute
+  '/nonduality': typeof NondualityRoute
+  '/podcast': typeof PodcastRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recording-policy': typeof RecordingPolicyRoute
+  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
+  '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/team': typeof TeamRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/article/$slug': typeof ArticleSlugRoute
+  '/audio/$slug': typeof AudioSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/films/$slug': typeof FilmsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/article/category/$category': typeof ArticleCategoryCategoryRoute
+  '/article/tag/$tag': typeof ArticleTagTagRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
+  '/board': typeof BoardRoute
+  '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/films': typeof FilmsRouteWithChildren
+  '/join-the-community': typeof JoinTheCommunityRoute
+  '/library': typeof LibraryRoute
+  '/mission': typeof MissionRoute
+  '/nonduality': typeof NondualityRoute
+  '/podcast': typeof PodcastRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recording-policy': typeof RecordingPolicyRoute
+  '/sand-scholarship-program': typeof SandScholarshipProgramRoute
+  '/sponsors-partners': typeof SponsorsPartnersRoute
+  '/team': typeof TeamRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/article/$slug': typeof ArticleSlugRoute
+  '/audio/$slug': typeof AudioSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/films/$slug': typeof FilmsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/article/category/$category': typeof ArticleCategoryCategoryRoute
+  '/article/tag/$tag': typeof ArticleTagTagRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/articles'
+    | '/board'
+    | '/contact'
+    | '/courses'
+    | '/donate'
+    | '/events'
+    | '/faq'
+    | '/films'
+    | '/join-the-community'
+    | '/library'
+    | '/mission'
+    | '/nonduality'
+    | '/podcast'
+    | '/privacy-policy'
+    | '/recording-policy'
+    | '/sand-scholarship-program'
+    | '/sponsors-partners'
+    | '/team'
+    | '/testimonials'
+    | '/videos'
+    | '/article/$slug'
+    | '/audio/$slug'
+    | '/event/$slug'
+    | '/films/$slug'
+    | '/videos/$slug'
+    | '/article/category/$category'
+    | '/article/tag/$tag'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/articles'
+    | '/board'
+    | '/contact'
+    | '/courses'
+    | '/donate'
+    | '/events'
+    | '/faq'
+    | '/films'
+    | '/join-the-community'
+    | '/library'
+    | '/mission'
+    | '/nonduality'
+    | '/podcast'
+    | '/privacy-policy'
+    | '/recording-policy'
+    | '/sand-scholarship-program'
+    | '/sponsors-partners'
+    | '/team'
+    | '/testimonials'
+    | '/videos'
+    | '/article/$slug'
+    | '/audio/$slug'
+    | '/event/$slug'
+    | '/films/$slug'
+    | '/videos/$slug'
+    | '/article/category/$category'
+    | '/article/tag/$tag'
+  id:
+    | '__root__'
+    | '/'
+    | '/articles'
+    | '/board'
+    | '/contact'
+    | '/courses'
+    | '/donate'
+    | '/events'
+    | '/faq'
+    | '/films'
+    | '/join-the-community'
+    | '/library'
+    | '/mission'
+    | '/nonduality'
+    | '/podcast'
+    | '/privacy-policy'
+    | '/recording-policy'
+    | '/sand-scholarship-program'
+    | '/sponsors-partners'
+    | '/team'
+    | '/testimonials'
+    | '/videos'
+    | '/article/$slug'
+    | '/audio/$slug'
+    | '/event/$slug'
+    | '/films/$slug'
+    | '/videos/$slug'
+    | '/article/category/$category'
+    | '/article/tag/$tag'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArticlesRoute: typeof ArticlesRoute
+  BoardRoute: typeof BoardRoute
+  ContactRoute: typeof ContactRoute
+  CoursesRoute: typeof CoursesRoute
+  DonateRoute: typeof DonateRoute
+  EventsRoute: typeof EventsRoute
+  FaqRoute: typeof FaqRoute
+  FilmsRoute: typeof FilmsRouteWithChildren
+  JoinTheCommunityRoute: typeof JoinTheCommunityRoute
+  LibraryRoute: typeof LibraryRoute
+  MissionRoute: typeof MissionRoute
+  NondualityRoute: typeof NondualityRoute
+  PodcastRoute: typeof PodcastRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RecordingPolicyRoute: typeof RecordingPolicyRoute
+  SandScholarshipProgramRoute: typeof SandScholarshipProgramRoute
+  SponsorsPartnersRoute: typeof SponsorsPartnersRoute
+  TeamRoute: typeof TeamRoute
+  TestimonialsRoute: typeof TestimonialsRoute
+  VideosRoute: typeof VideosRouteWithChildren
+  ArticleSlugRoute: typeof ArticleSlugRoute
+  AudioSlugRoute: typeof AudioSlugRoute
+  EventSlugRoute: typeof EventSlugRoute
+  ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
+  ArticleTagTagRoute: typeof ArticleTagTagRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +401,246 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/board': {
+      id: '/board'
+      path: '/board'
+      fullPath: '/board'
+      preLoaderRoute: typeof BoardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/films': {
+      id: '/films'
+      path: '/films'
+      fullPath: '/films'
+      preLoaderRoute: typeof FilmsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-the-community': {
+      id: '/join-the-community'
+      path: '/join-the-community'
+      fullPath: '/join-the-community'
+      preLoaderRoute: typeof JoinTheCommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mission': {
+      id: '/mission'
+      path: '/mission'
+      fullPath: '/mission'
+      preLoaderRoute: typeof MissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nonduality': {
+      id: '/nonduality'
+      path: '/nonduality'
+      fullPath: '/nonduality'
+      preLoaderRoute: typeof NondualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast': {
+      id: '/podcast'
+      path: '/podcast'
+      fullPath: '/podcast'
+      preLoaderRoute: typeof PodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recording-policy': {
+      id: '/recording-policy'
+      path: '/recording-policy'
+      fullPath: '/recording-policy'
+      preLoaderRoute: typeof RecordingPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sand-scholarship-program': {
+      id: '/sand-scholarship-program'
+      path: '/sand-scholarship-program'
+      fullPath: '/sand-scholarship-program'
+      preLoaderRoute: typeof SandScholarshipProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sponsors-partners': {
+      id: '/sponsors-partners'
+      path: '/sponsors-partners'
+      fullPath: '/sponsors-partners'
+      preLoaderRoute: typeof SponsorsPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/article/$slug': {
+      id: '/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/article/$slug'
+      preLoaderRoute: typeof ArticleSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audio/$slug': {
+      id: '/audio/$slug'
+      path: '/audio/$slug'
+      fullPath: '/audio/$slug'
+      preLoaderRoute: typeof AudioSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/films/$slug': {
+      id: '/films/$slug'
+      path: '/$slug'
+      fullPath: '/films/$slug'
+      preLoaderRoute: typeof FilmsSlugRouteImport
+      parentRoute: typeof FilmsRoute
+    }
+    '/videos/$slug': {
+      id: '/videos/$slug'
+      path: '/$slug'
+      fullPath: '/videos/$slug'
+      preLoaderRoute: typeof VideosSlugRouteImport
+      parentRoute: typeof VideosRoute
+    }
+    '/article/category/$category': {
+      id: '/article/category/$category'
+      path: '/article/category/$category'
+      fullPath: '/article/category/$category'
+      preLoaderRoute: typeof ArticleCategoryCategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/article/tag/$tag': {
+      id: '/article/tag/$tag'
+      path: '/article/tag/$tag'
+      fullPath: '/article/tag/$tag'
+      preLoaderRoute: typeof ArticleTagTagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface FilmsRouteChildren {
+  FilmsSlugRoute: typeof FilmsSlugRoute
+}
+
+const FilmsRouteChildren: FilmsRouteChildren = {
+  FilmsSlugRoute: FilmsSlugRoute,
+}
+
+const FilmsRouteWithChildren = FilmsRoute._addFileChildren(FilmsRouteChildren)
+
+interface VideosRouteChildren {
+  VideosSlugRoute: typeof VideosSlugRoute
+}
+
+const VideosRouteChildren: VideosRouteChildren = {
+  VideosSlugRoute: VideosSlugRoute,
+}
+
+const VideosRouteWithChildren =
+  VideosRoute._addFileChildren(VideosRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArticlesRoute: ArticlesRoute,
+  BoardRoute: BoardRoute,
+  ContactRoute: ContactRoute,
+  CoursesRoute: CoursesRoute,
+  DonateRoute: DonateRoute,
+  EventsRoute: EventsRoute,
+  FaqRoute: FaqRoute,
+  FilmsRoute: FilmsRouteWithChildren,
+  JoinTheCommunityRoute: JoinTheCommunityRoute,
+  LibraryRoute: LibraryRoute,
+  MissionRoute: MissionRoute,
+  NondualityRoute: NondualityRoute,
+  PodcastRoute: PodcastRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RecordingPolicyRoute: RecordingPolicyRoute,
+  SandScholarshipProgramRoute: SandScholarshipProgramRoute,
+  SponsorsPartnersRoute: SponsorsPartnersRoute,
+  TeamRoute: TeamRoute,
+  TestimonialsRoute: TestimonialsRoute,
+  VideosRoute: VideosRouteWithChildren,
+  ArticleSlugRoute: ArticleSlugRoute,
+  AudioSlugRoute: AudioSlugRoute,
+  EventSlugRoute: EventSlugRoute,
+  ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
+  ArticleTagTagRoute: ArticleTagTagRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
