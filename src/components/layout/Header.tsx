@@ -9,6 +9,7 @@ import {
   exploreHref,
 } from "../../data/catalog";
 import { NAV, POPULAR_TOPICS } from "../../data/site";
+import brandLogo from "../../assets/sanyuka-african-ent-logo.png.asset.json";
 
 type Hit = { href: string; title: string; kind: string };
 
@@ -73,9 +74,7 @@ export function Header() {
           <span />
         </button>
         <Link to="/" className="logo" onClick={closeAll}>
-          <span className="logo-wordmark" aria-label="MAGEYE">
-            MAGEYE
-          </span>
+          <img src={brandLogo.url} alt="Sanyuka African Entertainment" />
         </Link>
         <nav className="nav-main" aria-label="Primary">
           {NAV.map((item) => (

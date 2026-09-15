@@ -2,7 +2,8 @@
 export const WHOP_API_KEY =
 	"apik_MFzbm4STJ087W_C6565930_C_8c051bd772e5fa561700ff55c03299e0150d45197003a7833a01f14fd540ee";
 
-export const WHOP_API = "https://api.whop.com/api/v2";
+export const WHOP_API = "https://api.whop.com/api/v1";
+const WHOP_ACCOUNT_ID = "biz_kpS7a3ydqxnVhf";
 
 export type WhopRegion = "UG" | "INTL";
 
@@ -11,7 +12,7 @@ export const WHOP_PRICES: Record<
 	WhopRegion,
 	{ currency: string; amount: number; title: string }
 > = {
-	UG: { currency: "ugx", amount: 5000, title: "MAGEYE Streaming — Uganda" },
+	UG: { currency: "usd", amount: 5.99, title: "MAGEYE Streaming — International" },
 	INTL: {
 		currency: "usd",
 		amount: 5.99,
@@ -35,17 +36,42 @@ async function whop(path: string, init?: RequestInit) {
 	return { ok: res.ok, status: res.status, body };
 }
 
+async function ensureStreamingProduct() {
+	const list = await whop(`/products?account_id=${WHOP_ACCOUNT_ID}&first=50`);
+	const products: any[] = Array.isArray(list.body?.data) ? list.body.data : [];
+	const existing = products.find(
+		(product) =>
+			product?.metadata?.mageye_region === "INTL" ||
+			product?.title === "MAGEYE Streaming — International",
+	);
+	if (existing?.id) return existing.id as string;
+
+	const created = await whop("/products", {
+		method: "POST",
+		body: JSON.stringify({
+			account_id: WHOP_ACCOUNT_ID,
+			title: "MAGEYE Streaming — International",
+			headline: "Unlimited streaming access to MAGEYE films",
+			description: "Monthly streaming membership for MAGEYE films.",
+			visibility: "hidden",
+			metadata: { mageye_region: "INTL" },
+		}),
+	});
+	return created.ok && created.body?.id ? (created.body.id as string) : null;
+}
+
 /**
  * Finds (or creates) the Whop plan for a region so nothing has to be
  * configured by hand in the dashboard.
  */
-export async function ensurePlan(region: WhopRegion): Promise<string | null> {
-	const cached = planCache.get(region);
+export async function ensurePlan(_region: WhopRegion): Promise<string | null> {
+	const canonicalRegion: WhopRegion = "INTL";
+	const cached = planCache.get(canonicalRegion);
 	if (cached) return cached;
 
-	const price = WHOP_PRICES[region];
+	const price = WHOP_PRICES[canonicalRegion];
 
-	const list = await whop("/plans?per=50");
+	const list = await whop(`/plans?account_id=${WHOP_ACCOUNT_ID}&first=50`);
 	const plans: any[] = Array.isArray(list.body?.data) ? list.body.data : [];
 	const match = plans.find(
 		(plan) =>
@@ -53,31 +79,35 @@ export async function ensurePlan(region: WhopRegion): Promise<string | null> {
 			plan?.id,
 	);
 	if (match?.id) {
-		planCache.set(region, match.id);
+		planCache.set(canonicalRegion, match.id);
 		return match.id as string;
 	}
+	const productId = await ensureStreamingProduct();
+	if (!productId) return null;
 
 	const created = await whop("/plans", {
 		method: "POST",
 		body: JSON.stringify({
+			product_id: productId,
 			plan_type: "renewal",
 			billing_period: 30,
-			base_currency: price.currency,
+			currency: price.currency,
 			renewal_price: price.amount,
 			initial_price: 0,
-			visibility: "quick_link",
+			visibility: "visible",
+			release_method: "buy_now",
 			internal_notes: price.title,
 		}),
 	});
 	if (created.ok && created.body?.id) {
-		planCache.set(region, created.body.id as string);
+		planCache.set(canonicalRegion, created.body.id as string);
 		return created.body.id as string;
 	}
 
 	// Last resort: reuse any existing live plan so checkout still opens.
 	const fallback = plans.find((plan) => plan?.id)?.id;
 	if (fallback) {
-		planCache.set(region, fallback as string);
+		planCache.set(canonicalRegion, fallback as string);
 		return fallback as string;
 	}
 	return null;

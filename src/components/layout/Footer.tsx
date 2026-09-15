@@ -2,15 +2,15 @@ import {
   FOOTER_ABOUT,
   FOOTER_COMMUNITY,
   FOOTER_LEGAL,
-  IMG,
 } from "../../data/site";
+import brandLogo from "../../assets/sanyuka-african-ent-logo.png.asset.json";
 
 export function Footer() {
   return (
     <footer className="footer">
       <div className="wrap footer-grid">
         <div>
-          <div className="footer-brand">MAGEYE</div>
+          <img className="footer-brand-logo" src={brandLogo.url} alt="Sanyuka African Entertainment" />
           <p>
             At SAND, we explore who we are beyond ultimate truths, binary
             thinking, and individual awakening while acknowledging humanity as a
@@ -52,7 +52,7 @@ export function Footer() {
           </div>
           <div>All Rights Reserved © {new Date().getFullYear()} MAGEYE</div>
         </div>
-        <img className="footer-logo" src={IMG.logoWhite} alt="" />
+        <img className="footer-logo" src={brandLogo.url} alt="Sanyuka African Entertainment" />
       </div>
     </footer>
   );

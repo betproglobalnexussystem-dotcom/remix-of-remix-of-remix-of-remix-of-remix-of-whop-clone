@@ -10,7 +10,6 @@ import {
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
 import { SiteLoader } from "../components/SiteLoader";
-import { IMG } from "../data/site";
 import styles from "../styles.css?url";
 
 function RootDocument({ children }: { children: ReactNode }) {
@@ -67,9 +66,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:title", content: "MAGEYE" },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: IMG.logo },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: IMG.logo },
     ],
     links: [
       { rel: "stylesheet", href: styles },
@@ -77,7 +74,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: IMG.favicon },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
   }),
   component: RootLayout,
