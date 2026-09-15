@@ -73,7 +73,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [pending, setPending] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const [whopPlan, setWhopPlan] = useState<string | null>(null);
+	const [whopPlan, setWhopPlan] = useState<string | null | undefined>(undefined);
 	const content = useContent();
 
 	// Resolve the Whop plan for this region so the one-click button can mount.
@@ -301,6 +301,13 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 									onComplete={() => activate()}
 									fallback={<div className="loader" />}
 								/>
+							</div>
+						) : whopPlan === null ? (
+							<div className="sub-float-pending">
+								<p>
+									Card, PayPal and Google Pay checkout needs your Whop plan ID.
+									Add it in the dashboard under Subscription.
+								</p>
 							</div>
 						) : (
 							<div className="sub-float-whop-pay">
