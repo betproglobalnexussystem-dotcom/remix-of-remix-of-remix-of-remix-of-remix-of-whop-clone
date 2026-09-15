@@ -101,8 +101,9 @@ h3,
 }
 
 .logo img {
-  height: 52px;
-  width: auto;
+  height: 68px;
+  width: 76px;
+  object-fit: contain;
 }
 
 .logo-wordmark {
@@ -992,6 +993,13 @@ h3,
   margin: 0 0 22px;
 }
 
+.footer-brand-logo {
+  width: 138px;
+  height: 122px;
+  object-fit: contain;
+  margin-bottom: 22px;
+}
+
 .footer h4 {
   font-family: Marcellus, serif;
   color: #fff;
@@ -1028,7 +1036,9 @@ h3,
 }
 
 .footer-logo {
-  height: 54px;
+  height: 88px;
+  width: 100px;
+  object-fit: contain;
   opacity: 0.9;
 }
 
@@ -1361,11 +1371,17 @@ h3,
   }
 
   .logo img {
-    height: 42px;
+    height: 62px;
+    width: 68px;
   }
 
   .logo-wordmark {
     font-size: 28px;
+  }
+
+  .logo img {
+    height: 56px;
+    width: 62px;
   }
 }
 

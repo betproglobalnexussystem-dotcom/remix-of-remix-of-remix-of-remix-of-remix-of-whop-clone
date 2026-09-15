@@ -81,13 +81,13 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		if (!open) return;
 		let cancelled = false;
 		const configured = content.plans.find(
-			(item) => item.id === (region === "UG" ? "ug" : "intl"),
+			(item) => item.id === "intl",
 		)?.whopPlanId;
 		if (configured) {
 			setWhopPlan(configured);
 			return;
 		}
-		getWhopPlanId({ data: { region } })
+		getWhopPlanId({ data: { region: "INTL" } })
 			.then((res) => {
 				if (!cancelled) setWhopPlan(res.planId);
 			})
@@ -97,7 +97,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		return () => {
 			cancelled = true;
 		};
-	}, [open, region, content.plans]);
+	}, [open, content.plans]);
 
 
 	useEffect(() => {
@@ -153,6 +153,11 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 
 	/** Every method checks out through Whop. */
 	async function payNow() {
+		if (method === "mobile-money") {
+			setError("Mobile Money will be available when your provider is connected.");
+			setPending(true);
+			return;
+		}
 		setBusy(true);
 		setError(null);
 		try {
@@ -304,10 +309,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							</div>
 						) : whopPlan === null ? (
 							<div className="sub-float-pending">
-								<p>
-									Card, PayPal and Google Pay checkout needs your Whop plan ID.
-									Add it in the dashboard under Subscription.
-								</p>
+								<p>Whop checkout could not be loaded. Please try again.</p>
 							</div>
 						) : (
 							<div className="sub-float-whop-pay">
