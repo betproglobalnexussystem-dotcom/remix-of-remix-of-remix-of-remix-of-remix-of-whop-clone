@@ -1,41 +1,6 @@
-import { useState } from "react";
-import { DONATE_PLAN_ID, IMG } from "../../data/site";
+import { IMG } from "../../data/site";
 
-export function Newsletter() {
-  const [done, setDone] = useState(false);
-  return (
-    <section
-      className="newsletter"
-      style={{ backgroundImage: `url(${IMG.contactHero})` }}
-    >
-      <div>
-        <h2>Newsletter</h2>
-        <p>
-          Sign up to receive news and updates from MAGEYE.
-          <br />
-          Your details are strictly confidential and never shared.
-        </p>
-        {done ? (
-          <p className="thanks">Thank you. We’ll be in touch.</p>
-        ) : (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setDone(true);
-            }}
-          >
-            <input name="first" placeholder="First Name" required />
-            <input name="last" placeholder="Last Name" required />
-            <input name="email" type="email" placeholder="Email Address" required />
-            <button className="btn-sign" type="submit">
-              Sign Up
-            </button>
-          </form>
-        )}
-      </div>
-    </section>
-  );
-}
+
 
 export function DonateBand() {
   return (
@@ -61,10 +26,5 @@ export function DonateBand() {
 }
 
 export function SiteEnd({ donate = true }: { donate?: boolean }) {
-  return (
-    <>
-      <Newsletter />
-      {donate ? <DonateBand /> : null}
-    </>
-  );
+  return <>{donate ? <DonateBand /> : null}</>;
 }
