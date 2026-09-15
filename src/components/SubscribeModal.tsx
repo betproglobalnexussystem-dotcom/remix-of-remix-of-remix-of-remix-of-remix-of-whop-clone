@@ -29,6 +29,8 @@ type Props = {
 type Method = {
 	id: PaymentMethod;
 	name: string;
+	/** Compact label used in the small mobile picker boxes. */
+	short: string;
 	logos: string[];
 	currency: "UGX" | "USD";
 };
@@ -38,23 +40,32 @@ const METHODS: Method[] = [
 	{
 		id: "mobile-money",
 		name: "Mobile Money (MTN / Airtel)",
+		short: "Mobile Money",
 		logos: [mtnLogo.url, airtelLogo.url],
 		currency: "UGX",
 	},
 	{
 		id: "card",
 		name: "Credit/debit card",
+		short: "Card",
 		logos: [cardLogos.url],
 		currency: "USD",
 	},
-	{ id: "paypal", name: "PayPal", logos: [paypalLogo.url], currency: "USD" },
+	{
+		id: "paypal",
+		name: "PayPal",
+		short: "PayPal",
+		logos: [paypalLogo.url],
+		currency: "USD",
+	},
 	{
 		id: "google-pay",
 		name: "Google Pay",
+		short: "G Pay",
 		logos: [googlePayLogo.url],
 		currency: "USD",
 	},
-	{ id: "whop", name: "Whop", logos: [], currency: "USD" },
+	{ id: "whop", name: "Whop", short: "Whop", logos: [], currency: "USD" },
 ];
 
 const UGX_MONTH = 5000;
