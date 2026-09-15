@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import { FilmCard } from "../components/sand/Cards";
 import { FILMS } from "../data/catalog";
+import filmsHero from "../assets/films-hero.jpg.asset.json";
 
 export const Route = createFileRoute("/films")({
   component: FilmsPage,
@@ -14,20 +15,19 @@ function FilmsPage() {
   const visible = FILMS.slice(0, count);
   return (
     <>
-      <section className="page-hero">
+      <section
+        className="page-hero hero-photo"
+        style={{
+          backgroundImage: `linear-gradient(rgba(12, 20, 28, 0.68), rgba(12, 20, 28, 0.68)), url("${filmsHero.url}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div>
           <h1>Films</h1>
           <p>
-            Our vision for The Eternal Song documentary series is to honor
-            Indigenous resilience, illuminate sacred wisdom held for humanity
-            and Earth, and invite healing across communities facing trauma and
-            colonial erasure.
-          </p>
-          <p>
-            Over the next two years, we will release a total of 12 full-length
-            films featuring different indigenous traditions. Each film opens a
-            portal into the ancestral wisdom of these cultures, calling us to
-            remember, grieve, heal, and act.
+            A collection of films by Hassan Mageye exploring African stories,
+            cultural identity, and character-driven drama.
           </p>
         </div>
       </section>

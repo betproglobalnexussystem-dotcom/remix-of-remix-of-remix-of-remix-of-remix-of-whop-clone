@@ -234,6 +234,33 @@ export const FILMS: Film[] = [
 		image: "/img/upcoming-modern-road.png",
 		upcoming: true,
 	},
+	{
+		slug: "the-potters-daughter",
+		title: "The Potter's Daughter",
+		duration: "1h 42m",
+		land: "Ghana",
+		excerpt:
+			"A young potter must choose between the traditions of her mother's hands and the future calling her to the city.",
+		image: "/img/film-the-potters-daughter.jpg",
+	},
+	{
+		slug: "crossing-the-mara",
+		title: "Crossing the Mara",
+		duration: "1h 36m",
+		land: "Kenya / Tanzania",
+		excerpt:
+			"Two brothers, one herd, and a river that tests everything their father taught them about land, loyalty, and letting go.",
+		image: "/img/film-crossing-the-mara.jpg",
+	},
+	{
+		slug: "the-weaver-of-lagos",
+		title: "The Weaver of Lagos",
+		duration: "1h 51m",
+		land: "Nigeria",
+		excerpt:
+			"A master tailor in a fading workshop sews the stories of a city into fabric, until one garment threatens to unravel his family.",
+		image: "/img/film-weaver-of-lagos.jpg",
+	},
 ];
 
 export const UPCOMING_FILMS: Film[] = FILMS.filter(
