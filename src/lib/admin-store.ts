@@ -100,6 +100,7 @@ export type Content = {
 	plans: PlanSetting[];
 	payments: PaymentSetting[];
 	messages: Message[];
+	wallet: Wallet;
 	accessCode: string;
 };
 
@@ -182,6 +183,7 @@ export function seedContent(): Content {
 			},
 		],
 		messages: [],
+		wallet: { balance: 0, currency: "UGX", transactions: [] },
 		accessCode: ADMIN_PASSCODE,
 	};
 }
