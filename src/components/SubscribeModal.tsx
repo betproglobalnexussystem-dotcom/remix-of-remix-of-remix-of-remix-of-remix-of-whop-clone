@@ -80,13 +80,6 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	useEffect(() => {
 		if (!open) return;
 		let cancelled = false;
-		const configured = content.plans.find(
-			(item) => item.id === "intl",
-		)?.whopPlanId;
-		if (configured) {
-			setWhopPlan(configured);
-			return;
-		}
 		getWhopPlanId({ data: { region: "INTL" } })
 			.then((res) => {
 				if (!cancelled) setWhopPlan(res.planId);
@@ -97,7 +90,7 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 		return () => {
 			cancelled = true;
 		};
-	}, [open, content.plans]);
+	}, [open]);
 
 
 	useEffect(() => {

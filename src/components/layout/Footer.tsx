@@ -2,7 +2,6 @@ import {
   FOOTER_ABOUT,
   FOOTER_COMMUNITY,
   FOOTER_LEGAL,
-  IMG,
 } from "../../data/site";
 import brandLogo from "../../assets/sanyuka-african-ent-logo.png.asset.json";
 

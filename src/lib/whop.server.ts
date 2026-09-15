@@ -64,7 +64,7 @@ async function ensureStreamingProduct() {
  * Finds (or creates) the Whop plan for a region so nothing has to be
  * configured by hand in the dashboard.
  */
-export async function ensurePlan(region: WhopRegion): Promise<string | null> {
+export async function ensurePlan(_region: WhopRegion): Promise<string | null> {
 	const canonicalRegion: WhopRegion = "INTL";
 	const cached = planCache.get(canonicalRegion);
 	if (cached) return cached;
