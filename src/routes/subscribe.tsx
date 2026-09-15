@@ -10,6 +10,7 @@ import {
 	readSubscription,
 	writeSubscription,
 } from "../lib/subscription";
+import { getRegionByIp } from "../lib/geo.functions";
 
 export const Route = createFileRoute("/subscribe")({
 	component: SubscribePage,
@@ -44,6 +45,9 @@ function SubscribePage() {
 	useEffect(() => {
 		setRegion(detectRegion());
 		setActive(Boolean(readSubscription()));
+		getRegionByIp()
+			.then((res) => setRegion(res.region))
+			.catch(() => {});
 	}, []);
 
 	const plan = planFor(region);

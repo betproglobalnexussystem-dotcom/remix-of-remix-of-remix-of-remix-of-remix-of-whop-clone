@@ -1774,3 +1774,79 @@ h3,
   opacity: 0.85;
   margin-bottom: 26px;
 }
+
+/* Floating subscription panel */
+.sub-float {
+	position: fixed;
+	inset: 0;
+	z-index: 90;
+	display: grid;
+	place-items: center;
+	padding: 20px;
+}
+.sub-float-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(12, 10, 8, 0.72);
+	backdrop-filter: blur(3px);
+}
+.sub-float-card {
+	position: relative;
+	width: min(560px, 100%);
+	max-height: 88vh;
+	overflow: auto;
+	background: var(--paper, #fbf8f3);
+	color: var(--ink, #1a1613);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 18px;
+	padding: 28px;
+	box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.sub-float-close {
+	position: absolute;
+	top: 10px;
+	right: 14px;
+	background: none;
+	border: 0;
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	color: inherit;
+}
+.sub-float-price {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	margin: 18px 0;
+}
+.sub-float-price strong {
+	font-size: 38px;
+}
+.sub-float-methods {
+	display: grid;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+.sub-float-method {
+	text-align: left;
+	display: grid;
+	gap: 4px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.14);
+	background: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+	color: inherit;
+}
+.sub-float-method.is-active {
+	border: 2px solid var(--gold);
+}
+.sub-float-method span {
+	font-size: 14px;
+	opacity: 0.8;
+}
+.sub-float-pending {
+	border: 1px dashed var(--gold);
+	border-radius: 12px;
+	padding: 16px;
+}
