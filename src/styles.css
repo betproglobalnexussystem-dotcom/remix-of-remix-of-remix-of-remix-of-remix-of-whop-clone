@@ -1757,3 +1757,20 @@ h3,
 		font-size: 28px;
 	}
 }
+
+.watch-paywall {
+  max-width: 620px;
+  margin: 12vh auto;
+  text-align: center;
+  color: #fff;
+}
+
+.watch-paywall h1 {
+  font-size: 40px;
+  margin: 8px 0 14px;
+}
+
+.watch-paywall p {
+  opacity: 0.85;
+  margin-bottom: 26px;
+}
