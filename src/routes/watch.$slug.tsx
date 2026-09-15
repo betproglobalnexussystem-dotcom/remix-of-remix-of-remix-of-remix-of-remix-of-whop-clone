@@ -82,8 +82,8 @@ function WatchPage() {
 						// Require hardware-backed protection where the platform offers it.
 						advanced: {
 							"com.widevine.alpha": {
-								videoRobustness: "HW_SECURE_DECODE",
-								audioRobustness: "SW_SECURE_CRYPTO",
+								videoRobustness: ["HW_SECURE_DECODE", "SW_SECURE_DECODE"],
+								audioRobustness: ["SW_SECURE_CRYPTO"],
 								persistentStateRequired: false,
 							},
 						},
