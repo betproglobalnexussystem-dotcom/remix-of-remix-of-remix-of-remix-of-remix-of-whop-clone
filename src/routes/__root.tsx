@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
+import { SiteLoader } from "../components/SiteLoader";
 import { IMG } from "../data/site";
 import styles from "../styles.css?url";
 
@@ -41,6 +42,7 @@ function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteLoader />
       <div className="site-shell">
         <Header />
         <main className="site-main">
