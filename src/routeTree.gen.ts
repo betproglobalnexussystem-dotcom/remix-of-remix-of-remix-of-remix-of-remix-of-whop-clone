@@ -38,8 +38,11 @@ import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
+import { Route as WatchSlugRouteImport } from './routes/watch.$slug'
 import { Route as ArticleCategoryCategoryRouteImport } from './routes/article.category.$category'
 import { Route as ArticleTagTagRouteImport } from './routes/article.tag.$tag'
+import { Route as ApiPublicStreamLicenseRouteImport } from './routes/api/public/stream.license'
+import { Route as ApiPublicStreamManifestRouteImport } from './routes/api/public/stream.manifest'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -186,6 +189,11 @@ const VideosSlugRoute = VideosSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => VideosRoute,
 } as any)
+const WatchSlugRoute = WatchSlugRouteImport.update({
+  id: '/watch/$slug',
+  path: '/watch/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleCategoryCategoryRoute = ArticleCategoryCategoryRouteImport.update({
   id: '/article/category/$category',
   path: '/article/category/$category',
@@ -194,6 +202,16 @@ const ArticleCategoryCategoryRoute = ArticleCategoryCategoryRouteImport.update({
 const ArticleTagTagRoute = ArticleTagTagRouteImport.update({
   id: '/article/tag/$tag',
   path: '/article/tag/$tag',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicStreamLicenseRoute = ApiPublicStreamLicenseRouteImport.update({
+  id: '/api/public/stream/license',
+  path: '/api/public/stream/license',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicStreamManifestRoute = ApiPublicStreamManifestRouteImport.update({
+  id: '/api/public/stream/manifest',
+  path: '/api/public/stream/manifest',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -227,8 +245,11 @@ export interface FileRoutesByFullPath {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -260,8 +281,11 @@ export interface FileRoutesByTo {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -294,8 +318,11 @@ export interface FileRoutesById {
   '/films/$slug': typeof FilmsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
+  '/watch/$slug': typeof WatchSlugRoute
   '/article/category/$category': typeof ArticleCategoryCategoryRoute
   '/article/tag/$tag': typeof ArticleTagTagRoute
+  '/api/public/stream/license': typeof ApiPublicStreamLicenseRoute
+  '/api/public/stream/manifest': typeof ApiPublicStreamManifestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -329,8 +356,11 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/license'
+    | '/api/public/stream/manifest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -362,8 +392,11 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/license'
+    | '/api/public/stream/manifest'
   id:
     | '__root__'
     | '/'
@@ -395,8 +428,11 @@ export interface FileRouteTypes {
     | '/films/$slug'
     | '/products/$slug'
     | '/videos/$slug'
+    | '/watch/$slug'
     | '/article/category/$category'
     | '/article/tag/$tag'
+    | '/api/public/stream/license'
+    | '/api/public/stream/manifest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -427,8 +463,11 @@ export interface RootRouteChildren {
   CollectionsLabelRoute: typeof CollectionsLabelRoute
   EventSlugRoute: typeof EventSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
+  WatchSlugRoute: typeof WatchSlugRoute
   ArticleCategoryCategoryRoute: typeof ArticleCategoryCategoryRoute
   ArticleTagTagRoute: typeof ArticleTagTagRoute
+  ApiPublicStreamLicenseRoute: typeof ApiPublicStreamLicenseRoute
+  ApiPublicStreamManifestRoute: typeof ApiPublicStreamManifestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -636,6 +675,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosSlugRouteImport
       parentRoute: typeof VideosRoute
     }
+    '/watch/$slug': {
+      id: '/watch/$slug'
+      path: '/watch/$slug'
+      fullPath: '/watch/$slug'
+      preLoaderRoute: typeof WatchSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article/category/$category': {
       id: '/article/category/$category'
       path: '/article/category/$category'
@@ -648,6 +694,20 @@ declare module '@tanstack/react-router' {
       path: '/article/tag/$tag'
       fullPath: '/article/tag/$tag'
       preLoaderRoute: typeof ArticleTagTagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/stream/license': {
+      id: '/api/public/stream/license'
+      path: '/api/public/stream/license'
+      fullPath: '/api/public/stream/license'
+      preLoaderRoute: typeof ApiPublicStreamLicenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/stream/manifest': {
+      id: '/api/public/stream/manifest'
+      path: '/api/public/stream/manifest'
+      fullPath: '/api/public/stream/manifest'
+      preLoaderRoute: typeof ApiPublicStreamManifestRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -702,8 +762,11 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsLabelRoute: CollectionsLabelRoute,
   EventSlugRoute: EventSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
+  WatchSlugRoute: WatchSlugRoute,
   ArticleCategoryCategoryRoute: ArticleCategoryCategoryRoute,
   ArticleTagTagRoute: ArticleTagTagRoute,
+  ApiPublicStreamLicenseRoute: ApiPublicStreamLicenseRoute,
+  ApiPublicStreamManifestRoute: ApiPublicStreamManifestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

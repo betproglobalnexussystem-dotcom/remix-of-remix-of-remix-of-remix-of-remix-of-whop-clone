@@ -37,9 +37,15 @@ function FilmDetailPage() {
           Join MAGEYE to watch this film and the growing library of original
           documentaries, conversations, and courses.
         </p>
-        <Link className="btn-gold" to="/join-the-community">
-          Join MAGEYE to Watch
-        </Link>
+        {film.upcoming ? (
+          <Link className="btn-gold" to="/join-the-community">
+            Join MAGEYE to Watch
+          </Link>
+        ) : (
+          <Link className="btn-gold" to="/watch/$slug" params={{ slug: film.slug }}>
+            Watch Now
+          </Link>
+        )}
       </article>
       <SiteEnd />
     </>
