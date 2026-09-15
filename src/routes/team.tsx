@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteEnd } from "../components/layout/SiteEnd";
-import { TEAM } from "../data/pages";
+import { useContent } from "../lib/admin-store";
 
 export const Route = createFileRoute("/team")({
   component: TeamPage,
@@ -16,7 +16,7 @@ function TeamPage() {
         <h1>Team</h1>
       </section>
       <article className="page-copy">
-        {TEAM.map((person) => (
+        {useContent().team.map((person) => (
           <section key={person.name}>
             <h2>{person.name}</h2>
             <p className="meta">{person.role}</p>
