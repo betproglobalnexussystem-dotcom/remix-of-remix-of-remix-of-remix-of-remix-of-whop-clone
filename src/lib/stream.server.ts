@@ -11,14 +11,10 @@ type StreamSource = {
 	drm?: "widevine" | "playready" | "fairplay" | "clearkey";
 };
 
-// Replace these with your own DRM-packaged (Widevine/PlayReady) DASH manifests.
-// Until then every film falls back to a DRM-protected reference stream so the
-// protection pipeline is fully exercised end to end.
+// Source URLs stay server-side; the browser only ever sees a signed ticket URL.
 const FALLBACK: StreamSource = {
 	manifest:
-		"https://storage.googleapis.com/shaka-demo-assets/angel-one-widevine/dash.mpd",
-	licenseUrl: "https://cwip-shaka-proxy.appspot.com/no_auth",
-	drm: "widevine",
+		"https://pub-eb00261df49f466a9e5efee154650b48.r2.dev/media/admin/02c0593d-4e27-4354-8f02-acc7325c5d43-Bedroom_Chains_Trailer_Final.mp4",
 };
 
 const SOURCES: Record<string, StreamSource> = {};
