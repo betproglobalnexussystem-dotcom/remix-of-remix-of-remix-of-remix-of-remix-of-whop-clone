@@ -6,7 +6,9 @@ import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
 import {
 	WhopCheckoutEmbed,
+	WhopExpressCheckoutButton,
 } from "@whop/checkout/react";
+import { getDeviceIdentity } from "../lib/device";
 import { getRegionByIp } from "../lib/geo.functions";
 import { useContent } from "../lib/admin-store";
 import { checkoutReturnUrl, WHOP_STREAMING_PLAN_ID } from "../lib/whop";
