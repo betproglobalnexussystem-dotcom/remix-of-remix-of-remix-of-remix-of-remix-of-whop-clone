@@ -49,6 +49,16 @@ function WatchPage() {
 				if (destroyed) return;
 				setSession(ticket.sessionId);
 
+				// Progressive (non-DRM) source: play straight from the token-gated
+				// proxy so no upstream URL is ever exposed to the browser.
+				if (!ticket.drm) {
+					const el = videoRef.current;
+					if (!el) return;
+					el.src = ticket.manifestUrl;
+					setStatus("ready");
+					return;
+				}
+
 				const mod = (await import(
 					"shaka-player/dist/shaka-player.compiled"
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
