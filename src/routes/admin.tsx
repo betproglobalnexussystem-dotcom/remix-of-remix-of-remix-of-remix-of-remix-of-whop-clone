@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
 	type Content,
-	fileToDataUrl,
 	getAdminPasscode,
 	isAdminSignedIn,
 	newId,
@@ -568,6 +567,7 @@ function AdminPage() {
 								{ key: "amount", label: "Amount", type: "number" },
 								{ key: "priceLabel", label: "Displayed price" },
 								{ key: "period", label: "Period" },
+								{ key: "whopPlanId", label: "Whop plan ID" },
 							]}
 							blank={() => ({
 								id: newId("plan"),
@@ -704,18 +704,13 @@ function FieldInput({
 				) : null}
 				<input
 					type="text"
-					placeholder="/img/example.jpg"
+					placeholder="https://... image link"
 					value={String(value ?? "")}
 					onChange={(event) => onChange(event.target.value)}
 				/>
-				<input
-					type="file"
-					accept="image/*"
-					onChange={async (event) => {
-						const file = event.target.files?.[0];
-						if (file) onChange(await fileToDataUrl(file));
-					}}
-				/>
+				<small className="admin-hint">
+					Paste a public image or video link (https://…).
+				</small>
 			</label>
 		);
 	return (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import {
 	PAYMENT_METHODS,
+	activateFromReturnUrl,
 	type PaymentMethod,
 	type Region,
 	detectRegion,
@@ -11,6 +12,7 @@ import {
 	writeSubscription,
 } from "../lib/subscription";
 import { getRegionByIp } from "../lib/geo.functions";
+import { createWhopCheckout } from "../lib/whop.functions";
 import { useContent } from "../lib/admin-store";
 
 export const Route = createFileRoute("/subscribe")({
@@ -44,7 +46,9 @@ function SubscribePage() {
 	const [active, setActive] = useState(false);
 
 	useEffect(() => {
-		setRegion(detectRegion());
+		const guess = detectRegion();
+		setRegion(guess);
+		activateFromReturnUrl(guess);
 		setActive(Boolean(readSubscription()));
 		getRegionByIp()
 			.then((res) => setRegion(res.region))
@@ -67,8 +71,20 @@ function SubscribePage() {
 		return match ? { ...item, name: match.name, blurb: match.blurb } : item;
 	});
 
-	function start(id: PaymentMethod) {
+	async function start(id: PaymentMethod) {
 		setMethod(id);
+		const res = await createWhopCheckout({
+			data: {
+				planId: setting?.whopPlanId ?? "",
+				region,
+				method: id,
+				redirectUrl: `${window.location.origin}/subscribe?paid=1`,
+			},
+		}).catch(() => null);
+		if (res?.url) {
+			window.location.assign(res.url);
+			return;
+		}
 		setPending(true);
 	}
 

@@ -1,7 +1,8 @@
-// Mock content store for the admin dashboard.
-// Everything lives in the browser (localStorage) so the dashboard is fully
-// usable before a real backend is wired. Firebase can replace read/write later.
+// Live content store backed by Firestore (single document: site/content).
+// Every public page and the admin dashboard read from here, so edits made in
+// the dashboard appear on the real site for every visitor.
 
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
 	COURSES,
@@ -15,6 +16,7 @@ import {
 	type Podcast,
 } from "../data/catalog";
 import { BOARD, TEAM } from "../data/pages";
+import { getDb } from "./firebase";
 
 export type HeroSlide = {
 	id: string;
@@ -35,6 +37,8 @@ export type PlanSetting = {
 	amount: number;
 	priceLabel: string;
 	period: string;
+	/** Whop plan id used when the visitor checks out on this plan. */
+	whopPlanId?: string;
 };
 
 export type PaymentSetting = {
@@ -78,8 +82,8 @@ export type Content = {
 	plans: PlanSetting[];
 	payments: PaymentSetting[];
 	messages: Message[];
+	accessCode: string;
 };
-
 
 function slugId(value: string) {
 	return value
@@ -87,6 +91,9 @@ function slugId(value: string) {
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-|-$/g, "");
 }
+
+/** Mock gate only — the access code is editable from the dashboard. */
+export const ADMIN_PASSCODE = "mageye-admin";
 
 export function seedContent(): Content {
 	return {
@@ -124,6 +131,7 @@ export function seedContent(): Content {
 				amount: 5000,
 				priceLabel: "UGX 5,000",
 				period: "per month",
+				whopPlanId: "",
 			},
 			{
 				id: "intl",
@@ -132,6 +140,7 @@ export function seedContent(): Content {
 				amount: 5.99,
 				priceLabel: "USD 5.99",
 				period: "per month",
+				whopPlanId: "",
 			},
 		],
 		payments: [
@@ -155,39 +164,62 @@ export function seedContent(): Content {
 			},
 		],
 		messages: [],
+		accessCode: ADMIN_PASSCODE,
 	};
 }
 
-const KEY = "mageye.admin.content.v1";
+const COLLECTION = "site";
+const DOC_ID = "content";
 const listeners = new Set<(content: Content) => void>();
 let cache: Content | null = null;
+let started = false;
+
+function clean<T>(value: T): T {
+	return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function merge(raw: Partial<Content> | undefined): Content {
+	return { ...seedContent(), ...(raw ?? {}) };
+}
+
+/** Starts the realtime Firestore listener once, seeding the doc if empty. */
+function start() {
+	if (started || typeof window === "undefined") return;
+	started = true;
+	const db = getDb();
+	if (!db) return;
+	const ref = doc(db, COLLECTION, DOC_ID);
+	onSnapshot(
+		ref,
+		(snap) => {
+			if (!snap.exists()) {
+				const seed = seedContent();
+				cache = seed;
+				void setDoc(ref, clean(seed));
+				for (const listener of listeners) listener(seed);
+				return;
+			}
+			cache = merge(snap.data() as Partial<Content>);
+			for (const listener of listeners) listener(cache);
+		},
+		() => {
+			/* offline / rules issue — keep whatever we have */
+		},
+	);
+}
 
 export function readContent(): Content {
 	if (typeof window === "undefined") return seedContent();
-	if (cache) return cache;
-	try {
-		const raw = window.localStorage.getItem(KEY);
-		if (raw) {
-			cache = { ...seedContent(), ...(JSON.parse(raw) as Content) };
-			return cache;
-		}
-	} catch {
-		/* fall back to seed */
-	}
-	cache = seedContent();
+	start();
+	if (!cache) cache = seedContent();
 	return cache;
 }
 
 export function writeContent(next: Content) {
 	cache = next;
-	if (typeof window !== "undefined") {
-		try {
-			window.localStorage.setItem(KEY, JSON.stringify(next));
-		} catch {
-			/* storage full — keep the in-memory copy */
-		}
-	}
 	for (const listener of listeners) listener(next);
+	const db = getDb();
+	if (db) void setDoc(doc(db, COLLECTION, DOC_ID), clean(next));
 }
 
 export function updateContent(patch: (current: Content) => Content) {
@@ -195,19 +227,18 @@ export function updateContent(patch: (current: Content) => Content) {
 }
 
 export function resetContent() {
-	cache = null;
-	if (typeof window !== "undefined") window.localStorage.removeItem(KEY);
 	writeContent(seedContent());
 }
 
 export function subscribeContent(listener: (content: Content) => void) {
+	start();
 	listeners.add(listener);
 	return () => {
 		listeners.delete(listener);
 	};
 }
 
-/** SSR-safe hook: renders the seed first, then the saved content after mount. */
+/** SSR-safe hook: renders the seed first, then live Firestore content. */
 export function useContent(): Content {
 	const [content, setContent] = useState<Content>(() => seedContent());
 	useEffect(() => {
@@ -231,32 +262,17 @@ export function addMessage(message: Omit<Message, "id" | "createdAt" | "read">) 
 	}));
 }
 
-/** Reads a picked file as a data URL so uploads work without storage. */
-export function fileToDataUrl(file: File): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => resolve(String(reader.result));
-		reader.onerror = () => reject(reader.error);
-		reader.readAsDataURL(file);
-	});
-}
-
 const ADMIN_KEY = "mageye.admin.session";
-const PASSCODE_KEY = "mageye.admin.passcode";
-/** Mock gate only — replace with Firebase Auth later. */
-export const ADMIN_PASSCODE = "mageye-admin";
 
-/** Current access code (admin-editable, stored in this browser). */
+/** Current access code (stored in Firestore, editable from the dashboard). */
 export function getAdminPasscode() {
-	if (typeof window === "undefined") return ADMIN_PASSCODE;
-	return window.localStorage.getItem(PASSCODE_KEY) || ADMIN_PASSCODE;
+	return readContent().accessCode || ADMIN_PASSCODE;
 }
 
 export function setAdminPasscode(next: string) {
-	if (typeof window === "undefined") return false;
 	const value = next.trim();
 	if (value.length < 4) return false;
-	window.localStorage.setItem(PASSCODE_KEY, value);
+	updateContent((current) => ({ ...current, accessCode: value }));
 	return true;
 }
 

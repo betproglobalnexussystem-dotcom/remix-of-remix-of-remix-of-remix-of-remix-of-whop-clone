@@ -5,6 +5,8 @@ import mtnLogo from "../assets/mtn-momo.png.asset.json";
 import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
 import { getRegionByIp } from "../lib/geo.functions";
+import { createWhopCheckout } from "../lib/whop.functions";
+import { useContent } from "../lib/admin-store";
 import {
 	type PaymentMethod,
 	type Region,
@@ -65,6 +67,9 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [country, setCountry] = useState<string | null>(null);
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const content = useContent();
 
 	useEffect(() => {
 		if (!open) return;
@@ -100,8 +105,12 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 
 	const selected = METHODS.find((item) => item.id === method) ?? METHODS[1]!;
 	const currency = selected.currency;
-	const amount = currency === "UGX" ? UGX_MONTH : USD_MONTH;
-	const price = money(currency, amount);
+	const plan = content.plans.find(
+		(item) => item.id === (currency === "UGX" ? "ug" : "intl"),
+	);
+	const amount =
+		plan?.amount ?? (currency === "UGX" ? UGX_MONTH : USD_MONTH);
+	const price = plan?.priceLabel || money(currency, amount);
 
 	function activate() {
 		writeSubscription({
@@ -111,6 +120,33 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 			startedAt: Date.now(),
 		});
 		onActivated?.();
+	}
+
+	/** Every method checks out through Whop. */
+	async function payNow() {
+		setBusy(true);
+		setError(null);
+		try {
+			const res = await createWhopCheckout({
+				data: {
+					planId: plan?.whopPlanId ?? "",
+					region,
+					method,
+					redirectUrl: `${window.location.origin}${window.location.pathname}?paid=1`,
+				},
+			});
+			if (res.url) {
+				window.location.assign(res.url);
+				return;
+			}
+			setError(res.error ?? "Checkout could not be started.");
+			setPending(true);
+		} catch {
+			setError("Checkout could not be started.");
+			setPending(true);
+		} finally {
+			setBusy(false);
+		}
 	}
 
 	return (
@@ -211,15 +247,16 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 						<button
 							type="button"
 							className="btn-gold sub-float-pay"
-							onClick={() => setPending(true)}
+							onClick={payNow}
+							disabled={busy}
 						>
-							Pay {price} now
+							{busy ? "Opening checkout…" : `Pay ${price} now`}
 						</button>
 						{pending ? (
 							<div className="sub-float-pending">
 								<p>
-									{selected.name} is not connected yet. Once your keys are added
-									this button opens the real checkout for {price} per month.
+									{error ??
+										`Checkout for ${selected.name} could not be opened right now.`}
 								</p>
 								<button type="button" className="btn-ghost" onClick={activate}>
 									Grant test access for now

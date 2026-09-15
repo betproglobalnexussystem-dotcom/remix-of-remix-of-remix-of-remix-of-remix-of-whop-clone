@@ -105,6 +105,17 @@ export function writeSubscription(state: SubscriptionState) {
 	window.localStorage.setItem(KEY, JSON.stringify(state));
 }
 
+/** Marks access active when Whop sends the visitor back with ?paid=1. */
+export function activateFromReturnUrl(region: Region): boolean {
+	if (typeof window === "undefined") return false;
+	const url = new URL(window.location.href);
+	if (url.searchParams.get("paid") !== "1") return false;
+	writeSubscription({ active: true, region, startedAt: Date.now() });
+	url.searchParams.delete("paid");
+	window.history.replaceState({}, "", url.toString());
+	return true;
+}
+
 export function clearSubscription() {
 	if (typeof window === "undefined") return;
 	window.localStorage.removeItem(KEY);

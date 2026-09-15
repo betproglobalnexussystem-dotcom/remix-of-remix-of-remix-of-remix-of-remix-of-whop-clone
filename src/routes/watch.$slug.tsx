@@ -5,6 +5,7 @@ import { filmBySlug } from "../data/catalog";
 import { getPlaybackTicket } from "../lib/stream.functions";
 import {
 	INTL_PLAN,
+	activateFromReturnUrl,
 	detectRegion,
 	planFor,
 	readSubscription,
@@ -52,7 +53,9 @@ function WatchPage() {
 	const [showSubscribe, setShowSubscribe] = useState(false);
 
 	useEffect(() => {
-		setPlan(planFor(detectRegion()));
+		const guess = detectRegion();
+		setPlan(planFor(guess));
+		activateFromReturnUrl(guess);
 		const subscribed = Boolean(readSubscription());
 		setAccess(subscribed ? "allowed" : "denied");
 		if (!subscribed) setShowSubscribe(true);
