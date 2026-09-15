@@ -2265,11 +2265,24 @@ h3,
 .sub-float-logos img {
   height: 22px;
   width: auto;
-  max-width: 56px;
+  max-width: 74px;
   object-fit: contain;
   background: #fff;
   border-radius: 4px;
   padding: 2px 5px;
+}
+.sub-float-logos--card img {
+  height: 25px;
+  max-width: 96px;
+}
+.sub-float-logos--paypal img {
+  height: 28px;
+  max-width: 56px;
+}
+.sub-float-logos--google-pay img {
+  height: 25px;
+  max-width: 72px;
+  padding: 0;
 }
 .sub-float-whop {
   display: inline-grid;

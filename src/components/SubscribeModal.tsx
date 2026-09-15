@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import airtelLogo from "../assets/airtel-money.png.asset.json";
-import googlePayLogo from "../assets/googlepay.svg.asset.json";
-import mastercardLogo from "../assets/mastercard.svg.asset.json";
+import googlePayLogo from "../assets/google-pay-official.webp.asset.json";
 import mtnLogo from "../assets/mtn-momo.png.asset.json";
-import paypalLogo from "../assets/paypal.svg.asset.json";
-import visaLogo from "../assets/visa.svg.asset.json";
+import paypalLogo from "../assets/paypal-official.webp.asset.json";
+import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
 import { getRegionByIp } from "../lib/geo.functions";
 import {
 	type PaymentMethod,
@@ -38,7 +37,7 @@ const METHODS: Method[] = [
 	{
 		id: "card",
 		name: "Credit/debit card",
-		logos: [visaLogo.url, mastercardLogo.url],
+		logos: [cardLogos.url],
 		currency: "USD",
 	},
 	{ id: "paypal", name: "PayPal", logos: [paypalLogo.url], currency: "USD" },
@@ -151,7 +150,10 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 									}}
 								>
 								<span className="sub-float-radio" aria-hidden="true" />
-									<span className="sub-float-logos" aria-hidden="true">
+									<span
+										className={`sub-float-logos sub-float-logos--${item.id}`}
+										aria-hidden="true"
+									>
 										{item.logos.map((logo) => (
 											<img key={logo} src={logo} alt="" loading="lazy" />
 										))}
