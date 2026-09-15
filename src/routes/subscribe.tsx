@@ -11,6 +11,7 @@ import {
 	writeSubscription,
 } from "../lib/subscription";
 import { getRegionByIp } from "../lib/geo.functions";
+import { useContent } from "../lib/admin-store";
 
 export const Route = createFileRoute("/subscribe")({
 	component: SubscribePage,
@@ -50,7 +51,21 @@ function SubscribePage() {
 			.catch(() => {});
 	}, []);
 
-	const plan = planFor(region);
+	const content = useContent();
+	const setting = content.plans.find(
+		(item) => item.id === (region === "UG" ? "ug" : "intl"),
+	);
+	const basePlan = planFor(region);
+	const plan = setting
+		? { ...basePlan, label: setting.priceLabel, period: setting.period }
+		: basePlan;
+	const methods = PAYMENT_METHODS.filter((item) => {
+		const match = content.payments.find((entry) => entry.id === item.id);
+		return match ? match.enabled : true;
+	}).map((item) => {
+		const match = content.payments.find((entry) => entry.id === item.id);
+		return match ? { ...item, name: match.name, blurb: match.blurb } : item;
+	});
 
 	function start(id: PaymentMethod) {
 		setMethod(id);
@@ -115,7 +130,7 @@ function SubscribePage() {
 						}}
 					>
 						<h2 className="serif" style={{ margin: 0, fontSize: 28 }}>
-							{region === "UG" ? "Uganda plan" : "International plan"}
+							{setting ? `${setting.label} plan` : region === "UG" ? "Uganda plan" : "International plan"}
 						</h2>
 						<div style={{ fontSize: 42, fontWeight: 700, marginTop: 8 }}>
 							{plan.label}
@@ -134,7 +149,7 @@ function SubscribePage() {
 							marginTop: 16,
 						}}
 					>
-						{PAYMENT_METHODS.map((item) => (
+						{methods.map((item) => (
 							<div
 								key={item.id}
 								style={{
