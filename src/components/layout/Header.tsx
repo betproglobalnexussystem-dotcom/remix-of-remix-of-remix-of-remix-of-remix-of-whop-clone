@@ -75,6 +75,7 @@ export function Header() {
         </button>
         <Link to="/" className="logo" onClick={closeAll}>
           <img src={brandLogo.url} alt="Sanyuka African Entertainment" />
+          <span className="logo-wordmark">MAGEYE</span>
         </Link>
         <nav className="nav-main" aria-label="Primary">
           {NAV.map((item) => (

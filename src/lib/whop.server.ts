@@ -1,7 +1,3 @@
-// Server-only Whop configuration. This file never ships to the browser.
-export const WHOP_API_KEY =
-	"apik_MFzbm4STJ087W_C6565930_C_8c051bd772e5fa561700ff55c03299e0150d45197003a7833a01f14fd540ee";
-
 export const WHOP_API = "https://api.whop.com/api/v1";
 const WHOP_ACCOUNT_ID = "biz_kpS7a3ydqxnVhf";
 
@@ -23,10 +19,12 @@ export const WHOP_PRICES: Record<
 const planCache = new Map<WhopRegion, string>();
 
 async function whop(path: string, init?: RequestInit) {
+	const apiKey = process.env["WHOP_API_KEY"];
+	if (!apiKey) throw new Error("WHOP_API_KEY is not configured");
 	const res = await fetch(`${WHOP_API}${path}`, {
 		...init,
 		headers: {
-			Authorization: `Bearer ${WHOP_API_KEY}`,
+			Authorization: `Bearer ${apiKey}`,
 			"Content-Type": "application/json",
 			...(init?.headers ?? {}),
 		},
