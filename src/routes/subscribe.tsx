@@ -45,7 +45,9 @@ function SubscribePage() {
 	const [active, setActive] = useState(false);
 
 	useEffect(() => {
-		setRegion(detectRegion());
+		const guess = detectRegion();
+		setRegion(guess);
+		activateFromReturnUrl(guess);
 		setActive(Boolean(readSubscription()));
 		getRegionByIp()
 			.then((res) => setRegion(res.region))

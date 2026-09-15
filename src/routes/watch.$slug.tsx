@@ -5,6 +5,7 @@ import { filmBySlug } from "../data/catalog";
 import { getPlaybackTicket } from "../lib/stream.functions";
 import {
 	INTL_PLAN,
+	activateFromReturnUrl,
 	detectRegion,
 	planFor,
 	readSubscription,
