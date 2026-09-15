@@ -199,13 +199,12 @@ function WatchPage() {
 							: `Streaming this film needs an active MAGEYE subscription — ${plan.label} ${plan.period}.`}
 					</p>
 					{access === "denied" ? (
-						<Link
+						<a
 							className="btn-gold"
-							to="/subscribe"
-							search={{ redirect: `/watch/${film.slug}` }}
+							href={`/subscribe?redirect=${encodeURIComponent(`/watch/${film.slug}`)}`}
 						>
 							Subscribe for {plan.label}
-						</Link>
+						</a>
 					) : null}
 				</div>
 			</div>
