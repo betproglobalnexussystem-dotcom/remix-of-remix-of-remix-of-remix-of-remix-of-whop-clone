@@ -704,18 +704,13 @@ function FieldInput({
 				) : null}
 				<input
 					type="text"
-					placeholder="/img/example.jpg"
+					placeholder="https://... image link"
 					value={String(value ?? "")}
 					onChange={(event) => onChange(event.target.value)}
 				/>
-				<input
-					type="file"
-					accept="image/*"
-					onChange={async (event) => {
-						const file = event.target.files?.[0];
-						if (file) onChange(await fileToDataUrl(file));
-					}}
-				/>
+				<small className="admin-hint">
+					Paste a public image or video link (https://…).
+				</small>
 			</label>
 		);
 	return (
