@@ -59,6 +59,24 @@ export type Message = {
 	read: boolean;
 };
 
+export type WalletTx = {
+	id: string;
+	kind: "payment" | "withdrawal";
+	provider: string;
+	phone: string;
+	amount: number;
+	currency: string;
+	status: "pending" | "completed" | "failed";
+	note: string;
+	createdAt: number;
+};
+
+export type Wallet = {
+	balance: number;
+	currency: string;
+	transactions: WalletTx[];
+};
+
 export type Director = {
 	name: string;
 	role: string;
@@ -82,6 +100,7 @@ export type Content = {
 	plans: PlanSetting[];
 	payments: PaymentSetting[];
 	messages: Message[];
+	wallet: Wallet;
 	accessCode: string;
 };
 
@@ -164,6 +183,7 @@ export function seedContent(): Content {
 			},
 		],
 		messages: [],
+		wallet: { balance: 0, currency: "UGX", transactions: [] },
 		accessCode: ADMIN_PASSCODE,
 	};
 }

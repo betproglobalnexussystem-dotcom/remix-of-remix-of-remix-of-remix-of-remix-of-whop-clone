@@ -47,6 +47,7 @@ const SECTIONS = [
 	{ id: "people", label: "Team & Board" },
 	{ id: "pages", label: "Pages" },
 	{ id: "subscription", label: "Subscription" },
+	{ id: "wallet", label: "Wallet" },
 	{ id: "messages", label: "Messages" },
 	{ id: "access", label: "Access Code" },
 ] as const;
@@ -67,6 +68,7 @@ const PREVIEW_PATH: Record<SectionId, string> = {
 	people: "/team",
 	pages: "/team",
 	subscription: "/subscribe",
+	wallet: "/subscribe",
 	messages: "/contact",
 	access: "/admin",
 };
@@ -606,6 +608,8 @@ function AdminPage() {
 					</>
 				) : null}
 
+				{section === "wallet" ? <WalletPanel content={content} /> : null}
+
 				{section === "messages" ? <Messages content={content} /> : null}
 
 				{section === "access" ? <AccessCode /> : null}
@@ -619,6 +623,131 @@ function AdminPage() {
 				)}
 			</section>
 		</main>
+	);
+}
+
+function WalletPanel({ content }: { content: Content }) {
+	const wallet = content.wallet ?? { balance: 0, currency: "UGX", transactions: [] };
+	const [amount, setAmount] = useState("");
+	const [phone, setPhone] = useState("");
+
+	const paidIn = wallet.transactions
+		.filter((tx) => tx.kind === "payment" && tx.status === "completed")
+		.reduce((sum, tx) => sum + tx.amount, 0);
+	const paidOut = wallet.transactions
+		.filter((tx) => tx.kind === "withdrawal" && tx.status !== "failed")
+		.reduce((sum, tx) => sum + tx.amount, 0);
+
+	function withdraw() {
+		const value = Number(amount);
+		if (!value || value <= 0 || !phone.trim()) return;
+		updateContent((current) => {
+			const base = current.wallet ?? {
+				balance: 0,
+				currency: "UGX",
+				transactions: [],
+			};
+			return {
+				...current,
+				wallet: {
+					...base,
+					balance: base.balance - value,
+					transactions: [
+						{
+							id: newId("wtx"),
+							kind: "withdrawal" as const,
+							provider: "Mobile Money",
+							phone: phone.trim(),
+							amount: value,
+							currency: base.currency,
+							status: "pending" as const,
+							note: "Withdrawal requested from dashboard",
+							createdAt: Date.now(),
+						},
+						...base.transactions,
+					],
+				},
+			};
+		});
+		setAmount("");
+		setPhone("");
+	}
+
+	return (
+		<div className="admin-panel">
+			<h1 className="serif">Wallet</h1>
+			<p className="admin-hint">
+				Mobile Money balance, withdrawals and every transaction. Payments land
+				here once your Mobile Money provider is connected.
+			</p>
+
+			<div className="admin-cards">
+				<div className="admin-stat">
+					<span>Available balance</span>
+					<strong>
+						{wallet.currency} {wallet.balance.toLocaleString()}
+					</strong>
+				</div>
+				<div className="admin-stat">
+					<span>Total received</span>
+					<strong>
+						{wallet.currency} {paidIn.toLocaleString()}
+					</strong>
+				</div>
+				<div className="admin-stat">
+					<span>Total withdrawn</span>
+					<strong>
+						{wallet.currency} {paidOut.toLocaleString()}
+					</strong>
+				</div>
+			</div>
+
+			<div className="admin-row">
+				<label>
+					Withdraw amount ({wallet.currency})
+					<input
+						type="number"
+						value={amount}
+						onChange={(event) => setAmount(event.target.value)}
+						placeholder="50000"
+					/>
+				</label>
+				<label>
+					Mobile Money number
+					<input
+						type="tel"
+						value={phone}
+						onChange={(event) => setPhone(event.target.value)}
+						placeholder="07XX XXX XXX"
+					/>
+				</label>
+				<button type="button" className="btn-gold" onClick={withdraw}>
+					Request withdrawal
+				</button>
+			</div>
+
+			<h2 className="serif">Transactions</h2>
+			{wallet.transactions.length === 0 ? (
+				<p className="admin-hint">No transactions yet.</p>
+			) : (
+				<div className="admin-list">
+					{wallet.transactions.map((tx) => (
+						<article key={tx.id} className="admin-item">
+							<strong>
+								{tx.kind === "payment" ? "+" : "-"} {tx.currency}{" "}
+								{tx.amount.toLocaleString()}
+							</strong>
+							<p>
+								{tx.provider} · {tx.phone || "—"} · {tx.status}
+							</p>
+							<p className="admin-hint">
+								{new Date(tx.createdAt).toLocaleString()} — {tx.note}
+							</p>
+						</article>
+					))}
+				</div>
+			)}
+		</div>
 	);
 }
 

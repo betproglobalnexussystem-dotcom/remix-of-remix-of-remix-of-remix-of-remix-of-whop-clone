@@ -4,8 +4,12 @@ import googlePayLogo from "../assets/google-pay-official.webp.asset.json";
 import mtnLogo from "../assets/mtn-momo.png.asset.json";
 import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
+import {
+	WhopCheckoutEmbed,
+	WhopExpressCheckoutButton,
+} from "@whop/checkout/react";
 import { getRegionByIp } from "../lib/geo.functions";
-import { createWhopCheckout } from "../lib/whop.functions";
+import { createWhopCheckout, getWhopPlanId } from "../lib/whop.functions";
 import { useContent } from "../lib/admin-store";
 import {
 	type PaymentMethod,
@@ -69,7 +73,32 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [pending, setPending] = useState(false);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [whopPlan, setWhopPlan] = useState<string | null | undefined>(undefined);
 	const content = useContent();
+
+	// Resolve the Whop plan for this region so the one-click button can mount.
+	useEffect(() => {
+		if (!open) return;
+		let cancelled = false;
+		const configured = content.plans.find(
+			(item) => item.id === (region === "UG" ? "ug" : "intl"),
+		)?.whopPlanId;
+		if (configured) {
+			setWhopPlan(configured);
+			return;
+		}
+		getWhopPlanId({ data: { region } })
+			.then((res) => {
+				if (!cancelled) setWhopPlan(res.planId);
+			})
+			.catch(() => {
+				if (!cancelled) setWhopPlan(null);
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [open, region, content.plans]);
+
 
 	useEffect(() => {
 		if (!open) return;
@@ -244,14 +273,47 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							<span>Amount due</span>
 							<strong>{price}</strong>
 						</div>
-						<button
-							type="button"
-							className="btn-gold sub-float-pay"
-							onClick={payNow}
-							disabled={busy}
-						>
-							{busy ? "Opening checkout…" : `Pay ${price} now`}
-						</button>
+						{method === "mobile-money" ? (
+							<button
+								type="button"
+								className="btn-gold sub-float-pay"
+								onClick={payNow}
+								disabled={busy}
+							>
+								{busy ? "Opening checkout…" : `Pay ${price} now`}
+							</button>
+						) : whopPlan ? (
+							<div className="sub-float-whop-pay">
+								<WhopExpressCheckoutButton
+									planId={whopPlan}
+									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
+									theme="dark"
+									onComplete={() => activate()}
+									onPaymentError={(err) =>
+										setError(err.message || "Payment failed.")
+									}
+								/>
+								<WhopCheckoutEmbed
+									planId={whopPlan}
+									theme="dark"
+									hidePrice
+									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
+									onComplete={() => activate()}
+									fallback={<div className="loader" />}
+								/>
+							</div>
+						) : whopPlan === null ? (
+							<div className="sub-float-pending">
+								<p>
+									Card, PayPal and Google Pay checkout needs your Whop plan ID.
+									Add it in the dashboard under Subscription.
+								</p>
+							</div>
+						) : (
+							<div className="sub-float-whop-pay">
+								<div className="loader" />
+							</div>
+						)}
 						{pending ? (
 							<div className="sub-float-pending">
 								<p>
