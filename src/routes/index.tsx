@@ -1,12 +1,12 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { EventCard, ExploreCard } from "../components/sand/Cards";
+import { EventCard } from "../components/sand/Cards";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import {
   EVENTS,
-  EXPLORE,
   FILMS,
   HERO_SLIDES,
+  UPCOMING_FILMS,
 } from "../data/catalog";
 
 const AWARDS = [
@@ -50,7 +50,6 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [slide, setSlide] = useState(0);
   const [eventStart, setEventStart] = useState(0);
-  const [exploreStart, setExploreStart] = useState(0);
   const [filmRailPosition, setFilmRailPosition] = useState({
     canScrollLeft: false,
     canScrollRight: false,
