@@ -27,17 +27,23 @@ export function EventCard({ item }: { item: EventItem | Course }) {
   );
 }
 
-export function FilmCard({ film }: { film: Film }) {
+export function FilmCard({ film, portrait }: { film: Film; portrait?: boolean }) {
   return (
     <Link to="/films/$slug" params={{ slug: film.slug }} className="film-card">
-      <div className="thumb">
+      <div className={portrait ? "thumb portrait" : "thumb"}>
         <img src={film.image} alt="" />
-        <PlayIcon />
-        <span className="watch-now">
-          Watch
-          <br />
-          Now
-        </span>
+        {film.upcoming ? (
+          <span className="badge badge-soon">Coming Soon</span>
+        ) : (
+          <>
+            <PlayIcon />
+            <span className="watch-now">
+              Watch
+              <br />
+              Now
+            </span>
+          </>
+        )}
       </div>
       <h3>{film.title}</h3>
       {film.duration ? <p className="meta">{film.duration}</p> : null}

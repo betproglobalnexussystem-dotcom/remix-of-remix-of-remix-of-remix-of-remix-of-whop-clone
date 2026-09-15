@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteEnd } from "../components/layout/SiteEnd";
 import { FilmCard } from "../components/sand/Cards";
-import { FILMS } from "../data/catalog";
+import { FILMS, UPCOMING_FILMS } from "../data/catalog";
 import filmsHero from "../assets/films-hero.jpg.asset.json";
 
 export const Route = createFileRoute("/films")({
@@ -11,8 +11,9 @@ export const Route = createFileRoute("/films")({
 });
 
 function FilmsPage() {
+  const regular = FILMS.filter((film) => !film.upcoming);
   const [count, setCount] = useState(6);
-  const visible = FILMS.slice(0, count);
+  const visible = regular.slice(0, count);
   return (
     <>
       <section
