@@ -709,16 +709,11 @@ h3,
   color: var(--ink);
 }
 
-.production-service-chip:nth-child(odd) {
+.production-service-chip:nth-child(odd),
+.production-service-chip:nth-child(even) {
   border-color: var(--gold);
   background: var(--gold);
   color: var(--ink);
-}
-
-.production-service-chip:nth-child(even) {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: #fff;
 }
 
 .awards-recognition {
