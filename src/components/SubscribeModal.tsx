@@ -6,11 +6,10 @@ import paypalLogo from "../assets/paypal-official.webp.asset.json";
 import cardLogos from "../assets/visa-mastercard-official.png.asset.json";
 import {
 	WhopCheckoutEmbed,
-	WhopExpressCheckoutButton,
 } from "@whop/checkout/react";
 import { getRegionByIp } from "../lib/geo.functions";
-import { createWhopCheckout, getWhopPlanId } from "../lib/whop.functions";
 import { useContent } from "../lib/admin-store";
+import { checkoutReturnUrl, WHOP_STREAMING_PLAN_ID } from "../lib/whop";
 import {
 	type PaymentMethod,
 	type Region,
@@ -71,26 +70,8 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 	const [country, setCountry] = useState<string | null>(null);
 	const [method, setMethod] = useState<PaymentMethod>("card");
 	const [pending, setPending] = useState(false);
-	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const [whopPlan, setWhopPlan] = useState<string | null | undefined>(undefined);
 	const content = useContent();
-
-	// Resolve the Whop plan for this region so the one-click button can mount.
-	useEffect(() => {
-		if (!open) return;
-		let cancelled = false;
-		getWhopPlanId({ data: { region: "INTL" } })
-			.then((res) => {
-				if (!cancelled) setWhopPlan(res.planId);
-			})
-			.catch(() => {
-				if (!cancelled) setWhopPlan(null);
-			});
-		return () => {
-			cancelled = true;
-		};
-	}, [open]);
 
 
 	useEffect(() => {
@@ -142,38 +123,6 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 			startedAt: Date.now(),
 		});
 		onActivated?.();
-	}
-
-	/** Every method checks out through Whop. */
-	async function payNow() {
-		if (method === "mobile-money") {
-			setError("Mobile Money will be available when your provider is connected.");
-			setPending(true);
-			return;
-		}
-		setBusy(true);
-		setError(null);
-		try {
-			const res = await createWhopCheckout({
-				data: {
-					planId: plan?.whopPlanId ?? "",
-					region,
-					method,
-					redirectUrl: `${window.location.origin}${window.location.pathname}?paid=1`,
-				},
-			});
-			if (res.url) {
-				window.location.assign(res.url);
-				return;
-			}
-			setError(res.error ?? "Checkout could not be started.");
-			setPending(true);
-		} catch {
-			setError("Checkout could not be started.");
-			setPending(true);
-		} finally {
-			setBusy(false);
-		}
 	}
 
 	return (
@@ -235,15 +184,6 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 								<p className="kicker">Mobile Money number</p>
 								<input type="tel" placeholder="07XX XXX XXX" />
 							</div>
-						) : method === "card" ? (
-							<div className="sub-float-fields">
-								<p className="kicker">Card details</p>
-								<div className="sub-float-card-row">
-									<input type="text" placeholder="Card number" />
-									<input type="text" placeholder="MM/YY" />
-									<input type="text" placeholder="CVC" />
-								</div>
-							</div>
 						) : null}
 
 						<p className="sub-float-note">
@@ -275,38 +215,30 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							<button
 								type="button"
 								className="btn-gold sub-float-pay"
-								onClick={payNow}
-								disabled={busy}
+								onClick={() => {
+									setError("Mobile Money will be available when your provider is connected.");
+									setPending(true);
+								}}
 							>
-								{busy ? "Opening checkout…" : `Pay ${price} now`}
+								Pay {price} now
 							</button>
-						) : whopPlan ? (
-							<div className="sub-float-whop-pay">
-								<WhopExpressCheckoutButton
-									planId={whopPlan}
-									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
-									theme="dark"
-									onComplete={() => activate()}
-									onPaymentError={(err) =>
-										setError(err.message || "Payment failed.")
-									}
-								/>
-								<WhopCheckoutEmbed
-									planId={whopPlan}
-									theme="dark"
-									hidePrice
-									returnUrl={`${typeof window === "undefined" ? "" : window.location.origin}${typeof window === "undefined" ? "" : window.location.pathname}?paid=1`}
-									onComplete={() => activate()}
-									fallback={<div className="loader" />}
-								/>
-							</div>
-						) : whopPlan === null ? (
-							<div className="sub-float-pending">
-								<p>Whop checkout could not be loaded. Please try again.</p>
-							</div>
 						) : (
 							<div className="sub-float-whop-pay">
-								<div className="loader" />
+								<WhopCheckoutEmbed
+									planId={WHOP_STREAMING_PLAN_ID}
+									returnUrl={checkoutReturnUrl(window.location.pathname)}
+									theme="light"
+									adaptivePricing
+									collectPhoneNumbers="optional"
+									themeOptions={{ accentColor: "gold", borderRadius: 6 }}
+									styles={{ container: { paddingX: 0, paddingY: 0 } }}
+									onComplete={() => activate()}
+									onPaymentError={(paymentError) => {
+									setError(paymentError.message || "Payment could not be completed.");
+									setPending(true);
+								}}
+									fallback={<div className="loader" />}
+								/>
 							</div>
 						)}
 						{pending ? (
@@ -315,9 +247,6 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 									{error ??
 										`Checkout for ${selected.name} could not be opened right now.`}
 								</p>
-								<button type="button" className="btn-ghost" onClick={activate}>
-									Grant test access for now
-								</button>
 							</div>
 						) : (
 							<p className="sub-float-small">

@@ -12,8 +12,8 @@ import {
 	writeSubscription,
 } from "../lib/subscription";
 import { getRegionByIp } from "../lib/geo.functions";
-import { createWhopCheckout } from "../lib/whop.functions";
 import { useContent } from "../lib/admin-store";
+import { WHOP_STREAMING_PLAN_ID } from "../lib/whop";
 
 export const Route = createFileRoute("/subscribe")({
 	component: SubscribePage,
@@ -71,18 +71,12 @@ function SubscribePage() {
 		return match ? { ...item, name: match.name, blurb: match.blurb } : item;
 	});
 
-	async function start(id: PaymentMethod) {
+	function start(id: PaymentMethod) {
 		setMethod(id);
-		const res = await createWhopCheckout({
-			data: {
-				planId: setting?.whopPlanId ?? "",
-				region,
-				method: id,
-				redirectUrl: `${window.location.origin}/subscribe?paid=1`,
-			},
-		}).catch(() => null);
-		if (res?.url) {
-			window.location.assign(res.url);
+		if (id !== "mobile-money") {
+			const planId = setting?.whopPlanId || WHOP_STREAMING_PLAN_ID;
+			const next = redirect || "/films";
+			window.location.assign(`/checkout/${planId}?redirect=${encodeURIComponent(next)}`);
 			return;
 		}
 		setPending(true);
@@ -199,20 +193,10 @@ function SubscribePage() {
 								border: "1px dashed var(--gold)",
 							}}
 						>
-							<h3 style={{ marginTop: 0 }}>Waiting for payment connection</h3>
+							<h3 style={{ marginTop: 0 }}>Mobile Money is coming soon</h3>
 							<p>
-								{method === "mobile-money"
-									? "Mobile Money"
-									: method === "paypal"
-										? "PayPal"
-										: "Whop"}{" "}
-								is not connected yet. Once the account keys are added, this
-								button will open the real checkout for {plan.label}{" "}
-								{plan.period}.
+								Mobile Money will be available when your Uganda payment provider is connected.
 							</p>
-							<button type="button" className="btn-ghost" onClick={activate}>
-								Grant test access for now
-							</button>
 						</div>
 					) : null}
 
