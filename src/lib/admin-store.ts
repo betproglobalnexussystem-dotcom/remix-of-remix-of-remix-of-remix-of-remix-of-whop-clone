@@ -242,8 +242,23 @@ export function fileToDataUrl(file: File): Promise<string> {
 }
 
 const ADMIN_KEY = "mageye.admin.session";
+const PASSCODE_KEY = "mageye.admin.passcode";
 /** Mock gate only — replace with Firebase Auth later. */
 export const ADMIN_PASSCODE = "mageye-admin";
+
+/** Current access code (admin-editable, stored in this browser). */
+export function getAdminPasscode() {
+	if (typeof window === "undefined") return ADMIN_PASSCODE;
+	return window.localStorage.getItem(PASSCODE_KEY) || ADMIN_PASSCODE;
+}
+
+export function setAdminPasscode(next: string) {
+	if (typeof window === "undefined") return false;
+	const value = next.trim();
+	if (value.length < 4) return false;
+	window.localStorage.setItem(PASSCODE_KEY, value);
+	return true;
+}
 
 export function isAdminSignedIn() {
 	if (typeof window === "undefined") return false;
@@ -251,7 +266,7 @@ export function isAdminSignedIn() {
 }
 
 export function signInAdmin(passcode: string) {
-	if (passcode !== ADMIN_PASSCODE) return false;
+	if (passcode !== getAdminPasscode()) return false;
 	window.localStorage.setItem(ADMIN_KEY, "1");
 	return true;
 }
