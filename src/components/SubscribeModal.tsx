@@ -231,23 +231,54 @@ export function SubscribeModal({ open, title, onClose, onActivated }: Props) {
 							>
 								Pay {price} now
 							</button>
-						) : (
+						) : email ? (
 							<div className="sub-float-whop-pay">
+								<WhopExpressCheckoutButton
+									planId={WHOP_STREAMING_PLAN_ID}
+									returnUrl={checkoutReturnUrl(window.location.pathname)}
+									methods={["apple_pay", "google_pay", "paypal"]}
+									theme="light"
+									themeOptions={{ accentColor: "gold" }}
+									prefill={{ email }}
+									adaptivePricing
+									onComplete={(_planId, receiptId) => activate(receiptId)}
+									onPaymentError={(paymentError) => {
+										setError(
+											paymentError.message || "Payment could not be completed.",
+										);
+										setPending(true);
+									}}
+								/>
 								<WhopCheckoutEmbed
 									planId={WHOP_STREAMING_PLAN_ID}
 									returnUrl={checkoutReturnUrl(window.location.pathname)}
 									theme="light"
 									adaptivePricing
-									collectPhoneNumbers="optional"
-									themeOptions={{ accentColor: "gold", borderRadius: 6 }}
+									hideEmail
+									hideAddressForm
+									hidePrice
+									prefill={{ email }}
+									themeOptions={{
+										accentColor: "gold",
+										borderRadius: 6,
+										buttonText: `Pay ${price}`,
+									}}
 									styles={{ container: { paddingX: 0, paddingY: 0 } }}
-									onComplete={() => activate()}
+									onComplete={(_id, receiptId) =>
+										activate(typeof receiptId === "string" ? receiptId : undefined)
+									}
 									onPaymentError={(paymentError) => {
-									setError(paymentError.message || "Payment could not be completed.");
-									setPending(true);
-								}}
+										setError(
+											paymentError.message || "Payment could not be completed.",
+										);
+										setPending(true);
+									}}
 									fallback={<div className="loader" />}
 								/>
+							</div>
+						) : (
+							<div className="sub-float-whop-pay">
+								<div className="loader" />
 							</div>
 						)}
 						{pending ? (
