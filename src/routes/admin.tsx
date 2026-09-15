@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-	ADMIN_PASSCODE,
 	type Content,
 	fileToDataUrl,
+	getAdminPasscode,
 	isAdminSignedIn,
 	newId,
 	readContent,
 	resetContent,
+	setAdminPasscode,
 	signInAdmin,
 	signOutAdmin,
 	subscribeContent,
