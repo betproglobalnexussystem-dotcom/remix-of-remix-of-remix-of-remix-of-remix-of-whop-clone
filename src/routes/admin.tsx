@@ -48,9 +48,131 @@ const SECTIONS = [
 	{ id: "pages", label: "Pages" },
 	{ id: "subscription", label: "Subscription" },
 	{ id: "messages", label: "Messages" },
+	{ id: "access", label: "Access Code" },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]["id"];
+
+/** Which public page the live preview shows for each dashboard section. */
+const PREVIEW_PATH: Record<SectionId, string> = {
+	overview: "/",
+	hero: "/",
+	films: "/films",
+	explore: "/",
+	director: "/",
+	events: "/events",
+	courses: "/courses",
+	podcasts: "/podcast",
+	library: "/library",
+	people: "/team",
+	pages: "/team",
+	subscription: "/subscribe",
+	messages: "/contact",
+	access: "/admin",
+};
+
+/** Live site preview beside the editor; reloads shortly after each save. */
+function LivePreview({ path, stamp }: { path: string; stamp: number }) {
+	const [reloadKey, setReloadKey] = useState(0);
+	useEffect(() => {
+		const timer = window.setTimeout(() => setReloadKey((n) => n + 1), 500);
+		return () => window.clearTimeout(timer);
+	}, [stamp, path]);
+	return (
+		<aside className="admin-preview">
+			<div className="admin-preview__bar">
+				<span>Live preview · {path}</span>
+				<button type="button" onClick={() => setReloadKey((n) => n + 1)}>
+					Refresh
+				</button>
+			</div>
+			<iframe
+				key={`${path}-${reloadKey}`}
+				className="admin-preview__frame"
+				title="Live site preview"
+				src={path}
+			/>
+		</aside>
+	);
+}
+
+function AccessCode() {
+	const [current, setCurrent] = useState("");
+	const [next, setNext] = useState("");
+	const [confirm, setConfirm] = useState("");
+	const [note, setNote] = useState("");
+	const [bad, setBad] = useState(false);
+
+	return (
+		<div className="admin-panel">
+			<h2 className="serif">Access code</h2>
+			<p className="admin-hint">
+				The code used to open this dashboard. It is saved in this browser for
+				now and replaced by real sign in when Firebase is connected.
+			</p>
+			<form
+				className="admin-form"
+				onSubmit={(event) => {
+					event.preventDefault();
+					if (current.trim() !== getAdminPasscode()) {
+						setBad(true);
+						setNote("Current code is wrong.");
+						return;
+					}
+					if (next.trim().length < 4) {
+						setBad(true);
+						setNote("New code needs at least 4 characters.");
+						return;
+					}
+					if (next !== confirm) {
+						setBad(true);
+						setNote("New codes do not match.");
+						return;
+					}
+					setAdminPasscode(next);
+					setBad(false);
+					setNote("Access code updated.");
+					setCurrent("");
+					setNext("");
+					setConfirm("");
+				}}
+			>
+				<label className="admin-field">
+					Current code
+					<input
+						type="password"
+						value={current}
+						onChange={(event) => setCurrent(event.target.value)}
+					/>
+				</label>
+				<label className="admin-field">
+					New code
+					<input
+						type="password"
+						value={next}
+						onChange={(event) => setNext(event.target.value)}
+					/>
+				</label>
+				<label className="admin-field">
+					Confirm new code
+					<input
+						type="password"
+						value={confirm}
+						onChange={(event) => setConfirm(event.target.value)}
+					/>
+				</label>
+				<div className="admin-field admin-field--wide">
+					{note ? (
+						<p className={bad ? "admin-error" : "admin-saved"}>{note}</p>
+					) : null}
+					<button className="btn-gold" type="submit">
+						Save access code
+					</button>
+				</div>
+			</form>
+		</div>
+	);
+}
 
 function AdminPage() {
 	const [signedIn, setSignedIn] = useState(false);
