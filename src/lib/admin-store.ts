@@ -59,6 +59,24 @@ export type Message = {
 	read: boolean;
 };
 
+export type WalletTx = {
+	id: string;
+	kind: "payment" | "withdrawal";
+	provider: string;
+	phone: string;
+	amount: number;
+	currency: string;
+	status: "pending" | "completed" | "failed";
+	note: string;
+	createdAt: number;
+};
+
+export type Wallet = {
+	balance: number;
+	currency: string;
+	transactions: WalletTx[];
+};
+
 export type Director = {
 	name: string;
 	role: string;
