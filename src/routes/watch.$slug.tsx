@@ -37,8 +37,18 @@ function WatchPage() {
 	const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 	const [message, setMessage] = useState("Securing your session…");
 	const [session, setSession] = useState("");
+	const [access, setAccess] = useState<"checking" | "allowed" | "denied">(
+		"checking",
+	);
+	const [plan, setPlan] = useState(INTL_PLAN);
 
 	useEffect(() => {
+		setPlan(planFor(detectRegion()));
+		setAccess(readSubscription() ? "allowed" : "denied");
+	}, []);
+
+	useEffect(() => {
+		if (access !== "allowed") return;
 		let destroyed = false;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let player: any = null;
